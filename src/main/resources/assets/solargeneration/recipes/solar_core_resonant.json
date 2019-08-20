@@ -1,0 +1,23 @@
+{
+    "result": {
+        "item": "solargeneration:solar_core_resonant"
+    },
+    "pattern": [
+        "cac",
+        "aba",
+        "cac"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "thermalfoundation:material",
+            "data": 231
+        },
+        "b": {
+            "item": "solargeneration:solar_core_redstone"
+        },
+        "c" : {
+            "item": "minecraft:glass_pane"
+        }
+    }
+}

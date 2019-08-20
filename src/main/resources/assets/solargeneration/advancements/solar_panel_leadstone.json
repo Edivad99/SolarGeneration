@@ -1,0 +1,26 @@
+    
+{
+    "display": {
+        "icon": {
+            "item": "solargeneration:solar_panel_leadstone"
+        },
+        "title": {
+            "translate": "achievement.solargeneration.solar_panel_leadstone"
+        },
+        "description": {
+            "translate": "achievement.solargeneration.solar_panel_leadstone.desc"
+        }
+    },
+    "criteria": {
+        "certus": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "solargeneration:solar_panel_leadstone"
+                    }
+                ]
+            }
+        }
+    }
+}

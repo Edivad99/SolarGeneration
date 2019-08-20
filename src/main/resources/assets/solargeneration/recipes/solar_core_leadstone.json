@@ -1,0 +1,23 @@
+{
+    "result": {
+        "item": "solargeneration:solar_core_leadstone"
+    },
+    "pattern": [
+        "cac",
+        "aba",
+        "cac"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "thermalfoundation:material",
+            "data": 195
+        },
+        "b": {
+            "item": "minecraft:iron_ingot"
+        },
+        "c" : {
+            "item": "minecraft:glass_pane"
+        }
+    }
+}

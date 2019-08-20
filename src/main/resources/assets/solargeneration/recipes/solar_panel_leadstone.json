@@ -1,0 +1,26 @@
+{
+    "result": {
+        "item": "solargeneration:solar_panel_leadstone"
+    },
+    "pattern": [
+        "aaa",
+        "bcb",
+        "ddd"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "solargeneration:photovoltaic_cell"
+        },
+        "b": {
+            "item": "minecraft:redstone"
+        },
+        "c": {
+            "item": "solargeneration:solar_core_leadstone"
+        },
+        "d": {
+            "item": "thermalfoundation:material",
+            "data": 224
+        }
+    }
+}

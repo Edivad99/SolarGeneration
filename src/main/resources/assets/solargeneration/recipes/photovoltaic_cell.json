@@ -1,0 +1,22 @@
+{
+    "result": {
+        "item": "solargeneration:photovoltaic_cell"
+    },
+    "pattern": [
+        "aaa",
+        "bbb",
+        "ccc"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "minecraft:glass_pane"
+        },
+        "b": {
+            "item": "solargeneration:lapis_shard"
+        },
+        "c": {
+            "item": "minecraft:iron_nugget"
+        }
+    }
+}

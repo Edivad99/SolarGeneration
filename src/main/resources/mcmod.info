@@ -1,0 +1,18 @@
+[
+    {
+      "modid": "solargeneration",
+      "name": "Solar Generation",
+      "description": "A way to generate FE from the sun",
+      "version": "1.0",
+      "mcversion": "${mcversion}",
+      "url": "",
+      "updateUrl": "",
+      "authorList": ["edivad"],
+      "credits": "I know what I am doing",
+      "logoFile": "",
+      "screenshots": [],
+      "dependencies": [
+        "forge,thermalfoundation"
+        ]
+    }
+]

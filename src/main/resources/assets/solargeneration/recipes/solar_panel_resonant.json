@@ -1,0 +1,19 @@
+{
+    "result": {
+        "item": "solargeneration:solar_panel_resonant"
+    },
+    "pattern": [
+        "aaa",
+        "aba",
+        "aaa"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "solargeneration:solar_panel_redstone"
+        },
+        "b": {
+            "item": "solargeneration:solar_core_resonant"
+        }
+    }
+}

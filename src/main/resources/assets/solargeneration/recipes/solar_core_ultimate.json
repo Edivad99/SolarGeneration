@@ -1,0 +1,23 @@
+{
+    "result": {
+        "item": "solargeneration:solar_core_ultimate"
+    },
+    "pattern": [
+        "cac",
+        "aba",
+        "cac"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "thermalfoundation:material",
+            "data": 199
+        },
+        "b": {
+            "item": "solargeneration:solar_core_advanced"
+        },
+        "c" : {
+            "item": "minecraft:glass_pane"
+        }
+    }
+}
