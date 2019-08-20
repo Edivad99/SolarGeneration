@@ -16,7 +16,7 @@ Produce energy from the sun, use your head for recharging your inventory and cle
 
 ## Downloads
 
-Downloads can be found on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/solar-generation).
+Downloads can be found on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/solargeneration).
 
 ## Installation
 
