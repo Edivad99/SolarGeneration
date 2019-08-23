@@ -10,8 +10,8 @@
     "type": "forge:ore_shaped",
     "key": {
         "a": {
-            "item": "thermalfoundation:material",
-            "data": 225
+            "type": "forge:ore_dict",
+            "ore": "nuggetElectrum"
         },
         "b": {
             "item": "solargeneration:solar_core_hardened"

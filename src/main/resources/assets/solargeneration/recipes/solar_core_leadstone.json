@@ -10,8 +10,8 @@
     "type": "forge:ore_shaped",
     "key": {
         "a": {
-            "item": "thermalfoundation:material",
-            "data": 195
+            "type": "forge:ore_dict",
+            "ore": "nuggetLead"
         },
         "b": {
             "item": "minecraft:iron_ingot"

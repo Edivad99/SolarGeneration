@@ -10,8 +10,8 @@
     "type": "forge:ore_shaped",
     "key": {
         "a": {
-            "item": "thermalfoundation:material",
-            "data": 226
+            "type": "forge:ore_dict",
+            "ore": "nuggetInvar"
         },
         "b": {
             "item": "solargeneration:solar_core_leadstone"

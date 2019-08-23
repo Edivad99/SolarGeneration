@@ -19,8 +19,8 @@
             "item": "solargeneration:solar_core_leadstone"
         },
         "d": {
-            "item": "thermalfoundation:material",
-            "data": 224
+            "type": "forge:ore_dict",
+            "ore": "nuggetSteel"
         }
     }
 }

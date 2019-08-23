@@ -10,8 +10,8 @@
     "type": "forge:ore_shaped",
     "key": {
         "a": {
-            "item": "thermalfoundation:material",
-            "data": 199
+            "type": "forge:ore_dict",
+            "ore": "nuggetIridium"
         },
         "b": {
             "item": "solargeneration:solar_core_advanced"
