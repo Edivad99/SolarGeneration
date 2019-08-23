@@ -1,0 +1,11 @@
+{
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/solargeneration",
+    "1.12.2": {
+        "1.0.1": "Added support for oreDict in the recipes.",
+        "1.0": "First beta of Solar Generation."
+    },
+    "promos": {
+        "1.12.2-latest": "1.0.1",
+        "1.12.2-recommended": "1.0.1"
+    }
+}
