@@ -36,6 +36,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -53,6 +54,7 @@ public class SolarPanel extends Block implements ITileEntityProvider{
 	// 4-SolarPanelAdvanced
 	// 5-SolarPanelUltimate
 	private final SolarPanelLevel levelSolarPanel;
+	private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
 	
 	public SolarPanel(SolarPanelLevel levelSolarPanel) {
 		
@@ -122,11 +124,6 @@ public class SolarPanel extends Block implements ITileEntityProvider{
 	}
 	
 	@Override
-	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
-	
-	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
@@ -134,6 +131,11 @@ public class SolarPanel extends Block implements ITileEntityProvider{
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return AABB_TOP_HALF;
 	}
 	
 	@Override
