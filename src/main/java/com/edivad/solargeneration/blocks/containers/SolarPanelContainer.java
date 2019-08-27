@@ -10,10 +10,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 
-public class SolarPanelContainer extends Container implements ISolarPanelStateContainer{
+public class SolarPanelContainer extends Container implements ISolarPanelStateContainer {
 
 	private final TileEntitySolarPanel tileEntitySolarPanel;
-	
+
 	public SolarPanelContainer(TileEntitySolarPanel tileEntitySolarPanel) {
 		this.tileEntitySolarPanel = tileEntitySolarPanel;
 	}
@@ -22,31 +22,29 @@ public class SolarPanelContainer extends Container implements ISolarPanelStateCo
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return this.tileEntitySolarPanel.canInteractWith(playerIn);
 	}
-	
+
 	@Override
 	public void detectAndSendChanges() {
-		//For sync variable from client and server
+		// For sync variable from client and server
 		super.detectAndSendChanges();
-		if(!this.tileEntitySolarPanel.getWorld().isRemote)
-		{
-			if(tileEntitySolarPanel.getEnergy() != tileEntitySolarPanel.getClientEnergy() || 
-					tileEntitySolarPanel.currentAmountEnergyProduced() != tileEntitySolarPanel.getClientCurrentAmountEnergyProduced())
-			{
+		if (!this.tileEntitySolarPanel.getWorld().isRemote) {
+			if (tileEntitySolarPanel.getEnergy() != tileEntitySolarPanel.getClientEnergy() || tileEntitySolarPanel
+					.currentAmountEnergyProduced() != tileEntitySolarPanel.getClientCurrentAmountEnergyProduced()) {
 				tileEntitySolarPanel.setClientEnergy(tileEntitySolarPanel.getEnergy());
-				tileEntitySolarPanel.setClientCurrentAmountEnergyProduced(tileEntitySolarPanel.currentAmountEnergyProduced());
+				tileEntitySolarPanel
+						.setClientCurrentAmountEnergyProduced(tileEntitySolarPanel.currentAmountEnergyProduced());
 
-				for(IContainerListener listener : listeners)
-				{
-					if(listener instanceof EntityPlayerMP)
-					{
+				for (IContainerListener listener : listeners) {
+					if (listener instanceof EntityPlayerMP) {
 						EntityPlayerMP player = (EntityPlayerMP) listener;
-						Messages.INSTANCE.sendTo(new PacketSyncMachineState(this.tileEntitySolarPanel.getEnergy(), this.tileEntitySolarPanel.currentAmountEnergyProduced()), player);
+						Messages.INSTANCE.sendTo(new PacketSyncMachineState(this.tileEntitySolarPanel.getEnergy(),
+								this.tileEntitySolarPanel.currentAmountEnergyProduced()), player);
 					}
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void sync(int energy, int energyProducing) {
 		this.tileEntitySolarPanel.setClientEnergy(energy);

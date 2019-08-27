@@ -6,6 +6,7 @@ import com.edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import com.edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
 import com.edivad.solargeneration.tile.TileEntityRedstoneSolarPanel;
 import com.edivad.solargeneration.tile.TileEntityResonantSolarPanel;
+import com.edivad.solargeneration.tile.TileEntitySignalumSolarPanel;
 import com.edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
 import com.edivad.solargeneration.tools.SolarPanelLevel;
 
@@ -17,46 +18,50 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModBlocks {
 
-	//Solar panel
+	// Solar panel
 	@GameRegistry.ObjectHolder(Main.MODID + ":solar_panel_advanced")
-    public static SolarPanel solarPanelAdvanced;
+	public static SolarPanel solarPanelAdvanced;
 	@GameRegistry.ObjectHolder(Main.MODID + ":solar_panel_hardened")
-    public static SolarPanel solarPanelHardened;
+	public static SolarPanel solarPanelHardened;
 	@GameRegistry.ObjectHolder(Main.MODID + ":solar_panel_leadstone")
-    public static SolarPanel solarPanelLeadstone;
+	public static SolarPanel solarPanelLeadstone;
 	@GameRegistry.ObjectHolder(Main.MODID + ":solar_panel_redstone")
-    public static SolarPanel solarPanelRedstone;
+	public static SolarPanel solarPanelRedstone;
 	@GameRegistry.ObjectHolder(Main.MODID + ":solar_panel_resonant")
-    public static SolarPanel solarPanelResonant;
+	public static SolarPanel solarPanelResonant;
+	@GameRegistry.ObjectHolder(Main.MODID + ":solar_panel_signalum")
+	public static SolarPanel solarPanelSignalum;
 	@GameRegistry.ObjectHolder(Main.MODID + ":solar_panel_ultimate")
-    public static SolarPanel solarPanelUltimate;
+	public static SolarPanel solarPanelUltimate;
 
-    @SideOnly(Side.CLIENT)
-    public static void initModels() {
-        solarPanelAdvanced.initModel();
-        solarPanelHardened.initModel();
-        solarPanelLeadstone.initModel();
-        solarPanelRedstone.initModel();
-        solarPanelResonant.initModel();
-        solarPanelUltimate.initModel();
-    }
+	@SideOnly(Side.CLIENT)
+	public static void initModels() {
+		solarPanelAdvanced.initModel();
+		solarPanelHardened.initModel();
+		solarPanelLeadstone.initModel();
+		solarPanelRedstone.initModel();
+		solarPanelResonant.initModel();
+		solarPanelSignalum.initModel();
+		solarPanelUltimate.initModel();
+	}
 
-    public static void register(IForgeRegistry<Block> registry) {
-    	
-    	registry.register(new SolarPanel(SolarPanelLevel.Advanced));
-    	registry.register(new SolarPanel(SolarPanelLevel.Hardened));
-    	registry.register(new SolarPanel(SolarPanelLevel.Leadstone));
-    	registry.register(new SolarPanel(SolarPanelLevel.Redstone));
-    	registry.register(new SolarPanel(SolarPanelLevel.Resonant));
-        registry.register(new SolarPanel(SolarPanelLevel.Ultimate));
-        
-        GameRegistry.registerTileEntity(TileEntityAdvancedSolarPanel.class, Main.MODID + ":solar_panel_advanced");
-        GameRegistry.registerTileEntity(TileEntityHardenedSolarPanel.class, Main.MODID + ":solar_panel_hardened");
-        GameRegistry.registerTileEntity(TileEntityLeadstoneSolarPanel.class, Main.MODID + ":solar_panel_leadstone");
-        GameRegistry.registerTileEntity(TileEntityRedstoneSolarPanel.class, Main.MODID + ":solar_panel_redstone");
-        GameRegistry.registerTileEntity(TileEntityResonantSolarPanel.class, Main.MODID + ":solar_panel_resonant");
-        GameRegistry.registerTileEntity(TileEntityUltimateSolarPanel.class, Main.MODID + ":solar_panel_ultimate");
-    }
+	public static void register(IForgeRegistry<Block> registry) {
+
+		registry.register(new SolarPanel(SolarPanelLevel.Advanced));
+		registry.register(new SolarPanel(SolarPanelLevel.Hardened));
+		registry.register(new SolarPanel(SolarPanelLevel.Leadstone));
+		registry.register(new SolarPanel(SolarPanelLevel.Redstone));
+		registry.register(new SolarPanel(SolarPanelLevel.Resonant));
+		registry.register(new SolarPanel(SolarPanelLevel.Signalum));
+		registry.register(new SolarPanel(SolarPanelLevel.Ultimate));
+
+		GameRegistry.registerTileEntity(TileEntityAdvancedSolarPanel.class, Main.MODID + ":solar_panel_advanced");
+		GameRegistry.registerTileEntity(TileEntityHardenedSolarPanel.class, Main.MODID + ":solar_panel_hardened");
+		GameRegistry.registerTileEntity(TileEntityLeadstoneSolarPanel.class, Main.MODID + ":solar_panel_leadstone");
+		GameRegistry.registerTileEntity(TileEntityRedstoneSolarPanel.class, Main.MODID + ":solar_panel_redstone");
+		GameRegistry.registerTileEntity(TileEntityResonantSolarPanel.class, Main.MODID + ":solar_panel_resonant");
+		GameRegistry.registerTileEntity(TileEntitySignalumSolarPanel.class, Main.MODID + ":solar_panel_signalum");
+		GameRegistry.registerTileEntity(TileEntityUltimateSolarPanel.class, Main.MODID + ":solar_panel_ultimate");
+	}
 
 }
-

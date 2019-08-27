@@ -1,6 +1,6 @@
 {
     "result": {
-        "item": "solargeneration:solar_core_resonant"
+        "item": "solargeneration:solar_core_signalum"
     },
     "pattern": [
         "cac",
@@ -11,10 +11,10 @@
     "key": {
         "a": {
             "type": "forge:ore_dict",
-            "ore": "nuggetEnderium"
+            "ore": "nuggetSignalum"
         },
         "b": {
-            "item": "solargeneration:solar_core_signalum"
+            "item": "solargeneration:solar_core_redstone"
         },
         "c" : {
             "item": "minecraft:glass_pane"

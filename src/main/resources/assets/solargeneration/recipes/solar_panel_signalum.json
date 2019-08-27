@@ -1,6 +1,6 @@
 {
     "result": {
-        "item": "solargeneration:solar_panel_resonant"
+        "item": "solargeneration:solar_panel_signalum"
     },
     "pattern": [
         "aaa",
@@ -10,10 +10,10 @@
     "type": "forge:ore_shaped",
     "key": {
         "a": {
-            "item": "solargeneration:solar_panel_signalum"
+            "item": "solargeneration:solar_panel_redstone"
         },
         "b": {
-            "item": "solargeneration:solar_core_resonant"
+            "item": "solargeneration:solar_core_signalum"
         }
     }
 }

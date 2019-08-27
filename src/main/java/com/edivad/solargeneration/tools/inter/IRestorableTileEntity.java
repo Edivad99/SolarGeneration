@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public interface IRestorableTileEntity {
 
-    void readRestorableFromNBT(NBTTagCompound compound);
+	void readRestorableFromNBT(NBTTagCompound compound);
 
-    void writeRestorableToNBT(NBTTagCompound compound);
+	void writeRestorableToNBT(NBTTagCompound compound);
 }

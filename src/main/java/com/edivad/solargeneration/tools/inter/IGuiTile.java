@@ -6,7 +6,7 @@ import net.minecraft.inventory.Container;
 
 public interface IGuiTile {
 
-    Container createContainer(EntityPlayer player);
+	Container createContainer(EntityPlayer player);
 
-    GuiContainer createGui(EntityPlayer player);
+	GuiContainer createGui(EntityPlayer player);
 }

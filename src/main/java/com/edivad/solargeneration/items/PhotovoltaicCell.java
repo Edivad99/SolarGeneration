@@ -9,18 +9,18 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PhotovoltaicCell extends Item{
-	
+public class PhotovoltaicCell extends Item {
+
 	public PhotovoltaicCell() {
-		
+
 		setRegistryName(new ResourceLocation(Main.MODID, "photovoltaic_cell"));
 		setUnlocalizedName(Main.MODID + ".photovoltaic_cell");
-        setCreativeTab(Main.solarGenerationTab);
+		setCreativeTab(Main.solarGenerationTab);
 		setMaxStackSize(64);
 	}
 
 	@SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
+	public void initModel() {
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
 }

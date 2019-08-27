@@ -9,18 +9,18 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class LapisShard extends Item{
-	
+public class LapisShard extends Item {
+
 	public LapisShard() {
-		
+
 		setRegistryName(new ResourceLocation(Main.MODID, "lapis_shard"));
 		setUnlocalizedName(Main.MODID + ".lapis_shard");
-        setCreativeTab(Main.solarGenerationTab);
+		setCreativeTab(Main.solarGenerationTab);
 		setMaxStackSize(64);
 	}
 
 	@SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
+	public void initModel() {
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
 }

@@ -6,19 +6,21 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class Messages {
 
-    public static SimpleNetworkWrapper INSTANCE;
+	public static SimpleNetworkWrapper INSTANCE;
 
-    private static int ID = 0;
-    private static int nextID() {
-        return ID++;
-    }
+	private static int ID = 0;
 
-    public static void registerMessages(String channelName) {
-        INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(channelName);
+	private static int nextID() {
+		return ID++;
+	}
 
-        // Server side
+	public static void registerMessages(String channelName) {
+		INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(channelName);
 
-        // Client side
-        INSTANCE.registerMessage(PacketSyncMachineState.Handler.class, PacketSyncMachineState.class, nextID(), Side.CLIENT);
-    }
+		// Server side
+
+		// Client side
+		INSTANCE.registerMessage(PacketSyncMachineState.Handler.class, PacketSyncMachineState.class, nextID(),
+				Side.CLIENT);
+	}
 }

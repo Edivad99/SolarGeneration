@@ -1,0 +1,71 @@
+#PARSE_ESCAPES
+
+//GUI Creative
+itemGroup.solargeneration_tab=Solar Generation
+
+//Items
+item.solargeneration.solar_core_advanced.name=Nucleo Solar Avanzado
+item.solargeneration.solar_core_hardened.name=Nucleo Solar Reforzado
+item.solargeneration.solar_core_leadstone.name=Nucleo Solar de Plomo
+item.solargeneration.solar_core_redstone.name=Nucleo Solar de Redstone
+item.solargeneration.solar_core_resonant.name=Nucleo Solar de Resonant
+item.solargeneration.solar_core_signalum.name=Nucleo Solar de Signalum
+item.solargeneration.solar_core_ultimate.name=Nucleo Solar Final
+
+item.solargeneration.solar_helmet_advanced.name=Casco Solar Avanzado
+item.solargeneration.solar_helmet_hardened.name=Casco Solar Reforzado
+item.solargeneration.solar_helmet_leadstone.name=Casco Solar de Plomo
+item.solargeneration.solar_helmet_redstone.name=Casco Solar de Redstone
+item.solargeneration.solar_helmet_resonant.name=Casco Solar de Resonant
+item.solargeneration.solar_helmet_signalum.name=Casco Solar de Signalum
+item.solargeneration.solar_helmet_ultimate.name=Casco Solar Final
+
+item.solargeneration.lapis_shard.name=Fragmento de Lapislazuli
+item.solargeneration.photovoltaic_cell.name=Celula fotovoltaica
+
+//Blocks
+tile.solargeneration.solar_panel_advanced.name=Panel Solar Avanzado
+tile.solargeneration.solar_panel_hardened.name=Panel Solar Reforzado
+tile.solargeneration.solar_panel_leadstone.name=Panel Solar de Plomo
+tile.solargeneration.solar_panel_redstone.name=Panel Solar de Redstone
+tile.solargeneration.solar_panel_resonant.name=Panel Solar de Resonant
+tile.solargeneration.solar_panel_signalum.name=Panel Solar de Signalum
+tile.solargeneration.solar_panel_ultimate.name=Panel Solar Final
+
+
+// Achievements
+achievement.solargeneration.solar_panel_leadstone=Comience con lo basico
+achievement.solargeneration.solar_panel_leadstone.desc=Coloque un Panel Solar de Plomo.
+
+achievement.solargeneration.solar_panel_hardened=1 es mejor que 8
+achievement.solargeneration.solar_panel_hardened.desc=Coloque un Panel Solar Reforzado.
+
+achievement.solargeneration.solar_panel_redstone=No hay suficiente energia
+achievement.solargeneration.solar_panel_redstone.desc=Coloque un Panel Solar de Redstone.
+
+achievement.solargeneration.solar_panel_signalum=Buscando la senal
+achievement.solargeneration.solar_panel_signalum.desc=Coloque un Panel Solar de Signalum.
+
+achievement.solargeneration.solar_panel_resonant=Escalada de potencia
+achievement.solargeneration.solar_panel_resonant.desc=Coloque un Panel Solar de Resonant.
+
+achievement.solargeneration.solar_panel_advanced=Presidente de energia
+achievement.solargeneration.solar_panel_advanced.desc=Coloque un Panel Solar Avanzado.
+
+achievement.solargeneration.solar_panel_ultimate=¡Oh sol, te controlo!
+achievement.solargeneration.solar_panel_ultimate.desc=Coloque un Panel Solar Final.
+
+//Tooltip
+message.solargeneration.hold_shift=\
+    Presione @b@oShift @7para detalles
+
+message.solargeneration.hold_ctrl=\
+    Presione @b@oCtrl @7para energia almacenada
+
+message.solargeneration.shift_info=\
+    @fGeneracion: @a%d @4FE/t\n\
+    @fTransferencia: @a%d @4FE/t\n\
+    @fCapacidad: @a%d @4FE
+
+message.solargeneration.ctrl_info=\
+    @fEnergia almacenada: @a%d @4FE

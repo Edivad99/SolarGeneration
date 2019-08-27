@@ -12,25 +12,25 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
 
-    @Nullable
-    @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        BlockPos pos = new BlockPos(x, y, z);
-        TileEntity te = world.getTileEntity(pos);
-        if (te instanceof IGuiTile) {
-            return ((IGuiTile) te).createContainer(player);
-        }
-        return null;
-    }
+	@Nullable
+	@Override
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		BlockPos pos = new BlockPos(x, y, z);
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof IGuiTile) {
+			return ((IGuiTile) te).createContainer(player);
+		}
+		return null;
+	}
 
-    @Nullable
-    @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        BlockPos pos = new BlockPos(x, y, z);
-        TileEntity te = world.getTileEntity(pos);
-        if (te instanceof IGuiTile) {
-            return ((IGuiTile) te).createGui(player);
-        }
-        return null;
-    }
+	@Nullable
+	@Override
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		BlockPos pos = new BlockPos(x, y, z);
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof IGuiTile) {
+			return ((IGuiTile) te).createGui(player);
+		}
+		return null;
+	}
 }
