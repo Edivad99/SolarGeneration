@@ -63,6 +63,7 @@ public class SolarHelmet extends ItemArmor {
 		Tooltip.showInfoShift(levelSolarHelmet, tooltip);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot,
 			ModelBiped _default) {
