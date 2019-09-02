@@ -111,8 +111,7 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote)
 			return true;
 
@@ -147,16 +146,14 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 
 		worldIn.setBlockToAir(pos);
 
-		EntityItem entityItem = new EntityItem(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-				itemStack);
+		EntityItem entityItem = new EntityItem(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
 		entityItem.motionX = 0;
 		entityItem.motionZ = 0;
 		worldIn.spawnEntity(entityItem);
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> result, IBlockAccess world, BlockPos pos, IBlockState state,
-			int fortune) {
+	public void getDrops(NonNullList<ItemStack> result, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
 		TileEntity tileEntity = world.getTileEntity(pos);
 
@@ -174,23 +171,20 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 	}
 
 	@Override
-	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player,
-			boolean willHarvest) {
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 		if (willHarvest)
 			return true;
 		return super.removedByPlayer(state, world, pos, player, willHarvest);
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te,
-			ItemStack stack) {
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
 		super.harvestBlock(worldIn, player, pos, state, te, stack);
 		worldIn.setBlockToAir(pos);
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
@@ -222,7 +216,7 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 		case Ultimate:
 			return new TileEntityUltimateSolarPanel();
 		default:
-			return new TileEntityLeadstoneSolarPanel();
+			return null;
 		}
 	}
 
@@ -238,7 +232,6 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 
 	@SideOnly(Side.CLIENT)
 	public void initModel() {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
-				new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 }

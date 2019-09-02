@@ -103,19 +103,12 @@ public class ModItems {
 		registry.register(new PhotovoltaicCell());
 
 		// Blocks
-		registry.register(new ItemBlock(ModBlocks.solarPanelAdvanced)
-				.setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelHardened)
-				.setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Hardened)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelLeadstone)
-				.setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Leadstone)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelRedstone)
-				.setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Redstone)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelResonant)
-				.setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Resonant)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelSignalum)
-				.setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelUltimate)
-				.setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelAdvanced).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelHardened).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Hardened)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelLeadstone).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Leadstone)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelRedstone).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Redstone)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelResonant).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Resonant)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelSignalum).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelUltimate).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));
 	}
 }

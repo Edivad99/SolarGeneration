@@ -28,17 +28,14 @@ public class SolarPanelContainer extends Container implements ISolarPanelStateCo
 		// For sync variable from client and server
 		super.detectAndSendChanges();
 		if (!this.tileEntitySolarPanel.getWorld().isRemote) {
-			if (tileEntitySolarPanel.getEnergy() != tileEntitySolarPanel.getClientEnergy() || tileEntitySolarPanel
-					.currentAmountEnergyProduced() != tileEntitySolarPanel.getClientCurrentAmountEnergyProduced()) {
+			if (tileEntitySolarPanel.getEnergy() != tileEntitySolarPanel.getClientEnergy() || tileEntitySolarPanel.currentAmountEnergyProduced() != tileEntitySolarPanel.getClientCurrentAmountEnergyProduced()) {
 				tileEntitySolarPanel.setClientEnergy(tileEntitySolarPanel.getEnergy());
-				tileEntitySolarPanel
-						.setClientCurrentAmountEnergyProduced(tileEntitySolarPanel.currentAmountEnergyProduced());
+				tileEntitySolarPanel.setClientCurrentAmountEnergyProduced(tileEntitySolarPanel.currentAmountEnergyProduced());
 
 				for (IContainerListener listener : listeners) {
 					if (listener instanceof EntityPlayerMP) {
 						EntityPlayerMP player = (EntityPlayerMP) listener;
-						Messages.INSTANCE.sendTo(new PacketSyncMachineState(this.tileEntitySolarPanel.getEnergy(),
-								this.tileEntitySolarPanel.currentAmountEnergyProduced()), player);
+						Messages.INSTANCE.sendTo(new PacketSyncMachineState(this.tileEntitySolarPanel.getEnergy(), this.tileEntitySolarPanel.currentAmountEnergyProduced()), player);
 					}
 				}
 			}

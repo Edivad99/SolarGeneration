@@ -21,12 +21,10 @@ public class EventHandler {
 		CheckResult result = ForgeVersion.getResult(Loader.instance().activeModContainer());
 		if (!(result.status.equals(Status.UP_TO_DATE) || result.status.equals(Status.PENDING))) {
 
-			event.player.sendMessage(new TextComponentString(TextFormatting.GREEN + "[" + Main.MODNAME + "] "
-					+ TextFormatting.WHITE + "A new version is available (" + result.target + "), please update!"));
+			event.player.sendMessage(new TextComponentString(TextFormatting.GREEN + "[" + Main.MODNAME + "] " + TextFormatting.WHITE + "A new version is available (" + result.target + "), please update!"));
 			event.player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "Changelog:"));
 
-			String changes[] = result.changes.values().toString()
-					.subSequence(1, result.changes.values().toString().length() - 1).toString().split("\n");
+			String changes[] = result.changes.values().toString().subSequence(1, result.changes.values().toString().length() - 1).toString().split("\n");
 			for (String change : changes) {
 				event.player.sendMessage(new TextComponentString(TextFormatting.WHITE + "- " + change));
 			}

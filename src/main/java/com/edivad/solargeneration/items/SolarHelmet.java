@@ -65,8 +65,7 @@ public class SolarHelmet extends ItemArmor {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot,
-			ModelBiped _default) {
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
 		if (itemStack != ItemStack.EMPTY) {
 			if (itemStack.getItem() instanceof ItemArmor) {
 				ModelCustomArmour model = new ModelCustomArmour();

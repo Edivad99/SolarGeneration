@@ -19,6 +19,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiTile, IRestorableTileEntity {
 
@@ -62,23 +64,6 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 		return 0;
 	}
 
-	/*
-	 * private float computeSunIntensity() { if (world.canBlockSeeSky(new
-	 * BlockPos(this.pos.getX(), this.pos.getY() + 1 , this.pos.getZ()))) { float
-	 * multiplicator = 1.5f; float displacement = 1.2f; // Celestial angle == 0 at
-	 * zenith. float celestialAngleRadians = world.getCelestialAngleRadians(1.0f);
-	 * if (celestialAngleRadians > Math.PI) { celestialAngleRadians = (2 * 3.141592f
-	 * - celestialAngleRadians); }
-	 * 
-	 * int sunIntensity = Math.round(this.energyGeneration * multiplicator *
-	 * MathHelper.cos(celestialAngleRadians / displacement));
-	 * 
-	 * if (sunIntensity > 0) { if (world.isRaining() || world.isThundering()) return
-	 * 0; return Math.min(this.energyGeneration, sunIntensity); } }
-	 * 
-	 * return 0; }
-	 */
-
 	private float computeSunIntensity() {
 		float sunIntensity = 0;
 
@@ -96,7 +81,6 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 			sunIntensity = Math.min(1, sunIntensity);
 
 			if (sunIntensity > 0) {
-				// System.out.println("Sole: " + sunIntensity);
 				if (getLevelSolarPanel() == SolarPanelLevel.Leadstone)
 					sunIntensity = 1;
 
@@ -118,8 +102,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 				if (tileEntity != null && tileEntity.hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())) {
 					IEnergyStorage handler = tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
 					if (handler != null && handler.canReceive()) {
-						int accepted = Math.min(maxEnergyOutput,
-								handler.receiveEnergy(energyStorage.getEnergyStored(), true));
+						int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
 						energyStorage.consumePower(accepted);
 						handler.receiveEnergy(accepted, false);
 						if (energyStorage.getEnergyStored() <= 0)
@@ -185,7 +168,9 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 		return new SolarPanelContainer(this);
 	}
 
+	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public GuiContainer createGui(EntityPlayer player) {
 		return new SolarPanelGui(this, new SolarPanelContainer(this));
 	}

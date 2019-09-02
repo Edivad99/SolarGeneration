@@ -20,7 +20,6 @@ public class Messages {
 		// Server side
 
 		// Client side
-		INSTANCE.registerMessage(PacketSyncMachineState.Handler.class, PacketSyncMachineState.class, nextID(),
-				Side.CLIENT);
+		INSTANCE.registerMessage(PacketSyncMachineState.Handler.class, PacketSyncMachineState.class, nextID(), Side.CLIENT);
 	}
 }

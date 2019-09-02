@@ -34,16 +34,13 @@ public class SolarPanelGui extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
 		String clientEnergy = "Stored enery: " + this.tileEntitySolarPanel.getClientEnergy() + " FE";
-		this.fontRenderer.drawString(clientEnergy,
-				(this.xSize / 2 - this.fontRenderer.getStringWidth(clientEnergy) / 2) + 14, 20, 4210752);
+		this.fontRenderer.drawString(clientEnergy, (this.xSize / 2 - this.fontRenderer.getStringWidth(clientEnergy) / 2) + 14, 20, 4210752);
 
 		String maxEnergy = "Max capacity: " + this.tileEntitySolarPanel.getMaxEnergy() + " FE";
-		this.fontRenderer.drawString(maxEnergy, (this.xSize / 2 - this.fontRenderer.getStringWidth(maxEnergy) / 2) + 14,
-				30, 4210752);
+		this.fontRenderer.drawString(maxEnergy, (this.xSize / 2 - this.fontRenderer.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
 
 		String generation = "Generation: " + this.tileEntitySolarPanel.getClientCurrentAmountEnergyProduced() + " FE/t";
-		this.fontRenderer.drawString(generation,
-				(this.xSize / 2 - this.fontRenderer.getStringWidth(generation) / 2) + 14, 40, 4210752);
+		this.fontRenderer.drawString(generation, (this.xSize / 2 - this.fontRenderer.getStringWidth(generation) / 2) + 14, 40, 4210752);
 	}
 
 	@Override

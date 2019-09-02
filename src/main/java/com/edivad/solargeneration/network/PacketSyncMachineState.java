@@ -14,6 +14,7 @@ public class PacketSyncMachineState implements IMessage {
 	private int energy, energyProducing;
 
 	public PacketSyncMachineState() {
+		
 	}
 
 	public PacketSyncMachineState(int energy, int energyProducing) {
@@ -32,7 +33,8 @@ public class PacketSyncMachineState implements IMessage {
 		try {
 			energy = buf.readInt();
 			energyProducing = buf.readInt();
-		} catch (IndexOutOfBoundsException ioe) {
+		} 
+		catch (IndexOutOfBoundsException ioe) {
 			Main.logger.debug(ioe.getMessage());
 			return;
 		}

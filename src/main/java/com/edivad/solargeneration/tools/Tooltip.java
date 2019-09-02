@@ -20,7 +20,8 @@ public class Tooltip {
 			int capacity = ((int) Math.pow(8, solarPanelLevel.ordinal())) * 1000;
 
 			addInformationLocalized(tooltip, "message.solargeneration.shift_info", generation, transfer, capacity);
-		} else
+		} 
+		else
 			addInformationLocalized(tooltip, "message.solargeneration.hold_shift");
 	}
 

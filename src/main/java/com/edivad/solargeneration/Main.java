@@ -18,7 +18,7 @@ public class Main {
 	public static final String MODID = "solargeneration";
 	public static final String MODNAME = "Solar Generation";
 	public static final String MCVERSION = "1.12.2";
-	public static final String MODVERSION = "1.1.1";
+	public static final String MODVERSION = "1.1.2";
 	public static final String UPDATE_URL = "https://raw.githubusercontent.com/Edivad99/SolarGeneration/master/solargeneration_update.json";
 	public static final String CLIENT_PROXY_CLASS = "com.edivad.solargeneration.proxy.ClientProxy";
 	public static final String SERVER_PROXY_CLASS = "com.edivad.solargeneration.proxy.CommonProxy";
