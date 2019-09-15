@@ -1,6 +1,7 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/solargeneration",
     "1.12.2": {
+        "1.2" : "Fixed a serious bug in the solar helmet.\nNow you can get back the lapis lazuli from the lapis shards.\nUpdated the minimum version of forge.",
         "1.1.2": "Fixed a bug that causes crashes on server side when user place a solar panel in the world. Thanks to Doedelsander for reporting it.",
         "1.1.1": "Fixed a bug that causes crashes on server side. Thanks to Doedelsander for reporting it.",
         "1.1": "Added Signalum Solar Panel.\nSome crafting has changed, check the JEI.\nAdded translations for other languages.",
