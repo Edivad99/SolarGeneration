@@ -1,0 +1,17 @@
+{
+    "result": {
+        "item": "minecraft:dye",
+        "data": 4
+    },
+    "pattern": [
+        "aaa",
+        "aaa",
+        "aaa"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "solargeneration:lapis_shard"
+        }
+    }
+}
