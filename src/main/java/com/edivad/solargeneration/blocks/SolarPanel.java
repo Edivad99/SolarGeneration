@@ -165,7 +165,8 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 
 			stack.setTagCompound(tagCompound);
 			result.add(stack);
-		} else {
+		} 
+		else {
 			super.getDrops(result, world, pos, state, fortune);
 		}
 	}
@@ -201,22 +202,22 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		switch (this.levelSolarPanel) {
-		case Leadstone:
-			return new TileEntityLeadstoneSolarPanel();
-		case Hardened:
-			return new TileEntityHardenedSolarPanel();
-		case Redstone:
-			return new TileEntityRedstoneSolarPanel();
-		case Signalum:
-			return new TileEntitySignalumSolarPanel();
-		case Resonant:
-			return new TileEntityResonantSolarPanel();
-		case Advanced:
-			return new TileEntityAdvancedSolarPanel();
-		case Ultimate:
-			return new TileEntityUltimateSolarPanel();
-		default:
-			return null;
+			case Leadstone:
+				return new TileEntityLeadstoneSolarPanel();
+			case Hardened:
+				return new TileEntityHardenedSolarPanel();
+			case Redstone:
+				return new TileEntityRedstoneSolarPanel();
+			case Signalum:
+				return new TileEntitySignalumSolarPanel();
+			case Resonant:
+				return new TileEntityResonantSolarPanel();
+			case Advanced:
+				return new TileEntityAdvancedSolarPanel();
+			case Ultimate:
+				return new TileEntityUltimateSolarPanel();
+			default:
+				return null;
 		}
 	}
 
