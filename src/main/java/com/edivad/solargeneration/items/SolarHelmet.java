@@ -133,6 +133,16 @@ public class SolarHelmet extends ItemArmor {
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
 	{
+		if(world.isRemote)
+			return;
+		
+		
+		if(itemStack.getTagCompound() == null)
+		{
+			energyStorage.setEnergy(0);
+			saveEnergyItem(itemStack);
+		}
+		
 		if(!(getEnergyStored(itemStack) == getMaxEnergyStored()))
 		{
 			energyStorage.generatePower(currentAmountEnergyProduced(world, player));
@@ -143,31 +153,29 @@ public class SolarHelmet extends ItemArmor {
 
 	private void sendEnergy(World world, EntityPlayer player)
 	{
-		if(!world.isRemote)
+		for (int i = 0; i < player.inventory.getSizeInventory(); i++)
 		{
-			for (int i = 0; i < player.inventory.getSizeInventory(); i++)
+			ItemStack slot = player.inventory.getStackInSlot(i);
+			if(slot.getCount() == 1)
 			{
-				ItemStack slot = player.inventory.getStackInSlot(i);
-				if(slot.getCount() == 1)
+				if(slot.hasCapability(CapabilityEnergy.ENERGY, null))
 				{
-					if(slot.hasCapability(CapabilityEnergy.ENERGY, null))
+					IEnergyStorage handler = slot.getCapability(CapabilityEnergy.ENERGY, null);
+					if(handler != null && handler.canReceive())
 					{
-						IEnergyStorage handler = slot.getCapability(CapabilityEnergy.ENERGY, null);
-						if(handler != null && handler.canReceive())
-						{
-							int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
-							energyStorage.consumePower(accepted);
-							handler.receiveEnergy(accepted, false);
+						int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
+						energyStorage.consumePower(accepted);
+						handler.receiveEnergy(accepted, false);
 
-							if(energyStorage.getEnergyStored() <= 0)
-								break;
-						}
-
+						if(energyStorage.getEnergyStored() <= 0)
+							break;
 					}
+
 				}
 			}
 		}
 	}
+	
 
 	private int currentAmountEnergyProduced(World world, EntityPlayer player)
 	{
