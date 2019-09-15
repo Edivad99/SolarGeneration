@@ -4,7 +4,8 @@ import com.edivad.solargeneration.tools.SolarPanelLevel;
 
 public class TileEntityHardenedSolarPanel extends TileEntitySolarPanel {
 
-	public TileEntityHardenedSolarPanel() {
+	public TileEntityHardenedSolarPanel()
+	{
 		super(SolarPanelLevel.Hardened);
 	}
 }

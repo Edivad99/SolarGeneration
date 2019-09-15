@@ -15,23 +15,25 @@ public class SolarPanelGui extends GuiContainer {
 	private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MODID + ":textures/gui/solar_panel.png");
 	private final TileEntitySolarPanel tileEntitySolarPanel;
 
-	public SolarPanelGui(TileEntitySolarPanel tileEntitySolarPanel, SolarPanelContainer container) {
+	public SolarPanelGui(TileEntitySolarPanel tileEntitySolarPanel, SolarPanelContainer container)
+	{
 		super(container);
 		this.tileEntitySolarPanel = tileEntitySolarPanel;
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void drawScreen(int mouseX, int mouseY, float partialTicks)
+	{
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
-		if (mouseX > guiLeft + 7 && mouseX < guiLeft + 29 && mouseY > guiTop + 10 && mouseY < guiTop + 77)
-			drawHoveringText(Collections.singletonList("Energy: " + String.valueOf(getPercent()) + " %"), mouseX,
-					mouseY, fontRenderer);
+		if(mouseX > guiLeft + 7 && mouseX < guiLeft + 29 && mouseY > guiTop + 10 && mouseY < guiTop + 77)
+			drawHoveringText(Collections.singletonList("Energy: " + String.valueOf(getPercent()) + " %"), mouseX, mouseY, fontRenderer);
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+	{
 
 		String clientEnergy = "Stored enery: " + this.tileEntitySolarPanel.getClientEnergy() + " FE";
 		this.fontRenderer.drawString(clientEnergy, (this.xSize / 2 - this.fontRenderer.getStringWidth(clientEnergy) / 2) + 14, 20, 4210752);
@@ -44,7 +46,8 @@ public class SolarPanelGui extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	{
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		this.mc.getTextureManager().bindTexture(TEXTURES);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
@@ -55,12 +58,14 @@ public class SolarPanelGui extends GuiContainer {
 
 	}
 
-	private int getEnergyScaled(int pixels) {
+	private int getEnergyScaled(int pixels)
+	{
 		double percent = getPercent();
 		return pixels - (int) ((int) pixels * percent / 100);
 	}
 
-	private double getPercent() {
+	private double getPercent()
+	{
 		int currentEnergy = this.tileEntitySolarPanel.getClientEnergy();
 		int maxEnergy = this.tileEntitySolarPanel.getMaxEnergy();
 

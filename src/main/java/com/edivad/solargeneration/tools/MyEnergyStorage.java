@@ -4,30 +4,36 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class MyEnergyStorage extends EnergyStorage {
 
-	public MyEnergyStorage(int energyTransfer, int energyCapacity) {
+	public MyEnergyStorage(int energyTransfer, int energyCapacity)
+	{
 
 		super(energyCapacity, energyTransfer);
 		this.maxReceive = 0;
 	}
 
-	public void setEnergy(int energy) {
+	public void setEnergy(int energy)
+	{
 		this.energy = energy;
 	}
 
-	public void generatePower(int energy) {
+	public void generatePower(int energy)
+	{
 		this.energy += energy;
-		if (this.energy > capacity)
+		if(this.energy > capacity)
 			this.energy = capacity;
 	}
 
-	public void consumePower(int energy) {
+	public void consumePower(int energy)
+	{
 		this.energy -= energy;
-		if (this.energy < 0) {
+		if(this.energy < 0)
+		{
 			this.energy = 0;
 		}
 	}
 
-	public boolean isFullEnergy() {
+	public boolean isFullEnergy()
+	{
 		return getEnergyStored() >= getMaxEnergyStored();
 	}
 }

@@ -4,7 +4,8 @@ import com.edivad.solargeneration.tools.SolarPanelLevel;
 
 public class TileEntityLeadstoneSolarPanel extends TileEntitySolarPanel {
 
-	public TileEntityLeadstoneSolarPanel() {
+	public TileEntityLeadstoneSolarPanel()
+	{
 		super(SolarPanelLevel.Leadstone);
 	}
 }

@@ -11,7 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class LapisShard extends Item {
 
-	public LapisShard() {
+	public LapisShard()
+	{
 
 		setRegistryName(new ResourceLocation(Main.MODID, "lapis_shard"));
 		setUnlocalizedName(Main.MODID + ".lapis_shard");
@@ -20,7 +21,8 @@ public class LapisShard extends Item {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void initModel() {
+	public void initModel()
+	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 }

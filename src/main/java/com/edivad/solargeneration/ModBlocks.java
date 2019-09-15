@@ -35,7 +35,8 @@ public class ModBlocks {
 	public static SolarPanel solarPanelUltimate;
 
 	@SideOnly(Side.CLIENT)
-	public static void initModels() {
+	public static void initModels()
+	{
 		solarPanelAdvanced.initModel();
 		solarPanelHardened.initModel();
 		solarPanelLeadstone.initModel();
@@ -45,7 +46,8 @@ public class ModBlocks {
 		solarPanelUltimate.initModel();
 	}
 
-	public static void register(IForgeRegistry<Block> registry) {
+	public static void register(IForgeRegistry<Block> registry)
+	{
 
 		registry.register(new SolarPanel(SolarPanelLevel.Advanced));
 		registry.register(new SolarPanel(SolarPanelLevel.Hardened));

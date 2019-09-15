@@ -10,11 +10,13 @@ public class Messages {
 
 	private static int ID = 0;
 
-	private static int nextID() {
+	private static int nextID()
+	{
 		return ID++;
 	}
 
-	public static void registerMessages(String channelName) {
+	public static void registerMessages(String channelName)
+	{
 		INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(channelName);
 
 		// Server side
