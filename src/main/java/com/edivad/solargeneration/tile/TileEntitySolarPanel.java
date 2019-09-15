@@ -3,6 +3,7 @@ package com.edivad.solargeneration.tile;
 import com.edivad.solargeneration.blocks.containers.SolarPanelContainer;
 import com.edivad.solargeneration.gui.SolarPanelGui;
 import com.edivad.solargeneration.tools.MyEnergyStorage;
+import com.edivad.solargeneration.tools.ProductionSolarPanel;
 import com.edivad.solargeneration.tools.SolarPanelLevel;
 import com.edivad.solargeneration.tools.inter.IGuiTile;
 import com.edivad.solargeneration.tools.inter.IRestorableTileEntity;
@@ -15,7 +16,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -50,59 +50,26 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 	@Override
 	public void update()
 	{
+		if(world.isRemote)
+			return;
 
-		if(!world.isRemote)
+		if(!energyStorage.isFullEnergy())
 		{
-			if(!energyStorage.isFullEnergy())
-			{
-				energyStorage.generatePower(currentAmountEnergyProduced());
-
-				this.markDirty();
-			}
-			sendEnergy();
+			energyStorage.generatePower(currentAmountEnergyProduced());
+			this.markDirty();
 		}
+		sendEnergy();
 	}
 
 	public int currentAmountEnergyProduced()
 	{
 		if(!energyStorage.isFullEnergy())
-			return (int) (energyGeneration * computeSunIntensity());
-		return 0;
-	}
-
-	private float computeSunIntensity()
-	{
-		float sunIntensity = 0;
-
-		if(world.canBlockSeeSky(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ())))
 		{
-			float multiplicator = 1.5f;
-			float displacement = 1.2f;
-			// Celestial angle == 0 at zenith.
-			float celestialAngleRadians = world.getCelestialAngleRadians(1.0f);
-			if(celestialAngleRadians > Math.PI)
-			{
-				celestialAngleRadians = (2 * 3.141592f - celestialAngleRadians);
-			}
-
-			sunIntensity = multiplicator * MathHelper.cos(celestialAngleRadians / displacement);
-			sunIntensity = Math.max(0, sunIntensity);
-			sunIntensity = Math.min(1, sunIntensity);
-
-			if(sunIntensity > 0)
-			{
-				if(getLevelSolarPanel() == SolarPanelLevel.Leadstone)
-					sunIntensity = 1;
-
-				if(world.isRaining())
-					sunIntensity *= 0.4;
-
-				if(world.isThundering())
-					sunIntensity *= 0.2;
-			}
+			BlockPos pos = new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ());
+			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, getLevelSolarPanel()));
 		}
 
-		return sunIntensity;
+		return 0;
 	}
 
 	private void sendEnergy()

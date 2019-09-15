@@ -6,6 +6,7 @@ import com.edivad.solargeneration.Main;
 import com.edivad.solargeneration.tools.ItemNBTHelper;
 import com.edivad.solargeneration.tools.ModelCustomArmour;
 import com.edivad.solargeneration.tools.MyEnergyStorage;
+import com.edivad.solargeneration.tools.ProductionSolarPanel;
 import com.edivad.solargeneration.tools.SolarPanelLevel;
 import com.edivad.solargeneration.tools.Tooltip;
 
@@ -20,7 +21,6 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -135,14 +135,13 @@ public class SolarHelmet extends ItemArmor {
 	{
 		if(world.isRemote)
 			return;
-		
-		
+
 		if(itemStack.getTagCompound() == null)
 		{
 			energyStorage.setEnergy(0);
 			saveEnergyItem(itemStack);
 		}
-		
+
 		if(!(getEnergyStored(itemStack) == getMaxEnergyStored()))
 		{
 			energyStorage.generatePower(currentAmountEnergyProduced(world, player));
@@ -175,48 +174,16 @@ public class SolarHelmet extends ItemArmor {
 			}
 		}
 	}
-	
 
 	private int currentAmountEnergyProduced(World world, EntityPlayer player)
 	{
 		if(!energyStorage.isFullEnergy())
-			return (int) (energyGeneration * computeSunIntensity(world, player));
-		return 0;
-	}
-
-	private float computeSunIntensity(World world, EntityPlayer player)
-	{
-		float sunIntensity = 0;
-
-		if(world.canBlockSeeSky(new BlockPos(player.chasingPosX, player.chasingPosY + 1, player.chasingPosZ)))
 		{
-			float multiplicator = 1.5f;
-			float displacement = 1.2f;
-			// Celestial angle == 0 at zenith.
-			float celestialAngleRadians = world.getCelestialAngleRadians(1.0f);
-			if(celestialAngleRadians > Math.PI)
-			{
-				celestialAngleRadians = (2 * 3.141592f - celestialAngleRadians);
-			}
-
-			sunIntensity = multiplicator * MathHelper.cos(celestialAngleRadians / displacement);
-			sunIntensity = Math.max(0, sunIntensity);
-			sunIntensity = Math.min(1, sunIntensity);
-
-			if(sunIntensity > 0)
-			{
-				if(getLevelSolarPanel() == SolarPanelLevel.Leadstone)
-					sunIntensity = 1;
-
-				if(world.isRaining())
-					sunIntensity *= 0.4;
-
-				if(world.isThundering())
-					sunIntensity *= 0.2;
-			}
+			BlockPos pos = new BlockPos(player.chasingPosX, player.chasingPosY + 1, player.chasingPosZ);
+			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, getLevelSolarPanel()));
 		}
 
-		return sunIntensity;
+		return 0;
 	}
 
 	@SideOnly(Side.CLIENT)
