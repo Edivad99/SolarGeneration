@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Main.MODID, name = Main.MODNAME, version = Main.MODVERSION, acceptedMinecraftVersions = Main.MCVERSION, dependencies = "required-after:forge@[14.23.5.2838,);required-after:thermalfoundation@[2.6.3,)", updateJSON = Main.UPDATE_URL, useMetadata = true)
+@Mod(modid = Main.MODID, name = Main.MODNAME, version = Main.MODVERSION, acceptedMinecraftVersions = Main.MCVERSION, dependencies = "required-after:forge@[14.23.5.2847,);required-after:thermalfoundation@[2.6.3,)", updateJSON = Main.UPDATE_URL, useMetadata = true)
 public class Main {
 
 	public static final String MODID = "solargeneration";
