@@ -11,7 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PhotovoltaicCell extends Item {
 
-	public PhotovoltaicCell() {
+	public PhotovoltaicCell()
+	{
 
 		setRegistryName(new ResourceLocation(Main.MODID, "photovoltaic_cell"));
 		setUnlocalizedName(Main.MODID + ".photovoltaic_cell");
@@ -20,7 +21,8 @@ public class PhotovoltaicCell extends Item {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void initModel() {
+	public void initModel()
+	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 }

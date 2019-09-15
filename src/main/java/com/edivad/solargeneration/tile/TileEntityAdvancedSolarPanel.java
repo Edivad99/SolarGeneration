@@ -4,7 +4,8 @@ import com.edivad.solargeneration.tools.SolarPanelLevel;
 
 public class TileEntityAdvancedSolarPanel extends TileEntitySolarPanel {
 
-	public TileEntityAdvancedSolarPanel() {
+	public TileEntityAdvancedSolarPanel()
+	{
 		super(SolarPanelLevel.Advanced);
 	}
 }

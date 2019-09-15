@@ -12,14 +12,14 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Main.MODID, name = Main.MODNAME, version = Main.MODVERSION, acceptedMinecraftVersions = Main.MCVERSION, dependencies = "required-after:forge@[14.23.5.2838,);required-after:thermalfoundation@[2.6.3,)", updateJSON = Main.UPDATE_URL, useMetadata = true)
+@Mod(modid = Main.MODID, name = Main.MODNAME, version = Main.MODVERSION, acceptedMinecraftVersions = Main.MCVERSION, dependencies = "required-after:forge@[14.23.5.2847,);required-after:thermalfoundation@[2.6.3,)", updateJSON = Main.UPDATE_URL, useMetadata = true)
 public class Main {
 
 	public static final String MODID = "solargeneration";
 	public static final String MODNAME = "Solar Generation";
 	public static final String MCVERSION = "1.12.2";
-	public static final String MODVERSION = "1.1.2";
-	public static final String UPDATE_URL = "https://raw.githubusercontent.com/Edivad99/SolarGeneration/master/solargeneration_update.json";
+	public static final String MODVERSION = "1.2";
+	public static final String UPDATE_URL = "https://raw.githubusercontent.com/Edivad99/mod-version-controll/master/solargeneration_update.json";
 	public static final String CLIENT_PROXY_CLASS = "com.edivad.solargeneration.proxy.ClientProxy";
 	public static final String SERVER_PROXY_CLASS = "com.edivad.solargeneration.proxy.CommonProxy";
 
@@ -34,18 +34,21 @@ public class Main {
 	public static Logger logger;
 
 	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		logger = event.getModLog();
 		proxy.preInit(event);
 	}
 
 	@Mod.EventHandler
-	public void init(FMLInitializationEvent e) {
+	public void init(FMLInitializationEvent e)
+	{
 		proxy.init(e);
 	}
 
 	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent e) {
+	public void postInit(FMLPostInitializationEvent e)
+	{
 		proxy.postInit(e);
 	}
 

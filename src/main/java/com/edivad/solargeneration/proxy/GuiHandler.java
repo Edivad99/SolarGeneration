@@ -16,10 +16,12 @@ public class GuiHandler implements IGuiHandler {
 
 	@Nullable
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+	{
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IGuiTile) {
+		if(te instanceof IGuiTile)
+		{
 			return ((IGuiTile) te).createContainer(player);
 		}
 		return null;
@@ -28,10 +30,12 @@ public class GuiHandler implements IGuiHandler {
 	@Nullable
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+	{
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IGuiTile) {
+		if(te instanceof IGuiTile)
+		{
 			return ((IGuiTile) te).createGui(player);
 		}
 		return null;

@@ -55,7 +55,8 @@ public class ModItems {
 	public static PhotovoltaicCell photovoltaicCell;
 
 	@SideOnly(Side.CLIENT)
-	public static void initModels() {
+	public static void initModels()
+	{
 		// solarCore
 		solarCoreAdvanced.initModel();
 		solarCoreHardened.initModel();
@@ -79,7 +80,8 @@ public class ModItems {
 		photovoltaicCell.initModel();
 	}
 
-	public static void register(IForgeRegistry<Item> registry) {
+	public static void register(IForgeRegistry<Item> registry)
+	{
 		// solarCore
 		registry.register(new SolarCore("solar_core_advanced"));
 		registry.register(new SolarCore("solar_core_hardened"));

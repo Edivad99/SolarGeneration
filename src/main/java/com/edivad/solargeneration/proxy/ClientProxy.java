@@ -14,24 +14,29 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
+
 	@Override
-	public void preInit(FMLPreInitializationEvent e) {
+	public void preInit(FMLPreInitializationEvent e)
+	{
 		super.preInit(e);
 	}
 
 	@SubscribeEvent
-	public static void registerModels(ModelRegistryEvent event) {
+	public static void registerModels(ModelRegistryEvent event)
+	{
 		ModBlocks.initModels();
 		ModItems.initModels();
 	}
 
 	@Override
-	public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule) {
+	public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule)
+	{
 		return Minecraft.getMinecraft().addScheduledTask(runnableToSchedule);
 	}
 
 	@Override
-	public EntityPlayer getClientPlayer() {
+	public EntityPlayer getClientPlayer()
+	{
 		return Minecraft.getMinecraft().player;
 	}
 }

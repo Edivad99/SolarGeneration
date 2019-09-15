@@ -11,7 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SolarCore extends Item {
 
-	public SolarCore(String levelCore) {
+	public SolarCore(String levelCore)
+	{
 
 		setRegistryName(new ResourceLocation(Main.MODID, levelCore));
 		setUnlocalizedName(Main.MODID + "." + levelCore);
@@ -20,7 +21,8 @@ public class SolarCore extends Item {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void initModel() {
+	public void initModel()
+	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 }
