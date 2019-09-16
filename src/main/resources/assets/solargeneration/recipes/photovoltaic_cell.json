@@ -10,13 +10,15 @@
     "type": "forge:ore_shaped",
     "key": {
         "a": {
-            "item": "minecraft:glass_pane"
+            "type": "forge:ore_dict",
+            "ore": "paneGlassColorless"
         },
         "b": {
             "item": "solargeneration:lapis_shard"
         },
         "c": {
-            "item": "minecraft:iron_nugget"
+           "type": "forge:ore_dict",
+            "ore": "nuggetIron"
         }
     }
 }

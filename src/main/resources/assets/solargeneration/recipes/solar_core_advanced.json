@@ -10,14 +10,15 @@
     "type": "forge:ore_shaped",
     "key": {
         "a": {
-            "item": "thermalfoundation:material",
-            "data": 200
+            "type": "forge:ore_dict",
+            "ore": "nuggetMithril"
         },
         "b": {
             "item": "solargeneration:solar_core_resonant"
         },
-        "c" : {
-            "item": "minecraft:glass_pane"
+        "c": {
+            "type": "forge:ore_dict",
+            "ore": "paneGlassColorless"
         }
     }
 }

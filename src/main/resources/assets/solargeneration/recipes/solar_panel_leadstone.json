@@ -13,7 +13,8 @@
             "item": "solargeneration:photovoltaic_cell"
         },
         "b": {
-            "item": "minecraft:redstone"
+            "type": "forge:ore_dict",
+            "ore": "dustRedstone"
         },
         "c": {
             "item": "solargeneration:solar_core_leadstone"

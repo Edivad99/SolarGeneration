@@ -16,8 +16,9 @@
         "b": {
             "item": "solargeneration:solar_core_signalum"
         },
-        "c" : {
-            "item": "minecraft:glass_pane"
+        "c": {
+            "type": "forge:ore_dict",
+            "ore": "paneGlassColorless"
         }
     }
 }
