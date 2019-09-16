@@ -18,7 +18,6 @@ public class EventHandler {
 	@SubscribeEvent
 	public void handlePlayerLoggedInEvent(PlayerLoggedInEvent event)
 	{
-
 		CheckResult result = ForgeVersion.getResult(Loader.instance().activeModContainer());
 		if(!(result.status.equals(Status.UP_TO_DATE) || result.status.equals(Status.PENDING)))
 		{
