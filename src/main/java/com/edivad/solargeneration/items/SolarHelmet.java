@@ -135,19 +135,26 @@ public class SolarHelmet extends ItemArmor {
 	{
 		if(world.isRemote)
 			return;
-
-		if(itemStack.getTagCompound() == null)
-		{
-			energyStorage.setEnergy(0);
-			saveEnergyItem(itemStack);
-		}
-
+		
 		if(!(getEnergyStored(itemStack) == getMaxEnergyStored()))
 		{
 			energyStorage.generatePower(currentAmountEnergyProduced(world, player));
 		}
 		sendEnergy(world, player);
 		saveEnergyItem(itemStack);
+	}
+	
+	@Override
+	public EntityEquipmentSlot getEquipmentSlot(ItemStack stack)
+	{
+		if(stack.getTagCompound() == null)
+		{
+			energyStorage.setEnergy(0);
+			saveEnergyItem(stack);
+		}
+		else
+			energyStorage.setEnergy(getEnergyStored(stack));
+		return super.getEquipmentSlot(stack);
 	}
 
 	private void sendEnergy(World world, EntityPlayer player)
