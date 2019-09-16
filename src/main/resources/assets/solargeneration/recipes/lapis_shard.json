@@ -6,8 +6,8 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {
-            "item": "minecraft:dye",
-            "data": 4
+            "type": "forge:ore_dict",
+            "ore": "gemLapis"
         }
     ]
 }
