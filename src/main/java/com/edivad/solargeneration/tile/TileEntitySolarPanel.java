@@ -162,8 +162,8 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 		return new SolarPanelContainer(this);
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public GuiContainer createGui(EntityPlayer player)
 	{
 		return new SolarPanelGui(this, new SolarPanelContainer(this));

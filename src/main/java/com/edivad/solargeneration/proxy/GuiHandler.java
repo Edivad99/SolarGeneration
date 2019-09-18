@@ -28,8 +28,8 @@ public class GuiHandler implements IGuiHandler {
 	}
 
 	@Nullable
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
 		BlockPos pos = new BlockPos(x, y, z);

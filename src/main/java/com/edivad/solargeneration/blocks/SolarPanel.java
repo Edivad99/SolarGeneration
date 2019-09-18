@@ -246,6 +246,7 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
 	{

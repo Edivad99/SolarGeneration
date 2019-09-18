@@ -60,6 +60,7 @@ public class SolarHelmet extends ItemArmor {
 		return false;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
