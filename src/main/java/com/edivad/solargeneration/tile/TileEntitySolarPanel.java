@@ -65,7 +65,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 	{
 		if(!energyStorage.isFullEnergy())
 		{
-			BlockPos pos = new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ());
+			BlockPos pos = new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ());
 			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, getLevelSolarPanel()));
 		}
 
@@ -162,8 +162,8 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 		return new SolarPanelContainer(this);
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public GuiContainer createGui(EntityPlayer player)
 	{
 		return new SolarPanelGui(this, new SolarPanelContainer(this));
