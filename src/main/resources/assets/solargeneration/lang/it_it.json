@@ -1,0 +1,59 @@
+{
+    "itemGroup.solargeneration_tab": "Solar Generation",
+
+    "item.solargeneration.solar_core_advanced": "Nucleo Solare Avanzato",
+    "item.solargeneration.solar_core_hardened": "Nucleo Solare Rinforzato",
+    "item.solargeneration.solar_core_leadstone": "Nucleo Solare di Piombo",
+    "item.solargeneration.solar_core_redstone": "Nucleo Solare di Redstone",
+    "item.solargeneration.solar_core_resonant": "Nucleo Solare di Resonant",
+    "item.solargeneration.solar_core_signalum": "Nucleo Solare di Signalum",
+    "item.solargeneration.solar_core_ultimate": "Nucleo Solare Finale",
+
+    "item.solargeneration.solar_helmet_advanced": "Elmo Solare Avanzato",
+    "item.solargeneration.solar_helmet_hardened": "Elmo Solare Rinforzato",
+    "item.solargeneration.solar_helmet_leadstone": "Elmo Solare di Piombo",
+    "item.solargeneration.solar_helmet_redstone": "Elmo Solare di Redstone",
+    "item.solargeneration.solar_helmet_resonant": "Elmo Solare di Resonant",
+    "item.solargeneration.solar_helmet_signalum": "Elmo Solare di Signalum",
+    "item.solargeneration.solar_helmet_ultimate": "Elmo Solare Finale",
+
+    "item.solargeneration.lapis_shard": "Frammento di Lapis",
+    "item.solargeneration.photovoltaic_cell": "Cella Fotovoltaica",
+
+    "block.solargeneration.solar_panel_advanced": "Pannello Solare Avanzato",
+    "block.solargeneration.solar_panel_hardened": "Pannello Solare Rinforzato",
+    "block.solargeneration.solar_panel_leadstone": "Pannello Solare di Piombo",
+    "block.solargeneration.solar_panel_redstone": "Pannello Solare di Redstone",
+    "block.solargeneration.solar_panel_resonant": "Pannello Solare di Resonant",
+    "block.solargeneration.solar_panel_signalum": "Pannello Solare di Signalum",
+    "block.solargeneration.solar_panel_ultimate": "Pannello Solare Finale",
+
+    "achievement.solargeneration.solar_panel_leadstone": "Inizia con le basi",
+    "achievement.solargeneration.solar_panel_leadstone.desc": "Piazza un Pannello Solare di Piombo.",
+
+    "achievement.solargeneration.solar_panel_hardened": "1 e' meglio di 8",
+    "achievement.solargeneration.solar_panel_hardened.desc": "Piazza un Pannello Solare Rinforzato.",
+
+    "achievement.solargeneration.solar_panel_redstone": "Non abbastanza energia",
+    "achievement.solargeneration.solar_panel_redstone.desc": "Piazza un Pannello Solare di Redstone.",
+
+    "achievement.solargeneration.solar_panel_signalum": "Alla ricerca del segnale",
+    "achievement.solargeneration.solar_panel_signalum.desc": "Piazza un Pannello Solare di Signalum.",
+
+    "achievement.solargeneration.solar_panel_resonant": "Escalation di potenza",
+    "achievement.solargeneration.solar_panel_resonant.desc": "Piazza un Pannello Solare di Resonant.",
+
+    "achievement.solargeneration.solar_panel_advanced": "Presidente dell'energia",
+    "achievement.solargeneration.solar_panel_advanced.desc": "Piazza un Pannello Solare Avanzato.",
+
+    "achievement.solargeneration.solar_panel_ultimate": "Oh sole, ti controllo!",
+    "achievement.solargeneration.solar_panel_ultimate.desc": "Piazza un Pannello Solare Finale.",
+
+    "message.solargeneration.hold_shift": "Premi @b@oShift @7per i dettagli",
+
+    "message.solargeneration.hold_ctrl": "Premi @b@oCtrl @7per l'energia immagazzinata",
+
+    "message.solargeneration.shift_info": "@fGenerazione: @a%d @4FE/t\n@fTrasferimento: @a%d @4FE/t\n@fCapacita': @a%d @4FE",
+
+    "message.solargeneration.ctrl_info": "@fEnergia immagazzinata: @a%d @4FE"
+}

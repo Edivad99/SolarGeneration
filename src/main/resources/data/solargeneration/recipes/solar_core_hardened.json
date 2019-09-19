@@ -1,0 +1,22 @@
+{
+    "result": {
+        "item": "solargeneration:solar_core_hardened"
+    },
+    "pattern": [
+        "cac",
+        "aba",
+        "cac"
+   ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "a": {
+            "tag": "forge:nuggets/invar"
+        },
+        "b": {
+            "item": "solargeneration:solar_core_leadstone"
+        },
+        "c": {
+            "item": "minecraft:glass_pane"
+        }
+    }
+}

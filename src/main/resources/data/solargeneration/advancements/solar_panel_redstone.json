@@ -1,0 +1,26 @@
+    
+{
+    "display": {
+        "icon": {
+            "item": "solargeneration:solar_panel_redstone"
+        },
+        "title": {
+            "translate": "achievement.solargeneration.solar_panel_redstone"
+        },
+        "description": {
+            "translate": "achievement.solargeneration.solar_panel_redstone.desc"
+        }
+    },
+    "criteria": {
+        "certus": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "solargeneration:solar_panel_redstone"
+                    }
+                ]
+            }
+        }
+    }
+}

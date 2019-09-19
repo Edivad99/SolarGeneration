@@ -1,0 +1,26 @@
+    
+{
+    "display": {
+        "icon": {
+            "item": "solargeneration:solar_panel_signalum"
+        },
+        "title": {
+            "translate": "achievement.solargeneration.solar_panel_signalum"
+        },
+        "description": {
+            "translate": "achievement.solargeneration.solar_panel_signalum.desc"
+        }
+    },
+    "criteria": {
+        "certus": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "solargeneration:solar_panel_signalum"
+                    }
+                ]
+            }
+        }
+    }
+}

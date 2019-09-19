@@ -1,0 +1,22 @@
+{
+    "result": {
+        "item": "solargeneration:solar_core_ultimate"
+    },
+    "pattern": [
+        "cac",
+        "aba",
+        "cac"
+   ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "a": {
+            "tag": "forge:nuggets/iridium"
+        },
+        "b": {
+            "item": "solargeneration:solar_core_advanced"
+        },
+        "c": {
+            "item": "minecraft:glass_pane"
+        }
+    }
+}

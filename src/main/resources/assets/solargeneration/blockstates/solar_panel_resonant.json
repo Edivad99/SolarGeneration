@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model" : "solargeneration:block/solar_panel_resonant" }
+    }
+}

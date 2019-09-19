@@ -1,0 +1,22 @@
+{
+    "result": {
+        "item": "solargeneration:solar_core_advanced"
+    },
+    "pattern": [
+        "cac",
+        "aba",
+        "cac"
+   ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "a": {
+            "tag": "forge:nuggets/mithril"
+        },
+        "b": {
+            "item": "solargeneration:solar_core_resonant"
+        },
+        "c": {
+            "item": "minecraft:glass_pane"
+        }
+    }
+}

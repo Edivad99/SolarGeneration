@@ -1,0 +1,19 @@
+{
+    "result": {
+        "item": "solargeneration:solar_panel_ultimate"
+    },
+    "pattern": [
+        "aaa",
+        "aba",
+        "aaa"
+   ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "a": {
+            "item": "solargeneration:solar_panel_advanced"
+        },
+        "b": {
+            "item": "solargeneration:solar_core_ultimate"
+        }
+    }
+}
