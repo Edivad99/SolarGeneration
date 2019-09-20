@@ -2,36 +2,32 @@ package edivad.solargeneration.tile;
 
 import javax.annotation.Nonnull;
 
-import edivad.solargeneration.Main;
-import edivad.solargeneration.blocks.containers.SolarPanelContainer;
-import edivad.solargeneration.gui.SolarPanelGui;
+import edivad.solargeneration.blocks.containers.SolarPanelAdvancedContainer;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import edivad.solargeneration.tools.inter.IGuiTile;
 import edivad.solargeneration.tools.inter.IRestorableTileEntity;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.IInteractionObject;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntitySolarPanel extends TileEntity implements ITickable, IInteractionObject, IGuiTile, IRestorableTileEntity {
+public class TileEntitySolarPanel extends TileEntity implements ITickableTileEntity, INamedContainerProvider, IRestorableTileEntity {
 
 	// Energy
+	private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 	private MyEnergyStorage energyStorage;
 	private int energyGeneration;
 	private int maxEnergyOutput;
@@ -47,13 +43,11 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IInte
 		this.levelSolarPanel = levelSolarPanel;
 		energyGeneration = (int) Math.pow(8, levelSolarPanel.ordinal());
 		maxEnergyOutput = energyGeneration * 2;
-		energyStorage = new MyEnergyStorage(maxEnergyOutput, energyGeneration * 1000);
-
 	}
-
-	public boolean canInteractWith(EntityPlayer playerIn)
+	
+	private IEnergyStorage createEnergy()
 	{
-		return !isRemoved() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
+		return new MyEnergyStorage(maxEnergyOutput, energyGeneration * 1000);
 	}
 
 	@Override
@@ -85,9 +79,9 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IInte
 	{
 		if(energyStorage.getEnergyStored() > 0)
 		{
-			for(int i = 0; (i < EnumFacing.values().length) && (energyStorage.getEnergyStored() > 0); i++)
+			for(int i = 0; (i < Direction.values().length) && (energyStorage.getEnergyStored() > 0); i++)
 			{
-				EnumFacing facing = EnumFacing.values()[i];
+				Direction facing = Direction.values()[i];
 				TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
 				if(tileEntity != null)
 				{
@@ -106,8 +100,9 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IInte
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, EnumFacing facing)
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing)
 	{
 		if(capability == CapabilityEnergy.ENERGY)
 		{
@@ -158,54 +153,15 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IInte
 	}
 
 	@Override
-	public ITextComponent getName()
+	public void read(CompoundNBT compound)
 	{
-		return new TextComponentString("Solar panel " + levelSolarPanel.name());
-	}
-
-	@Override
-	public boolean hasCustomName()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ITextComponent getCustomName()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-	{
-		return new SolarPanelContainer(this);
-	}
-
-	@Override
-	public String getGuiID()
-	{
-		return Main.MODID + ":gui_" + levelSolarPanel.name().toLowerCase();
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public GuiContainer createGui(EntityPlayer player)
-	{
-		return new SolarPanelGui(this, new SolarPanelContainer(this));
-	}
-
-	@Override
-	public void read(NBTTagCompound compound)
-	{
-		// To save tileEntity
+		// To save tileEntity 
 		super.read(compound);
 		readRestorableFromNBT(compound);
 	}
 
 	@Override
-	public NBTTagCompound write(NBTTagCompound compound)
+	public CompoundNBT write(CompoundNBT compound)
 	{
 		super.write(compound);
 		writeRestorableToNBT(compound);
@@ -214,14 +170,31 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IInte
 	}
 
 	@Override
-	public void readRestorableFromNBT(NBTTagCompound compound)
+	public void readRestorableFromNBT(CompoundNBT compound)
 	{
 		this.energyStorage.setEnergy(compound.getInt("energy"));
 	}
 
 	@Override
-	public void writeRestorableToNBT(NBTTagCompound compound)
+	public void writeRestorableToNBT(CompoundNBT compound)
 	{
-		compound.setInt("energy", energyStorage.getEnergyStored());
+		compound.putInt("energy", energyStorage.getEnergyStored());
+	}
+
+	@Override
+	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity)
+	{
+		switch (levelSolarPanel)
+		{
+			case Advanced: return new SolarPanelAdvancedContainer(id, world, pos);
+
+			default: return null;
+		}
+	}
+
+	@Override
+	public ITextComponent getDisplayName()
+	{
+		return new StringTextComponent("Solar panel " + levelSolarPanel.name());
 	}
 }

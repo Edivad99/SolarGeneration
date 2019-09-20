@@ -1,4 +1,4 @@
-package edivad.solargeneration;
+ package edivad.solargeneration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,26 +6,23 @@ import org.apache.logging.log4j.Logger;
 import edivad.solargeneration.network.Messages;
 import edivad.solargeneration.proxy.ClientProxy;
 import edivad.solargeneration.proxy.EventHandler;
-import edivad.solargeneration.proxy.GuiHandler;
 import edivad.solargeneration.proxy.IProxy;
 import edivad.solargeneration.proxy.ServerProxy;
 import edivad.solargeneration.tabs.SolarGenerationTab;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(Main.MODID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Main {
 
 	public static final String MODID = "solargeneration";
@@ -40,7 +37,6 @@ public class Main {
 	public Main()
 	{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::getClientGuiElement);
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
@@ -49,22 +45,34 @@ public class Main {
 		MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
 		proxy.setup(event);
 	}
-
-	@SubscribeEvent
-	public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event)
-	{
-		ModBlocks.registerTiles(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Block> event)
-	{
-		ModBlocks.register(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event)
-	{
-		ModItems.register(event.getRegistry());
+	
+	
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+	public static class RegistryEvents {
+		
+		@SubscribeEvent
+		public static void onBlockRegistry(final RegistryEvent.Register<Block> event)
+		{
+			ModBlocks.register(event.getRegistry());
+		}
+		
+		@SubscribeEvent
+		public static void onItemsRegistry(final RegistryEvent.Register<Item> event)
+		{
+			ModItems.register(event.getRegistry());
+		}
+		
+		@SubscribeEvent
+		public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event)
+		{
+			ModBlocks.registerTiles(event.getRegistry());
+		}
+		
+		@SubscribeEvent
+		public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event)
+		{
+			ModBlocks.registerContainers(event.getRegistry());
+		}
+		
 	}
 }

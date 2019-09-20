@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import edivad.solargeneration.Main;
 import edivad.solargeneration.tools.inter.ISolarPanelStateContainer;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketSyncMachineState {
@@ -42,7 +42,7 @@ public class PacketSyncMachineState {
 	{
 		ctx.get().enqueueWork(() ->
 		{
-			EntityPlayer player = Main.proxy.getClientPlayer();
+			PlayerEntity player = Main.proxy.getClientPlayer();
 			if(player.openContainer instanceof ISolarPanelStateContainer)
 			{
 				((ISolarPanelStateContainer) player.openContainer).sync(energy, energyProducing);

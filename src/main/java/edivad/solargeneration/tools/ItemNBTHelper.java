@@ -1,63 +1,63 @@
 package edivad.solargeneration.tools;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public final class ItemNBTHelper {
 
 	// SETTERS ///////////////////////////////////////////////////////////////////
-	public static NBTTagCompound getCompound(ItemStack stack)
+	public static CompoundNBT getCompound(ItemStack stack)
 	{
 		if(stack.getTag() == null)
-			stack.setTag(new NBTTagCompound());
+			stack.setTag(new CompoundNBT());
 		return stack.getTag();
 	}
 
 	public static ItemStack setByte(ItemStack stack, String tag, byte b)
 	{
-		getCompound(stack).setByte(tag, b);
+		getCompound(stack).putByte(tag, b);
 		return stack;
 	}
 
 	public static ItemStack setBoolean(ItemStack stack, String tag, boolean b)
 	{
-		getCompound(stack).setBoolean(tag, b);
+		getCompound(stack).putBoolean(tag, b);
 		return stack;
 	}
 
 	public static ItemStack setShort(ItemStack stack, String tag, short s)
 	{
-		getCompound(stack).setShort(tag, s);
+		getCompound(stack).putShort(tag, s);
 		return stack;
 	}
 
 	public static ItemStack setInteger(ItemStack stack, String tag, int i)
 	{
-		getCompound(stack).setInt(tag, i);
+		getCompound(stack).putInt(tag, i);
 		return stack;
 	}
 
 	public static ItemStack setLong(ItemStack stack, String tag, long i)
 	{
-		getCompound(stack).setLong(tag, i);
+		getCompound(stack).putLong(tag, i);
 		return stack;
 	}
 
 	public static ItemStack setFloat(ItemStack stack, String tag, float f)
 	{
-		getCompound(stack).setFloat(tag, f);
+		getCompound(stack).putFloat(tag, f);
 		return stack;
 	}
 
 	public static ItemStack setDouble(ItemStack stack, String tag, double d)
 	{
-		getCompound(stack).setDouble(tag, d);
+		getCompound(stack).putDouble(tag, d);
 		return stack;
 	}
 
 	public static ItemStack setString(ItemStack stack, String tag, String s)
 	{
-		getCompound(stack).setString(tag, s);
+		getCompound(stack).putString(tag, s);
 		return stack;
 	}
 
@@ -65,10 +65,11 @@ public final class ItemNBTHelper {
 
 	public static boolean verifyExistance(ItemStack stack, String tag)
 	{
-		NBTTagCompound compound = stack.getTag();
+		CompoundNBT compound = stack.getTag();
 		if(compound == null)
 			return false;
-		return stack.getTag().hasKey(tag);
+		//return stack.getTag().hasKey(tag);
+		return stack.getTag().hasUniqueId(tag);
 	}
 
 	public static byte getByte(ItemStack stack, String tag, byte defaultExpected)

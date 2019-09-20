@@ -6,8 +6,8 @@ import edivad.solargeneration.items.PhotovoltaicCell;
 import edivad.solargeneration.items.SolarCore;
 import edivad.solargeneration.items.SolarHelmet;
 import edivad.solargeneration.tools.SolarPanelLevel;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -54,13 +54,13 @@ public class ModItems {
 	public static void register(IForgeRegistry<Item> registry)
 	{
 		// solarCore
-		registry.register(new SolarCore("solar_core_advanced"));
-		registry.register(new SolarCore("solar_core_hardened"));
-		registry.register(new SolarCore("solar_core_leadstone"));
-		registry.register(new SolarCore("solar_core_redstone"));
-		registry.register(new SolarCore("solar_core_resonant"));
-		registry.register(new SolarCore("solar_core_signalum"));
-		registry.register(new SolarCore("solar_core_ultimate"));
+		registry.register(new SolarCore(SolarPanelLevel.Advanced));
+		registry.register(new SolarCore(SolarPanelLevel.Hardened));
+		registry.register(new SolarCore(SolarPanelLevel.Leadstone));
+		registry.register(new SolarCore(SolarPanelLevel.Redstone));
+		registry.register(new SolarCore(SolarPanelLevel.Resonant));
+		registry.register(new SolarCore(SolarPanelLevel.Signalum));
+		registry.register(new SolarCore(SolarPanelLevel.Ultimate));
 
 		// solarHelmet
 		registry.register(new SolarHelmet(SolarPanelLevel.Advanced));
@@ -77,12 +77,12 @@ public class ModItems {
 
 		// Blocks
 		Item.Properties property = new Item.Properties().group(Main.solarGenerationTab);
-		registry.register(new ItemBlock(ModBlocks.solarPanelAdvanced, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelHardened, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Hardened)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelLeadstone, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Leadstone)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelRedstone, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Redstone)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelResonant, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Resonant)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelSignalum, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelUltimate, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));
+		registry.register(new BlockItem(ModBlocks.solarPanelAdvanced, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
+		registry.register(new BlockItem(ModBlocks.solarPanelHardened, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Hardened)));
+		registry.register(new BlockItem(ModBlocks.solarPanelLeadstone, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Leadstone)));
+		registry.register(new BlockItem(ModBlocks.solarPanelRedstone, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Redstone)));
+		registry.register(new BlockItem(ModBlocks.solarPanelResonant, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Resonant)));
+		registry.register(new BlockItem(ModBlocks.solarPanelSignalum, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
+		registry.register(new BlockItem(ModBlocks.solarPanelUltimate, property).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));
 	}
 }

@@ -1,31 +1,31 @@
 package edivad.solargeneration.blocks.containers;
 
-import edivad.solargeneration.network.Messages;
-import edivad.solargeneration.network.PacketSyncMachineState;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tools.inter.ISolarPanelStateContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class SolarPanelContainer extends Container implements ISolarPanelStateContainer {
 
 	private final TileEntitySolarPanel tileEntitySolarPanel;
-
-	public SolarPanelContainer(TileEntitySolarPanel tileEntitySolarPanel)
+	
+	public SolarPanelContainer(ContainerType<?> type, int windowId, World world, BlockPos pos)
 	{
-		this.tileEntitySolarPanel = tileEntitySolarPanel;
+		super(type, windowId);
+		tileEntitySolarPanel = (TileEntitySolarPanel) world.getTileEntity(pos);
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+	public boolean canInteractWith(PlayerEntity playerIn)
 	{
-		return this.tileEntitySolarPanel.canInteractWith(playerIn);
+		return isWithinUsableDistance(IWorldPosCallable.of(tileEntitySolarPanel.getWorld(), tileEntitySolarPanel.getPos()), playerIn, tileEntitySolarPanel.getBlockState().getBlock());
 	}
 
-	@Override
+	/*@Override
 	public void detectAndSendChanges()
 	{
 		// For sync variable from client and server
@@ -39,15 +39,15 @@ public class SolarPanelContainer extends Container implements ISolarPanelStateCo
 
 				for(IContainerListener listener : listeners)
 				{
-					if(listener instanceof EntityPlayerMP)
+					if(listener instanceof PlayerEntity)
 					{
-						EntityPlayerMP player = (EntityPlayerMP) listener;
+						PlayerEntity player = (PlayerEntity) listener;
 						Messages.INSTANCE.sendTo(new PacketSyncMachineState(this.tileEntitySolarPanel.getEnergy(), this.tileEntitySolarPanel.currentAmountEnergyProduced()), player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 					}
 				}
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void sync(int energy, int energyProducing)
@@ -55,5 +55,4 @@ public class SolarPanelContainer extends Container implements ISolarPanelStateCo
 		this.tileEntitySolarPanel.setClientEnergy(energy);
 		this.tileEntitySolarPanel.setClientCurrentAmountEnergyProduced(energyProducing);
 	}
-
 }

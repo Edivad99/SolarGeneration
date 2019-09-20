@@ -1,6 +1,7 @@
 package edivad.solargeneration;
 
 import edivad.solargeneration.blocks.SolarPanel;
+import edivad.solargeneration.blocks.containers.SolarPanelAdvancedContainer;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
@@ -10,8 +11,10 @@ import edivad.solargeneration.tile.TileEntitySignalumSolarPanel;
 import edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -32,6 +35,22 @@ public class ModBlocks {
 	public static SolarPanel solarPanelSignalum;
 	@ObjectHolder(Main.MODID + ":solar_panel_ultimate")
 	public static SolarPanel solarPanelUltimate;
+	
+	//Container
+	@ObjectHolder(Main.MODID + ":solar_panel_advanced")
+	public static ContainerType<SolarPanelAdvancedContainer> solarPanelAdvancedContainer;
+	/*@ObjectHolder(Main.MODID + ":solar_panel_hardened")
+	public static ContainerType<SolarPanelHardenedContainer> solarPanelHardenedContainer;
+	@ObjectHolder(Main.MODID + ":solar_panel_leadstone")
+	public static ContainerType<SolarPanelLeadstoneContainer> solarPanelLeadstoneContainer;
+	@ObjectHolder(Main.MODID + ":solar_panel_redstone")
+	public static ContainerType<SolarPanelRedstoneContainer> solarPanelRedstoneContainer;
+	@ObjectHolder(Main.MODID + ":solar_panel_resonant")
+	public static ContainerType<SolarPanelResonantContainer> solarPanelResonantContainer;
+	@ObjectHolder(Main.MODID + ":solar_panel_signalum")
+	public static ContainerType<SolarPanelSignalumContainer> solarPanelSignalumContainer;
+	@ObjectHolder(Main.MODID + ":solar_panel_ultimate")
+	public static ContainerType<SolarPanelUltimateContainer> solarPanelUltimateContainer;*/
 
 	public static TileEntityType<?> ADVANCED;
 	public static TileEntityType<?> HARDENED;
@@ -43,13 +62,21 @@ public class ModBlocks {
 
 	public static void registerTiles(IForgeRegistry<TileEntityType<?>> registry)
 	{
-		registry.register(ADVANCED = TileEntityType.Builder.create(TileEntityAdvancedSolarPanel::new).build(null).setRegistryName(new ResourceLocation(Main.MODID, "solar_panel_advanced")));
-		registry.register(HARDENED = TileEntityType.Builder.create(TileEntityHardenedSolarPanel::new).build(null).setRegistryName(new ResourceLocation(Main.MODID, "solar_panel_hardened")));
-		registry.register(LEADSTONE = TileEntityType.Builder.create(TileEntityLeadstoneSolarPanel::new).build(null).setRegistryName(new ResourceLocation(Main.MODID, "solar_panel_leadstone")));
-		registry.register(REDSTONE = TileEntityType.Builder.create(TileEntityRedstoneSolarPanel::new).build(null).setRegistryName(new ResourceLocation(Main.MODID, "solar_panel_redstone")));
-		registry.register(RESONANT = TileEntityType.Builder.create(TileEntityResonantSolarPanel::new).build(null).setRegistryName(new ResourceLocation(Main.MODID, "solar_panel_resonant")));
-		registry.register(SIGNALUM = TileEntityType.Builder.create(TileEntitySignalumSolarPanel::new).build(null).setRegistryName(new ResourceLocation(Main.MODID, "solar_panel_signalum")));
-		registry.register(ULTIMATE = TileEntityType.Builder.create(TileEntityUltimateSolarPanel::new).build(null).setRegistryName(new ResourceLocation(Main.MODID, "solar_panel_ultimate")));
+		registry.register(ADVANCED = TileEntityType.Builder.create(TileEntityAdvancedSolarPanel::new).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
+		registry.register(HARDENED = TileEntityType.Builder.create(TileEntityHardenedSolarPanel::new).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Hardened)));
+		registry.register(LEADSTONE = TileEntityType.Builder.create(TileEntityLeadstoneSolarPanel::new).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Leadstone)));
+		registry.register(REDSTONE = TileEntityType.Builder.create(TileEntityRedstoneSolarPanel::new).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Redstone)));
+		registry.register(RESONANT = TileEntityType.Builder.create(TileEntityResonantSolarPanel::new).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Resonant)));
+		registry.register(SIGNALUM = TileEntityType.Builder.create(TileEntitySignalumSolarPanel::new).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
+		registry.register(ULTIMATE = TileEntityType.Builder.create(TileEntityUltimateSolarPanel::new).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));
+	}
+	
+	public static void registerContainers(IForgeRegistry<ContainerType<?>> registry)
+	{
+		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+			BlockPos pos = data.readBlockPos();
+			return new SolarPanelAdvancedContainer(windowId, Main.proxy.getClientWorld(), pos);
+		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
 	}
 
 	public static void register(IForgeRegistry<Block> registry)

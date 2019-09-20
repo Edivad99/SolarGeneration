@@ -1,10 +1,10 @@
 package edivad.solargeneration.tools.inter;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public interface IRestorableTileEntity {
 
-	void readRestorableFromNBT(NBTTagCompound compound);
+	void readRestorableFromNBT(CompoundNBT compound);
 
-	void writeRestorableToNBT(NBTTagCompound compound);
+	void writeRestorableToNBT(CompoundNBT compound);
 }

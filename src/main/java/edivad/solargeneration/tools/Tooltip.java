@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class Tooltip {
 
@@ -46,6 +46,6 @@ public class Tooltip {
 		translated = COMPILE.matcher(translated).replaceAll("\u00a7");
 		String[] formatted = translated.split("\n");
 		for(String line : formatted)
-			tooltip.add(new TextComponentTranslation(line));
+			tooltip.add(new TranslationTextComponent(line));
 	}
 }
