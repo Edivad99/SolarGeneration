@@ -1,6 +1,7 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/solargeneration",
     "1.12.2": {
+        "1.2.2" : "Fixed a lot of small bugs.",
         "1.2.1" : "Now you can obtain the solar panel from solar helmet.\nFixed bugs in the mod.",
         "1.2" : "Fixed a serious bug in the solar helmet.\nNow you can get back the lapis lazuli from the lapis shards.\nUpdated the minimum version of forge.",
         "1.1.2": "Fixed a bug that causes crashes on server side when user place a solar panel in the world. Thanks to Doedelsander for reporting it.",
@@ -10,7 +11,7 @@
         "1.0": "First beta of Solar Generation."
     },
     "promos": {
-        "1.12.2-latest": "1.2.1",
-        "1.12.2-recommended": "1.2.1"
+        "1.12.2-latest": "1.2.2",
+        "1.12.2-recommended": "1.2.2"
     }
 }
