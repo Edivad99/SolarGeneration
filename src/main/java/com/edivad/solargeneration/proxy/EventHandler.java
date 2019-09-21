@@ -25,11 +25,15 @@ public class EventHandler {
 			event.player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "Changelog:"));
 			
 			String changes = result.changes.get(result.target);
-			String changesFormat[] = changes.split("\n");
 			
-			for (String change : changesFormat)
+			if(changes != null)
 			{
-				event.player.sendMessage(new TextComponentString(TextFormatting.WHITE + "- " + change));
+				String changesFormat[] = changes.split("\n");
+				
+				for (String change : changesFormat)
+				{
+					event.player.sendMessage(new TextComponentString(TextFormatting.WHITE + "- " + change));
+				}
 			}
 		}
 	}
