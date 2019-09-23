@@ -106,6 +106,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IInte
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, EnumFacing facing)
 	{

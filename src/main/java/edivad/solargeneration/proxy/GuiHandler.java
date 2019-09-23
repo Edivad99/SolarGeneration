@@ -6,7 +6,6 @@ import edivad.solargeneration.Main;
 import edivad.solargeneration.tools.inter.IGuiTile;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,15 +19,11 @@ public class GuiHandler {
 	@OnlyIn(Dist.CLIENT)
 	public static GuiScreen getClientGuiElement(OpenContainer container)
 	{
-		PacketBuffer buf = container.getAdditionalData();
-		int x = buf.readInt();
-		int y = buf.readInt();
-		int z = buf.readInt();
+		BlockPos pos = container.getAdditionalData().readBlockPos();
 
 		World world = Main.proxy.getClientWorld();
 		EntityPlayer player = Main.proxy.getClientPlayer();
 
-		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
 		if(te instanceof IGuiTile)
 		{

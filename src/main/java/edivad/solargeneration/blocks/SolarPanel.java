@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Random;
 
 import edivad.solargeneration.Main;
+import edivad.solargeneration.ModItems;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
 import edivad.solargeneration.tile.TileEntityRedstoneSolarPanel;
 import edivad.solargeneration.tile.TileEntityResonantSolarPanel;
 import edivad.solargeneration.tile.TileEntitySignalumSolarPanel;
+import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
@@ -21,6 +23,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.fluid.IFluidState;
@@ -109,31 +112,25 @@ public class SolarPanel extends Block {
 	{
 		if(worldIn.isRemote)
 			return true;
-
-		/*if(playerIn.isSneaking())
+		
+		if(player.isSneaking())
 		{
-			if(ItemStack.areItemsEqual(playerIn.getHeldItemMainhand(), ItemWrench.wrenchBasic))
+			if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
 			{
 				dismantleBlock(worldIn, pos);
 				return true;
 			}
-		
-		}*/
+		}
 
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(!(te instanceof IInteractionObject))
 			return false;
 
-		NetworkHooks.openGui((EntityPlayerMP) player, (IInteractionObject) te, buf ->
-		{
-			buf.writeInt(te.getPos().getX());
-			buf.writeInt(te.getPos().getY());
-			buf.writeInt(te.getPos().getZ());
-		});
+		NetworkHooks.openGui((EntityPlayerMP) player, (IInteractionObject) te, te.getPos());
 		return true;
 	}
 
-	/*private void dismantleBlock(World worldIn, BlockPos pos)
+	private void dismantleBlock(World worldIn, BlockPos pos)
 	{
 		ItemStack itemStack = new ItemStack(this);
 	
@@ -154,7 +151,7 @@ public class SolarPanel extends Block {
 		entityItem.motionX = 0;
 		entityItem.motionZ = 0;
 		worldIn.spawnEntity(entityItem);
-	}*/
+	}
 
 	@Override
 	public void getDrops(IBlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune)

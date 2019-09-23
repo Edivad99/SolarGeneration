@@ -38,7 +38,7 @@ public class SolarHelmet extends ItemArmor {
 	{
 		super(ArmorMaterial.IRON, EntityEquipmentSlot.HEAD, (new Item.Properties()).group(Main.solarGenerationTab).maxStackSize(1));
 		this.levelSolarHelmet = levelSolarHelmet;
-		setRegistryName(getResourceLocation(levelSolarHelmet));
+		setRegistryName(new ResourceLocation(Main.MODID, "solar_helmet_" + levelSolarHelmet.name().toLowerCase()));
 
 		energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
 		maxEnergyOutput = energyGeneration * 2;
@@ -49,11 +49,6 @@ public class SolarHelmet extends ItemArmor {
 	public int getItemStackLimit(ItemStack stack)
 	{
 		return 1;
-	}
-
-	public static ResourceLocation getResourceLocation(SolarPanelLevel levelSolarHelmet)
-	{
-		return new ResourceLocation(Main.MODID, "solar_helmet_" + levelSolarHelmet.name().toLowerCase());
 	}
 
 	@Override
