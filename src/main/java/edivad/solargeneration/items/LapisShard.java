@@ -12,7 +12,6 @@ public class LapisShard extends Item {
 
 	public LapisShard()
 	{
-
 		setRegistryName(new ResourceLocation(Main.MODID, "lapis_shard"));
 		setUnlocalizedName(Main.MODID + ".lapis_shard");
 		setCreativeTab(Main.solarGenerationTab);

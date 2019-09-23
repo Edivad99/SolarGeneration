@@ -135,7 +135,7 @@ public class SolarHelmet extends ItemArmor {
 	{
 		if(world.isRemote)
 			return;
-		
+
 		if(!(getEnergyStored(itemStack) == getMaxEnergyStored()))
 		{
 			energyStorage.generatePower(currentAmountEnergyProduced(world, player));
@@ -143,7 +143,7 @@ public class SolarHelmet extends ItemArmor {
 		sendEnergy(world, player);
 		saveEnergyItem(itemStack);
 	}
-	
+
 	@Override
 	public EntityEquipmentSlot getEquipmentSlot(ItemStack stack)
 	{
@@ -159,7 +159,7 @@ public class SolarHelmet extends ItemArmor {
 
 	private void sendEnergy(World world, EntityPlayer player)
 	{
-		for (int i = 0; i < player.inventory.getSizeInventory(); i++)
+		for(int i = 0; i < player.inventory.getSizeInventory(); i++)
 		{
 			ItemStack slot = player.inventory.getStackInSlot(i);
 			if(slot.getCount() == 1)

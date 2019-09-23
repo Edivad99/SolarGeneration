@@ -58,7 +58,6 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 
 	public SolarPanel(SolarPanelLevel levelSolarPanel)
 	{
-
 		super(Material.IRON);
 		setSoundType(SoundType.METAL);
 		setHardness(5F);

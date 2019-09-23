@@ -38,7 +38,7 @@ public class PacketSyncMachineState implements IMessage {
 			energy = buf.readInt();
 			energyProducing = buf.readInt();
 		}
-		catch (IndexOutOfBoundsException ioe)
+		catch(IndexOutOfBoundsException ioe)
 		{
 			Main.logger.debug(ioe.getMessage());
 			return;

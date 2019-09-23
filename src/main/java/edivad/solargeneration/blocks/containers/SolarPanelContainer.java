@@ -36,7 +36,7 @@ public class SolarPanelContainer extends Container implements ISolarPanelStateCo
 				tileEntitySolarPanel.setClientEnergy(tileEntitySolarPanel.getEnergy());
 				tileEntitySolarPanel.setClientCurrentAmountEnergyProduced(tileEntitySolarPanel.currentAmountEnergyProduced());
 
-				for (IContainerListener listener : listeners)
+				for(IContainerListener listener : listeners)
 				{
 					if(listener instanceof EntityPlayerMP)
 					{

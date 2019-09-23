@@ -82,22 +82,12 @@ public class ModItems {
 	public static void register(IForgeRegistry<Item> registry)
 	{
 		// solarCore
-		registry.register(new SolarCore("solar_core_advanced"));
-		registry.register(new SolarCore("solar_core_hardened"));
-		registry.register(new SolarCore("solar_core_leadstone"));
-		registry.register(new SolarCore("solar_core_redstone"));
-		registry.register(new SolarCore("solar_core_resonant"));
-		registry.register(new SolarCore("solar_core_signalum"));
-		registry.register(new SolarCore("solar_core_ultimate"));
+		for(SolarPanelLevel level : SolarPanelLevel.values())
+			registry.register(new SolarCore(level));
 
 		// solarHelmet
-		registry.register(new SolarHelmet(SolarPanelLevel.Advanced));
-		registry.register(new SolarHelmet(SolarPanelLevel.Hardened));
-		registry.register(new SolarHelmet(SolarPanelLevel.Leadstone));
-		registry.register(new SolarHelmet(SolarPanelLevel.Redstone));
-		registry.register(new SolarHelmet(SolarPanelLevel.Resonant));
-		registry.register(new SolarHelmet(SolarPanelLevel.Signalum));
-		registry.register(new SolarHelmet(SolarPanelLevel.Ultimate));
+		for(SolarPanelLevel level : SolarPanelLevel.values())
+			registry.register(new SolarHelmet(level));
 
 		// Other Items
 		registry.register(new LapisShard());

@@ -12,7 +12,6 @@ public class PhotovoltaicCell extends Item {
 
 	public PhotovoltaicCell()
 	{
-
 		setRegistryName(new ResourceLocation(Main.MODID, "photovoltaic_cell"));
 		setUnlocalizedName(Main.MODID + ".photovoltaic_cell");
 		setCreativeTab(Main.solarGenerationTab);

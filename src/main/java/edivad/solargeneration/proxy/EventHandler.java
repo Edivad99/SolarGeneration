@@ -22,14 +22,14 @@ public class EventHandler {
 		{
 			event.player.sendMessage(new TextComponentString(TextFormatting.GREEN + "[" + Main.MODNAME + "] " + TextFormatting.WHITE + "A new version is available (" + result.target + "), please update!"));
 			event.player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "Changelog:"));
-			
+
 			String changes = result.changes.get(result.target);
-			
+
 			if(changes != null)
 			{
 				String changesFormat[] = changes.split("\n");
-				
-				for (String change : changesFormat)
+
+				for(String change : changesFormat)
 				{
 					event.player.sendMessage(new TextComponentString(TextFormatting.WHITE + "- " + change));
 				}

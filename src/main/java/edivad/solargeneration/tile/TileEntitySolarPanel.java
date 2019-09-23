@@ -75,7 +75,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 	{
 		if(energyStorage.getEnergyStored() > 0)
 		{
-			for (EnumFacing facing : EnumFacing.VALUES)
+			for(EnumFacing facing : EnumFacing.VALUES)
 			{
 				TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
 				if(tileEntity != null && tileEntity.hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite()))
