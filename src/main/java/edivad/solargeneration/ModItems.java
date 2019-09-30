@@ -5,6 +5,7 @@ import edivad.solargeneration.items.LapisShard;
 import edivad.solargeneration.items.PhotovoltaicCell;
 import edivad.solargeneration.items.SolarCore;
 import edivad.solargeneration.items.SolarHelmet;
+import edivad.solargeneration.items.Wrench;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -50,30 +51,23 @@ public class ModItems {
 	public static LapisShard lapisShard;
 	@ObjectHolder(Main.MODID + ":photovoltaic_cell")
 	public static PhotovoltaicCell photovoltaicCell;
+	@ObjectHolder(Main.MODID + ":wrench")
+	public static Wrench wrench;
 
 	public static void register(IForgeRegistry<Item> registry)
 	{
 		// solarCore
-		registry.register(new SolarCore(SolarPanelLevel.Advanced));
-		registry.register(new SolarCore(SolarPanelLevel.Hardened));
-		registry.register(new SolarCore(SolarPanelLevel.Leadstone));
-		registry.register(new SolarCore(SolarPanelLevel.Redstone));
-		registry.register(new SolarCore(SolarPanelLevel.Resonant));
-		registry.register(new SolarCore(SolarPanelLevel.Signalum));
-		registry.register(new SolarCore(SolarPanelLevel.Ultimate));
+		for(SolarPanelLevel level : SolarPanelLevel.values())
+			registry.register(new SolarCore(level));
 
 		// solarHelmet
-		registry.register(new SolarHelmet(SolarPanelLevel.Advanced));
-		registry.register(new SolarHelmet(SolarPanelLevel.Hardened));
-		registry.register(new SolarHelmet(SolarPanelLevel.Leadstone));
-		registry.register(new SolarHelmet(SolarPanelLevel.Redstone));
-		registry.register(new SolarHelmet(SolarPanelLevel.Resonant));
-		registry.register(new SolarHelmet(SolarPanelLevel.Signalum));
-		registry.register(new SolarHelmet(SolarPanelLevel.Ultimate));
+		for(SolarPanelLevel level : SolarPanelLevel.values())
+			registry.register(new SolarHelmet(level));
 
 		// Other Items
 		registry.register(new LapisShard());
 		registry.register(new PhotovoltaicCell());
+		registry.register(new Wrench());
 
 		// Blocks
 		Item.Properties property = new Item.Properties().group(Main.solarGenerationTab);

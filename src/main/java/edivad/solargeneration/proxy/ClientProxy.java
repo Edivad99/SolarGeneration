@@ -1,22 +1,27 @@
 package edivad.solargeneration.proxy;
 
 import edivad.solargeneration.ModBlocks;
-import edivad.solargeneration.gui.SolarPanelGui;
+import edivad.solargeneration.gui.SolarPanelScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientProxy implements IProxy {
 
 	@Override
-	public void setup(FMLCommonSetupEvent event)
+	public void init()
 	{
-		ScreenManager.registerFactory(ModBlocks.solarPanelAdvancedContainer, SolarPanelGui::new);
+		ScreenManager.registerFactory(ModBlocks.solarPanelAdvancedContainer, SolarPanelScreen::new);
+		ScreenManager.registerFactory(ModBlocks.solarPanelHardenedContainer, SolarPanelScreen::new);
+		ScreenManager.registerFactory(ModBlocks.solarPanelLeadstoneContainer, SolarPanelScreen::new);
+		ScreenManager.registerFactory(ModBlocks.solarPanelRedstoneContainer, SolarPanelScreen::new);
+		ScreenManager.registerFactory(ModBlocks.solarPanelResonantContainer, SolarPanelScreen::new);
+		ScreenManager.registerFactory(ModBlocks.solarPanelSignalumContainer, SolarPanelScreen::new);
+		ScreenManager.registerFactory(ModBlocks.solarPanelUltimateContainer, SolarPanelScreen::new);
 	}
 
 	@Override

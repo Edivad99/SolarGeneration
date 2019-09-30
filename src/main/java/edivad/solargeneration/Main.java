@@ -3,7 +3,6 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import edivad.solargeneration.network.Messages;
 import edivad.solargeneration.proxy.ClientProxy;
 import edivad.solargeneration.proxy.EventHandler;
 import edivad.solargeneration.proxy.IProxy;
@@ -15,8 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -41,9 +40,8 @@ public class Main {
 
 	private void setup(final FMLCommonSetupEvent event)
 	{
-		Messages.registerMessages("main_channel");
 		MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
-		proxy.setup(event);
+		proxy.init();
 	}
 	
 	

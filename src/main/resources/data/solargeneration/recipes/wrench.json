@@ -1,0 +1,22 @@
+{
+    "result": {
+        "item": "solargeneration:wrench"
+    },
+    "pattern": [
+        " a ",
+        " ba",
+        "c  "
+   ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "a": {
+            "tag": "forge:ingots/iron"
+        },
+        "b": {
+            "tag": "forge:nuggets/iron"
+        },
+        "c": {
+           "item": "minecraft:red_dye"
+        }
+    }
+}

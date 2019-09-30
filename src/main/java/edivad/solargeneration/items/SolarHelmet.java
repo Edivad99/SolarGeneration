@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import edivad.solargeneration.Main;
-import edivad.solargeneration.tools.ItemNBTHelper;
 import edivad.solargeneration.tools.ModelCustomArmour;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
@@ -21,6 +20,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -117,12 +117,16 @@ public class SolarHelmet extends ArmorItem {
 
 	public void saveEnergyItem(ItemStack container)
 	{
-		ItemNBTHelper.setInteger(container, "energy", energyStorage.getEnergyStored());
+		if(container.getTag() == null)
+			container.setTag(new CompoundNBT());
+		container.getTag().putInt("energy", energyStorage.getEnergyStored());
 	}
 
 	public int getEnergyStored(ItemStack container)
 	{
-		return ItemNBTHelper.getInteger(container, "energy", 0);
+		if(container.getTag() == null)
+			return 0;
+		return container.getTag().getInt("energy");
 	}
 
 	public int getMaxEnergyStored()

@@ -26,13 +26,15 @@ public class EventHandler {
 			event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.YELLOW + "Changelog:"));
 
 			String changes = versionRAW.changes.get(versionRAW.target);
-			String changesFormat[] = changes.split("\n");
-
-			for(String change : changesFormat)
+			if(changes != null)
 			{
-				event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.WHITE + "- " + change));
+				String changesFormat[] = changes.split("\n");
+
+				for(String change : changesFormat)
+				{
+					event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.WHITE + "- " + change));
+				}
 			}
 		}
 	}
-
 }
