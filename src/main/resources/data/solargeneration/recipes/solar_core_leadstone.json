@@ -13,8 +13,7 @@
             "tag": "forge:nuggets/lead"
         },
         "b": {
-             "type": "forge:ore_dict",
-            "ore": "ingotIron"
+        	"tag": "forge:ingots/iron"
         },
         "c": {
             "item": "minecraft:glass_pane"
