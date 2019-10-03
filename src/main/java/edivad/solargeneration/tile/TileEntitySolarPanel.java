@@ -117,9 +117,9 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 					{
 						if(handler.canReceive())
 						{
-							int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
-							capacity.addAndGet(-accepted);
-							handler.receiveEnergy(accepted, false);
+							int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutput), false);
+							capacity.addAndGet(-received);
+							((MyEnergyStorage) energy).consumePower(received);
 						}
 					});
 				}
