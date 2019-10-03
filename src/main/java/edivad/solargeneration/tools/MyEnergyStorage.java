@@ -4,7 +4,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.EnergyStorage;
 
-public class MyEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT>{
+public class MyEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT> {
 
 	public MyEnergyStorage(int energyTransfer, int energyCapacity)
 	{
@@ -43,8 +43,8 @@ public class MyEnergyStorage extends EnergyStorage implements INBTSerializable<C
 	public CompoundNBT serializeNBT()
 	{
 		CompoundNBT tag = new CompoundNBT();
-        tag.putInt("energy", getEnergyStored());
-        return tag;
+		tag.putInt("energy", getEnergyStored());
+		return tag;
 	}
 
 	@Override

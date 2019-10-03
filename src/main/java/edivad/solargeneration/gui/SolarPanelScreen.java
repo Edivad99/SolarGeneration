@@ -34,7 +34,7 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-	{	
+	{
 		String clientEnergy = "Stored enery: " + this.container.getEnergy() + " FE";
 		this.font.drawString(clientEnergy, (this.xSize / 2 - this.font.getStringWidth(clientEnergy) / 2) + 14, 20, 4210752);
 

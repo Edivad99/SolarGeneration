@@ -19,7 +19,7 @@ public class ModelCustomArmour extends BipedModel<LivingEntity> {
 
 		this.bipedHead.addChild(shape15);
 	}
-	
+
 	@Override
 	public void render(LivingEntity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{

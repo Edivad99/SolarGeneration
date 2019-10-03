@@ -1,4 +1,4 @@
- package edivad.solargeneration;
+package edivad.solargeneration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,34 +43,33 @@ public class Main {
 		MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
 		proxy.init();
 	}
-	
-	
+
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class RegistryEvents {
-		
+
 		@SubscribeEvent
 		public static void onBlockRegistry(final RegistryEvent.Register<Block> event)
 		{
 			ModBlocks.register(event.getRegistry());
 		}
-		
+
 		@SubscribeEvent
 		public static void onItemsRegistry(final RegistryEvent.Register<Item> event)
 		{
 			ModItems.register(event.getRegistry());
 		}
-		
+
 		@SubscribeEvent
 		public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event)
 		{
 			ModBlocks.registerTiles(event.getRegistry());
 		}
-		
+
 		@SubscribeEvent
 		public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event)
 		{
 			ModBlocks.registerContainers(event.getRegistry());
 		}
-		
+
 	}
 }

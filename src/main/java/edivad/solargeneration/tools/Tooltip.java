@@ -8,19 +8,18 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-
 public class Tooltip {
 
 	private static final Pattern COMPILE = Pattern.compile("@", Pattern.LITERAL);
 
 	public static void showInfoShift(SolarPanelLevel solarPanelLevel, List<ITextComponent> tooltip)
-	{ 	
+	{
 		if(Screen.hasShiftDown())
 		{
 			int generation = (int) Math.pow(8, solarPanelLevel.ordinal());
 			int transfer = generation * 2;
 			int capacity = generation * 1000;
-		
+
 			addInformationLocalized(tooltip, "message.solargeneration.shift_info", generation, transfer, capacity);
 		}
 		else

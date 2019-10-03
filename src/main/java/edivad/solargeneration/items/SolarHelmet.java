@@ -65,12 +65,13 @@ public class SolarHelmet extends ArmorItem {
 		Tooltip.showInfoCtrl(getEnergyStored(stack), tooltip);
 		Tooltip.showInfoShift(levelSolarHelmet, tooltip);
 	}
-		
+
 	@SuppressWarnings("unchecked")
-    @Nullable
+	@Nullable
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
+	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)
+	{
 		if(itemStack != ItemStack.EMPTY)
 		{
 			if(itemStack.getItem() instanceof ArmorItem)
@@ -80,7 +81,7 @@ public class SolarHelmet extends ArmorItem {
 				model.bipedHead.showModel = armorSlot == EquipmentSlotType.HEAD;
 
 				model.isChild = _default.isChild;
-				model.isSitting= _default.isSitting;
+				model.isSitting = _default.isSitting;
 				model.isSneak = _default.isSneak;
 				model.rightArmPose = _default.rightArmPose;
 				model.leftArmPose = _default.leftArmPose;

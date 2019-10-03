@@ -16,37 +16,40 @@ public class SolarPanelContainer extends Container {
 
 	private final TileEntitySolarPanel tileEntitySolarPanel;
 	private final PlayerEntity player;
-	
+
 	public SolarPanelContainer(ContainerType<?> type, int windowId, World world, BlockPos pos, PlayerEntity player)
 	{
 		super(type, windowId);
 		this.tileEntitySolarPanel = (TileEntitySolarPanel) world.getTileEntity(pos);
 		this.player = player;
-		
-		trackInt(new IntReferenceHolder() {
-            @Override
-            public int get() {
-                return getEnergy();
-            }
 
-            @Override
-            public void set(int value) {
-            	tileEntitySolarPanel.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((MyEnergyStorage)h).setEnergy(value));
-            }
-        });
+		trackInt(new IntReferenceHolder() {
+
+			@Override
+			public int get()
+			{
+				return getEnergy();
+			}
+
+			@Override
+			public void set(int value)
+			{
+				tileEntitySolarPanel.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((MyEnergyStorage) h).setEnergy(value));
+			}
+		});
 	}
-	
+
 	public int getEnergy()
 	{
-        return tileEntitySolarPanel.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-    }
-	
+		return tileEntitySolarPanel.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+	}
+
 	public int getMaxEnergy()
 	{
-        return tileEntitySolarPanel.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
-    }
-	
-	public int getCurrentAmountEnergyProduced() 
+		return tileEntitySolarPanel.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
+	}
+
+	public int getCurrentAmountEnergyProduced()
 	{
 		return tileEntitySolarPanel.currentAmountEnergyProduced();
 	}

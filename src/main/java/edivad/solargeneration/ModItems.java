@@ -67,7 +67,7 @@ public class ModItems {
 		// Other Items
 		registry.register(new LapisShard());
 		registry.register(new PhotovoltaicCell());
-		registry.register(new Wrench());
+		//registry.register(new Wrench());
 
 		// Blocks
 		Item.Properties property = new Item.Properties().group(Main.solarGenerationTab);

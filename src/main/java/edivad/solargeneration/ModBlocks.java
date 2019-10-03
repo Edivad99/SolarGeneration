@@ -41,7 +41,7 @@ public class ModBlocks {
 	public static SolarPanel solarPanelSignalum;
 	@ObjectHolder(Main.MODID + ":solar_panel_ultimate")
 	public static SolarPanel solarPanelUltimate;
-	
+
 	//Container
 	@ObjectHolder(Main.MODID + ":solar_panel_advanced")
 	public static ContainerType<SolarPanelAdvancedContainer> solarPanelAdvancedContainer;
@@ -57,7 +57,7 @@ public class ModBlocks {
 	public static ContainerType<SolarPanelSignalumContainer> solarPanelSignalumContainer;
 	@ObjectHolder(Main.MODID + ":solar_panel_ultimate")
 	public static ContainerType<SolarPanelUltimateContainer> solarPanelUltimateContainer;
-	
+
 	//TilEntity
 	@ObjectHolder(Main.MODID + ":solar_panel_advanced")
 	public static TileEntityType<?> ADVANCED;
@@ -84,40 +84,47 @@ public class ModBlocks {
 		registry.register(TileEntityType.Builder.create(TileEntitySignalumSolarPanel::new, ModBlocks.solarPanelSignalum).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
 		registry.register(TileEntityType.Builder.create(TileEntityUltimateSolarPanel::new, ModBlocks.solarPanelUltimate).build(null).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));
 	}
-	
+
 	public static void registerContainers(IForgeRegistry<ContainerType<?>> registry)
-	{		
-		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+	{
+		registry.register(IForgeContainerType.create((windowId, inv, data) ->
+		{
 			BlockPos pos = data.readBlockPos();
 			return new SolarPanelAdvancedContainer(windowId, Main.proxy.getClientWorld(), pos, Main.proxy.getClientPlayer());
 		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
-		
-		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+
+		registry.register(IForgeContainerType.create((windowId, inv, data) ->
+		{
 			BlockPos pos = data.readBlockPos();
 			return new SolarPanelHardenedContainer(windowId, Main.proxy.getClientWorld(), pos, Main.proxy.getClientPlayer());
 		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Hardened)));
-		
-		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+
+		registry.register(IForgeContainerType.create((windowId, inv, data) ->
+		{
 			BlockPos pos = data.readBlockPos();
 			return new SolarPanelLeadstoneContainer(windowId, Main.proxy.getClientWorld(), pos, Main.proxy.getClientPlayer());
 		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Leadstone)));
-		
-		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+
+		registry.register(IForgeContainerType.create((windowId, inv, data) ->
+		{
 			BlockPos pos = data.readBlockPos();
 			return new SolarPanelRedstoneContainer(windowId, Main.proxy.getClientWorld(), pos, Main.proxy.getClientPlayer());
 		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Redstone)));
-		
-		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+
+		registry.register(IForgeContainerType.create((windowId, inv, data) ->
+		{
 			BlockPos pos = data.readBlockPos();
 			return new SolarPanelResonantContainer(windowId, Main.proxy.getClientWorld(), pos, Main.proxy.getClientPlayer());
 		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Resonant)));
-		
-		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+
+		registry.register(IForgeContainerType.create((windowId, inv, data) ->
+		{
 			BlockPos pos = data.readBlockPos();
 			return new SolarPanelSignalumContainer(windowId, Main.proxy.getClientWorld(), pos, Main.proxy.getClientPlayer());
 		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
-		
-		registry.register(IForgeContainerType.create((windowId, inv, data) -> {
+
+		registry.register(IForgeContainerType.create((windowId, inv, data) ->
+		{
 			BlockPos pos = data.readBlockPos();
 			return new SolarPanelUltimateContainer(windowId, Main.proxy.getClientWorld(), pos, Main.proxy.getClientPlayer());
 		}).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));

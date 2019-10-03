@@ -50,7 +50,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 		energyGeneration = (int) Math.pow(8, levelSolarPanel.ordinal());
 		maxEnergyOutput = energyGeneration * 2;
 	}
-	
+
 	private IEnergyStorage createEnergy()
 	{
 		return new MyEnergyStorage(maxEnergyOutput, energyGeneration * 1000);
@@ -62,7 +62,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 		if(world.isRemote)
 			return;
 
-		energy.ifPresent(e -> ((MyEnergyStorage)e).generatePower(currentAmountEnergyProduced()));
+		energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced()));
 		sendEnergy();
 	}
 
@@ -100,12 +100,13 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 			this.markDirty();
 		}
 	}*/
-	
+
 	private void sendEnergy()
 	{
-		energy.ifPresent(energy -> {
+		energy.ifPresent(energy ->
+		{
 			AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
-			
+
 			for(int i = 0; (i < Direction.values().length) && (capacity.get() > 0); i++)
 			{
 				Direction facing = Direction.values()[i];
@@ -155,16 +156,17 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 	public void readRestorableFromNBT(CompoundNBT tag)
 	{
 		CompoundNBT energyTag = tag.getCompound("energy");
-        energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
+		energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void writeRestorableToNBT(CompoundNBT tag)
 	{
-		energy.ifPresent(h -> {
+		energy.ifPresent(h ->
+		{
 			CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-            tag.put("energy", compound);
+			tag.put("energy", compound);
 		});
 	}
 
@@ -174,14 +176,22 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 	{
 		switch (levelSolarPanel)
 		{
-			case Advanced: return new SolarPanelAdvancedContainer(id, world, pos, playerEntity);
-			case Hardened: return new SolarPanelHardenedContainer(id, world, pos, playerEntity);
-			case Leadstone: return new SolarPanelLeadstoneContainer(id, world, pos, playerEntity);
-			case Redstone: return new SolarPanelRedstoneContainer(id, world, pos, playerEntity);
-			case Resonant: return new SolarPanelResonantContainer(id, world, pos, playerEntity);
-			case Signalum: return new SolarPanelSignalumContainer(id, world, pos, playerEntity);
-			case Ultimate: return new SolarPanelUltimateContainer(id, world, pos, playerEntity);
-			default: return null;
+			case Advanced:
+				return new SolarPanelAdvancedContainer(id, world, pos, playerEntity);
+			case Hardened:
+				return new SolarPanelHardenedContainer(id, world, pos, playerEntity);
+			case Leadstone:
+				return new SolarPanelLeadstoneContainer(id, world, pos, playerEntity);
+			case Redstone:
+				return new SolarPanelRedstoneContainer(id, world, pos, playerEntity);
+			case Resonant:
+				return new SolarPanelResonantContainer(id, world, pos, playerEntity);
+			case Signalum:
+				return new SolarPanelSignalumContainer(id, world, pos, playerEntity);
+			case Ultimate:
+				return new SolarPanelUltimateContainer(id, world, pos, playerEntity);
+			default:
+				return null;
 		}
 	}
 
