@@ -11,7 +11,7 @@
     "key": {
         "a": {
             "type": "forge:ore_dict",
-            "ore": "nuggetMithril"
+            "ore": "nuggetLumium"
         },
         "b": {
             "item": "solargeneration:solar_core_resonant"
