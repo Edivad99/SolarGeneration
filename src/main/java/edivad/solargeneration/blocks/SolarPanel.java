@@ -45,17 +45,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SolarPanel extends Block implements ITileEntityProvider {
 
-	// SolarPanel Level
-	// 0-SolarPanelLeadstone
-	// 1-SolarPanelHardened
-	// 2-SolarPanelRedstone
-	// 3-SolarPanelSignalum
-	// 4-SolarPanelResonant
-	// 5-SolarPanelAdvanced
-	// 6-SolarPanelUltimate
 	private final SolarPanelLevel levelSolarPanel;
 	private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
-
+	
 	public SolarPanel(SolarPanelLevel levelSolarPanel)
 	{
 		super(Material.IRON);
@@ -104,11 +96,23 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 	{
 		return false;
 	}
-
+	
+	@Override
+	public boolean isFullBlock(IBlockState state)
+	{
+		return false;
+	}
+	
 	@Override
 	public boolean isFullCube(IBlockState state)
 	{
 		return false;
+	}
+	
+	@Override
+	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side)
+	{
+		return side == EnumFacing.DOWN;
 	}
 
 	@Override
@@ -206,7 +210,7 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-
+		
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
 
 		// Always check this!!

@@ -47,14 +47,8 @@ public class ModBlocks {
 
 	public static void register(IForgeRegistry<Block> registry)
 	{
-
-		registry.register(new SolarPanel(SolarPanelLevel.Advanced));
-		registry.register(new SolarPanel(SolarPanelLevel.Hardened));
-		registry.register(new SolarPanel(SolarPanelLevel.Leadstone));
-		registry.register(new SolarPanel(SolarPanelLevel.Redstone));
-		registry.register(new SolarPanel(SolarPanelLevel.Resonant));
-		registry.register(new SolarPanel(SolarPanelLevel.Signalum));
-		registry.register(new SolarPanel(SolarPanelLevel.Ultimate));
+		for(SolarPanelLevel level : SolarPanelLevel.values())
+			registry.register(new SolarPanel(level));
 
 		GameRegistry.registerTileEntity(TileEntityAdvancedSolarPanel.class, Main.MODID + ":solar_panel_advanced");
 		GameRegistry.registerTileEntity(TileEntityHardenedSolarPanel.class, Main.MODID + ":solar_panel_hardened");

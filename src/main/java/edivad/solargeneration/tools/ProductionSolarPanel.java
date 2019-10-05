@@ -10,7 +10,7 @@ public class ProductionSolarPanel {
 	{
 		float sunIntensity = 0;
 
-		if(world.canBlockSeeSky(pos))
+		if(world.canSeeSky(pos))
 		{
 			float multiplicator = 1.5f;
 			float displacement = 1.2f;

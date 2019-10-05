@@ -1,27 +1,33 @@
 package edivad.solargeneration.tile;
 
+import java.util.List;
+
 import edivad.solargeneration.blocks.containers.SolarPanelContainer;
+import edivad.solargeneration.compat.waila.WailaInfoProvider;
 import edivad.solargeneration.gui.SolarPanelGui;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.inter.IGuiTile;
 import edivad.solargeneration.tools.inter.IRestorableTileEntity;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiTile, IRestorableTileEntity {
+public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiTile, IRestorableTileEntity, WailaInfoProvider {
 
 	// Energy
 	private MyEnergyStorage energyStorage;
@@ -63,37 +69,29 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 	public int currentAmountEnergyProduced()
 	{
 		if(!energyStorage.isFullEnergy())
-		{
-			BlockPos pos = new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ());
-			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, getLevelSolarPanel()));
-		}
-
+			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, getPos(), getLevelSolarPanel()));
+		
 		return 0;
 	}
 
 	private void sendEnergy()
 	{
-		if(energyStorage.getEnergyStored() > 0)
+		for(int i = 0; (i < EnumFacing.values().length) && (energyStorage.getEnergyStored() > 0); i++)
 		{
-			for(EnumFacing facing : EnumFacing.VALUES)
+			EnumFacing face = EnumFacing.values()[i];
+			
+			TileEntity tileEntity = world.getTileEntity(pos.offset(face));
+			if(tileEntity != null && tileEntity.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite()))
 			{
-				TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
-				if(tileEntity != null && tileEntity.hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite()))
+				IEnergyStorage handler = tileEntity.getCapability(CapabilityEnergy.ENERGY, face.getOpposite());
+				if(handler != null && handler.canReceive())
 				{
-					IEnergyStorage handler = tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
-					if(handler != null && handler.canReceive())
-					{
-						int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
-						energyStorage.consumePower(accepted);
-						handler.receiveEnergy(accepted, false);
-						if(energyStorage.getEnergyStored() <= 0)
-							break;
-					}
+					int received = handler.receiveEnergy(Math.min(energyStorage.getEnergyStored(), maxEnergyOutput), false);
+					energyStorage.consumePower(received);
+					this.markDirty();
 				}
 			}
-			this.markDirty();
 		}
-
 	}
 
 	@Override
@@ -194,5 +192,13 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 	public void writeRestorableToNBT(NBTTagCompound compound)
 	{
 		compound.setInteger("energy", energyStorage.getEnergyStored());
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+        currenttip.add(TextFormatting.GRAY + "Energy stored: " + currentAmountEnergyProduced() + " FE");
+        return currenttip;
 	}
 }
