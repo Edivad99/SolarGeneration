@@ -37,7 +37,6 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
 	// Energy
 	private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-	private MyEnergyStorage energyStorage;
 	private int energyGeneration;
 	private int maxEnergyOutput;
 
@@ -76,31 +75,6 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 		return levelSolarPanel;
 	}
 
-	/*private void sendEnergy2()
-	{
-		if(energyStorage.getEnergyStored() > 0)
-		{
-			for(int i = 0; (i < Direction.values().length) && (energyStorage.getEnergyStored() > 0); i++)
-			{
-				Direction facing = Direction.values()[i];
-				TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
-				if(tileEntity != null)
-				{
-					tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler ->
-					{
-						if(handler.canReceive())
-						{
-							int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
-							energyStorage.consumePower(accepted);
-							handler.receiveEnergy(accepted, false);
-						}
-					});
-				}
-			}
-			this.markDirty();
-		}
-	}*/
-
 	private void sendEnergy()
 	{
 		energy.ifPresent(energy ->
@@ -110,18 +84,22 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 			for(int i = 0; (i < Direction.values().length) && (capacity.get() > 0); i++)
 			{
 				Direction facing = Direction.values()[i];
-				TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
-				if(tileEntity != null)
+				if(facing != Direction.UP)
 				{
-					tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler ->
+					TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
+					if(tileEntity != null)
 					{
-						if(handler.canReceive())
+						tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler ->
 						{
-							int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutput), false);
-							capacity.addAndGet(-received);
-							((MyEnergyStorage) energy).consumePower(received);
-						}
-					});
+							if(handler.canReceive())
+							{
+								int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutput), false);
+								capacity.addAndGet(-received);
+								((MyEnergyStorage) energy).consumePower(received);
+								//this.markDirty();
+							}
+						});
+					}
 				}
 			}
 		});
@@ -130,7 +108,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing)
 	{
-		if(capability == CapabilityEnergy.ENERGY)
+		if(capability == CapabilityEnergy.ENERGY && facing != Direction.UP)
 		{
 			return energy.cast();
 		}

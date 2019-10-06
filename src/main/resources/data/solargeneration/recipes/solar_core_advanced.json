@@ -10,7 +10,7 @@
     "type": "minecraft:crafting_shaped",
     "key": {
         "a": {
-            "tag": "forge:nuggets/mithril"
+            "tag": "forge:nuggets/lumium"
         },
         "b": {
             "item": "solargeneration:solar_core_resonant"

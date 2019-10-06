@@ -10,7 +10,7 @@
     "type": "minecraft:crafting_shaped",
     "key": {
         "a": {
-            "tag": "forge:nuggets/iridium"
+            "tag": "forge:nuggets/platinum"
         },
         "b": {
             "item": "solargeneration:solar_core_advanced"

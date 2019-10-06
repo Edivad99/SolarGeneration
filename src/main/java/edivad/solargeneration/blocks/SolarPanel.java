@@ -16,7 +16,6 @@ import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
-//import cofh.thermalfoundation.item.ItemWrench;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -48,14 +47,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class SolarPanel extends Block {
 
-	// SolarPanel Level
-	// 0-SolarPanelLeadstone
-	// 1-SolarPanelHardened
-	// 2-SolarPanelRedstone
-	// 3-SolarPanelSignalum
-	// 4-SolarPanelResonant
-	// 5-SolarPanelAdvanced
-	// 6-SolarPanelUltimate
 	private final SolarPanelLevel levelSolarPanel;
 	private static final VoxelShape BOX = VoxelShapes.create(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
 
