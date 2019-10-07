@@ -61,7 +61,15 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 		if(world.isRemote)
 			return;
 
-		energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced()));
+		energy.ifPresent(e -> 
+		{
+			if(!((MyEnergyStorage)e).isFullEnergy())
+			{
+				((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced());
+				this.markDirty();
+			}
+			
+		});
 		sendEnergy();
 	}
 
@@ -96,7 +104,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 								int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutput), false);
 								capacity.addAndGet(-received);
 								((MyEnergyStorage) energy).consumePower(received);
-								//this.markDirty();
+								this.markDirty();
 							}
 						});
 					}

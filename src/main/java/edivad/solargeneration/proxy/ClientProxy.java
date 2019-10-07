@@ -7,6 +7,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
@@ -22,6 +23,8 @@ public class ClientProxy implements IProxy {
 		ScreenManager.registerFactory(ModBlocks.solarPanelResonantContainer, SolarPanelScreen::new);
 		ScreenManager.registerFactory(ModBlocks.solarPanelSignalumContainer, SolarPanelScreen::new);
 		ScreenManager.registerFactory(ModBlocks.solarPanelUltimateContainer, SolarPanelScreen::new);
+		
+		MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edivad.solargeneration.proxy.ClientProxy;
-import edivad.solargeneration.proxy.EventHandler;
 import edivad.solargeneration.proxy.IProxy;
 import edivad.solargeneration.proxy.ServerProxy;
 import edivad.solargeneration.tabs.SolarGenerationTab;
@@ -13,7 +12,6 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -40,7 +38,6 @@ public class Main {
 
 	private void setup(final FMLCommonSetupEvent event)
 	{
-		MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
 		proxy.init();
 	}
 

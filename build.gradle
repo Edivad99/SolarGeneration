@@ -13,14 +13,15 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.2'
+version = '1.0.3'
 group = 'edivad.solargeneration'
 archivesBaseName = 'solargeneration'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20191006-1.14.3'
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
+
     runs {
         client {
             workingDirectory project.file('run')
