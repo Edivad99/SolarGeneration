@@ -53,7 +53,7 @@ public class SolarPanelContainer extends Container {
 	{
 		if(getEnergy() != getMaxEnergy())
 			return tileEntitySolarPanel.currentAmountEnergyProduced();
-		else 
+		else
 			return 0;
 	}
 

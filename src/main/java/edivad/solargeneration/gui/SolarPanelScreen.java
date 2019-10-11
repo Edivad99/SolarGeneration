@@ -29,7 +29,7 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 		super.render(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
 		if(mouseX > guiLeft + 7 && mouseX < guiLeft + 29 && mouseY > guiTop + 10 && mouseY < guiTop + 77)
-			this.renderTooltip(Collections.singletonList("Energy: " + String.valueOf(getPercent()) + "%"), mouseX, mouseY, font);
+			this.renderTooltip(Collections.singletonList("Energy: " + getPercent() + "%"), mouseX, mouseY, font);
 	}
 
 	@Override
@@ -65,11 +65,12 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
 	private int getPercent()
 	{
-		int currentEnergy = this.container.getEnergy();
+		Long currentEnergy = new Long(this.container.getEnergy());
 		int maxEnergy = this.container.getMaxEnergy();
 
-		int result = currentEnergy * 100 / maxEnergy;
-		return result;
+		long result = currentEnergy * 100 / maxEnergy;
+
+		return (int) result;
 	}
 
 }

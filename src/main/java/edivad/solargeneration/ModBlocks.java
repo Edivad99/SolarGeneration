@@ -42,7 +42,7 @@ public class ModBlocks {
 	@ObjectHolder(Main.MODID + ":solar_panel_ultimate")
 	public static SolarPanel solarPanelUltimate;
 
-	//Container
+	// Container
 	@ObjectHolder(Main.MODID + ":solar_panel_advanced")
 	public static ContainerType<SolarPanelAdvancedContainer> solarPanelAdvancedContainer;
 	@ObjectHolder(Main.MODID + ":solar_panel_hardened")
@@ -58,7 +58,7 @@ public class ModBlocks {
 	@ObjectHolder(Main.MODID + ":solar_panel_ultimate")
 	public static ContainerType<SolarPanelUltimateContainer> solarPanelUltimateContainer;
 
-	//TilEntity
+	// TilEntity
 	@ObjectHolder(Main.MODID + ":solar_panel_advanced")
 	public static TileEntityType<?> ADVANCED;
 	@ObjectHolder(Main.MODID + ":solar_panel_hardened")

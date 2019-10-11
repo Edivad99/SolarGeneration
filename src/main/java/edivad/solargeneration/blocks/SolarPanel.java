@@ -5,14 +5,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import edivad.solargeneration.Main;
-import edivad.solargeneration.ModItems;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
 import edivad.solargeneration.tile.TileEntityRedstoneSolarPanel;
 import edivad.solargeneration.tile.TileEntityResonantSolarPanel;
 import edivad.solargeneration.tile.TileEntitySignalumSolarPanel;
-import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
@@ -21,7 +19,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.IFluidState;
@@ -41,8 +38,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class SolarPanel extends Block {
@@ -92,15 +87,13 @@ public class SolarPanel extends Block {
 	{
 		if(!worldIn.isRemote)
 		{
-			//TODO: Solve when forge allows it
-			/*if(player.isSneaking())
-			{
-				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
-				{
-					dismantleBlock(worldIn, pos);
-					return true;
-				}
-			}*/
+			// TODO: Solve when forge allows it
+			/*
+			 * if(player.isSneaking()) {
+			 * if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new
+			 * ItemStack(ModItems.wrench, 1))) { dismantleBlock(worldIn, pos); return true;
+			 * } }
+			 */
 
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof INamedContainerProvider)
@@ -113,10 +106,10 @@ public class SolarPanel extends Block {
 				throw new IllegalStateException("Our named container provider is missing!");
 			}
 		}
-		return false;
+		return true;
 	}
 
-	private void dismantleBlock(World worldIn, BlockPos pos)
+	/*private void dismantleBlock(World worldIn, BlockPos pos)
 	{
 		ItemStack itemStack = new ItemStack(this);
 	
@@ -137,7 +130,7 @@ public class SolarPanel extends Block {
 	
 		entityItem.setMotion(0, entityItem.getYOffset(), 0);
 		worldIn.addEntity(entityItem);
-	}
+	}*/
 
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)

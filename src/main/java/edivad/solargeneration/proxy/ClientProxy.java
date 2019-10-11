@@ -23,7 +23,7 @@ public class ClientProxy implements IProxy {
 		ScreenManager.registerFactory(ModBlocks.solarPanelResonantContainer, SolarPanelScreen::new);
 		ScreenManager.registerFactory(ModBlocks.solarPanelSignalumContainer, SolarPanelScreen::new);
 		ScreenManager.registerFactory(ModBlocks.solarPanelUltimateContainer, SolarPanelScreen::new);
-		
+
 		MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
 	}
 
