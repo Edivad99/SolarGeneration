@@ -1,15 +1,15 @@
 {
-    "parent": "solargeneration:solar_panel_advanced",
+    "parent": "solargeneration:solar_helmet_advanced",
     "display": {
         "frame": "challenge",
         "icon": {
-            "item": "solargeneration:solar_panel_ultimate"
+            "item": "solargeneration:solar_helmet_ultimate"
         },
         "title": {
-            "translate": "advancements.solargeneration.solar_panel_ultimate"
+            "translate": "advancements.solargeneration.solar_helmet_ultimate"
         },
         "description": {
-            "translate": "advancements.solargeneration.solar_panel_ultimate.desc"
+            "translate": "advancements.solargeneration.solar_helmet_ultimate.desc"
         }
     },
     "criteria": {
@@ -18,7 +18,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "solargeneration:solar_panel_ultimate"
+                        "item": "solargeneration:solar_helmet_ultimate"
                     }
                 ]
             }

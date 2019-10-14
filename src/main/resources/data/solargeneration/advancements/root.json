@@ -1,14 +1,14 @@
 {
-    "parent": "solargeneration:root",
     "display": {
+        "background": "solargeneration:textures/gui/advancements.png",
         "icon": {
-            "item": "solargeneration:solar_panel_leadstone"
+            "item": "solargeneration:photovoltaic_cell"
         },
         "title": {
-            "translate": "advancements.solargeneration.solar_panel_leadstone"
+            "translate": "advancements.solargeneration.root"
         },
         "description": {
-            "translate": "advancements.solargeneration.solar_panel_leadstone.desc"
+            "translate": "advancements.solargeneration.root.desc"
         }
     },
     "criteria": {
@@ -17,7 +17,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "solargeneration:solar_panel_leadstone"
+                        "item": "solargeneration:photovoltaic_cell"
                     }
                 ]
             }

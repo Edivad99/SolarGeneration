@@ -28,27 +28,39 @@
     "block.solargeneration.solar_panel_resonant": "Resonant Solar Panel",
     "block.solargeneration.solar_panel_signalum": "Signalum Solar Panel",
     "block.solargeneration.solar_panel_ultimate": "Ultimate Solar Panel",
+    
+    "advancements.solargeneration.root": "Solar Generation",
+    "advancements.solargeneration.root.desc": "Start your solar-power journey by creating a Photovoltaic Cell.",
 
-    "achievement.solargeneration.solar_panel_leadstone": "Start with the basics",
-    "achievement.solargeneration.solar_panel_leadstone.desc": "Place down a Leadstone Solar Panel.",
-
-    "achievement.solargeneration.solar_panel_hardened": "1 is better than 8",
-    "achievement.solargeneration.solar_panel_hardened.desc": "Place down a Hardened Solar Panel.",
-
-    "achievement.solargeneration.solar_panel_redstone": "Not enough energy",
-    "achievement.solargeneration.solar_panel_redstone.desc": "Place down a Redstone Solar Panel.",
-
-    "achievement.solargeneration.solar_panel_signalum": "Looking for the signal",
-    "achievement.solargeneration.solar_panel_signalum.desc": "Place down a Signalum Solar Panel.",
-
-    "achievement.solargeneration.solar_panel_resonant": "Escalation of power",
-    "achievement.solargeneration.solar_panel_resonant.desc": "Place down a Resonant Solar Panel.",
-
-    "achievement.solargeneration.solar_panel_advanced": "President of energy",
-    "achievement.solargeneration.solar_panel_advanced.desc": "Place down a Advanced Solar Panel.",
-
-    "achievement.solargeneration.solar_panel_ultimate": "Oh sun, I control you!",
-    "achievement.solargeneration.solar_panel_ultimate.desc": "Place down a Ultimate Solar Panel.",
+    "advancements.solargeneration.solar_panel_leadstone": "Start with the basics",
+    "advancements.solargeneration.solar_panel_leadstone.desc": "Craft a Leadstone Solar Panel.",
+    "advancements.solargeneration.solar_panel_hardened": "1 is better than 8",
+    "advancements.solargeneration.solar_panel_hardened.desc": "Craft a Hardened Solar Panel.",
+    "advancements.solargeneration.solar_panel_redstone": "Not enough energy",
+    "advancements.solargeneration.solar_panel_redstone.desc": "Craft a Redstone Solar Panel.",
+    "advancements.solargeneration.solar_panel_signalum": "Looking for the signal",
+    "advancements.solargeneration.solar_panel_signalum.desc": "Craft a Signalum Solar Panel.",
+    "advancements.solargeneration.solar_panel_resonant": "Escalation of power",
+    "advancements.solargeneration.solar_panel_resonant.desc": "Craft a Resonant Solar Panel.",
+    "advancements.solargeneration.solar_panel_advanced": "President of energy",
+    "advancements.solargeneration.solar_panel_advanced.desc": "Craft a Advanced Solar Panel.",
+    "advancements.solargeneration.solar_panel_ultimate": "Oh sun, I control you!",
+    "advancements.solargeneration.solar_panel_ultimate.desc": "Craft a Ultimate Solar Panel.",
+    
+    "advancements.solargeneration.solar_helmet_leadstone": "Using your head!",
+    "advancements.solargeneration.solar_helmet_leadstone.desc": "Craft a Leadstone Solar Helmet.",
+    "advancements.solargeneration.solar_helmet_hardened": "8 helmets in 1",
+    "advancements.solargeneration.solar_helmet_hardened.desc": "Craft a Hardened Solar Helmet.",
+    "advancements.solargeneration.solar_helmet_redstone": "Electric mind",
+    "advancements.solargeneration.solar_helmet_redstone.desc": "Craft a Redstone Solar Helmet.",
+    "advancements.solargeneration.solar_helmet_signalum": "Brain signals",
+    "advancements.solargeneration.solar_helmet_signalum.desc": "Craft a Signalum Solar Helmet.",
+    "advancements.solargeneration.solar_helmet_resonant": "Resonating tune",
+    "advancements.solargeneration.solar_helmet_resonant.desc": "Craft a Resonant Solar Helmet.",
+    "advancements.solargeneration.solar_helmet_advanced": "Fancy crown",
+    "advancements.solargeneration.solar_helmet_advanced.desc": "Craft a Advanced Solar Helmet.",
+    "advancements.solargeneration.solar_helmet_ultimate": "The ultimate helmet",
+    "advancements.solargeneration.solar_helmet_ultimate.desc": "Craft a Ultimate Solar Helmet.",
 
     "message.solargeneration.hold_shift": "Hold @b@oShift @7for details",
 
