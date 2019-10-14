@@ -29,26 +29,38 @@
     "block.solargeneration.solar_panel_signalum": "Panel Solar de Signalum",
     "block.solargeneration.solar_panel_ultimate": "Panel Solar Final",
 
-    "achievement.solargeneration.solar_panel_leadstone": "Comience con lo basico",
-    "achievement.solargeneration.solar_panel_leadstone.desc": "Coloque un Panel Solar de Plomo.",
-
-    "achievement.solargeneration.solar_panel_hardened": "1 es mejor que 8",
-    "achievement.solargeneration.solar_panel_hardened.desc": "Coloque un Panel Solar Reforzado.",
-
-    "achievement.solargeneration.solar_panel_redstone": "No hay suficiente energia",
-    "achievement.solargeneration.solar_panel_redstone.desc": "Coloque un Panel Solar de Redstone.",
-
-    "achievement.solargeneration.solar_panel_signalum": "Buscando la senal",
-    "achievement.solargeneration.solar_panel_signalum.desc": "Coloque un Panel Solar de Signalum.",
-
-    "achievement.solargeneration.solar_panel_resonant": "Escalada de potencia",
-    "achievement.solargeneration.solar_panel_resonant.desc": "Coloque un Panel Solar de Resonant.",
-
-    "achievement.solargeneration.solar_panel_advanced": "Presidente de energia",
-    "achievement.solargeneration.solar_panel_advanced.desc": "Coloque un Panel Solar Avanzado.",
-
-    "achievement.solargeneration.solar_panel_ultimate": "Oh sol, te controlo!",
-    "achievement.solargeneration.solar_panel_ultimate.desc": "Coloque un Panel Solar Final.",
+    "advancements.solargeneration.root": "Solar Generation",
+    "advancements.solargeneration.root.desc": "Comience su viaje de energia solar creando una Celula Fotovoltaica.",
+    
+    "advancements.solargeneration.solar_panel_leadstone": "Comience con lo basico",
+    "advancements.solargeneration.solar_panel_leadstone.desc": "Crear un Panel Solar de Plomo.",
+    "advancements.solargeneration.solar_panel_hardened": "1 es mejor que 8",
+    "advancements.solargeneration.solar_panel_hardened.desc": "Crear un Panel Solar Reforzado.",
+    "advancements.solargeneration.solar_panel_redstone": "No hay suficiente energia",
+    "advancements.solargeneration.solar_panel_redstone.desc": "Crear un Panel Solar de Redstone.",
+    "advancements.solargeneration.solar_panel_signalum": "Buscando la senal",
+    "advancements.solargeneration.solar_panel_signalum.desc": "Crear un Panel Solar de Signalum.",
+    "advancements.solargeneration.solar_panel_resonant": "Escalada de potencia",
+    "advancements.solargeneration.solar_panel_resonant.desc": "Crear un Panel Solar de Resonant.",
+    "advancements.solargeneration.solar_panel_advanced": "Presidente de energia",
+    "advancements.solargeneration.solar_panel_advanced.desc": "Crear un Panel Solar Avanzado.",
+    "advancements.solargeneration.solar_panel_ultimate": "Oh sol, te controlo!",
+    "advancements.solargeneration.solar_panel_ultimate.desc": "Crear un Panel Solar Final.",
+    
+    "advancements.solargeneration.solar_helmet_leadstone": "Usando tu cabeza!",
+    "advancements.solargeneration.solar_helmet_leadstone.desc": "Crear un Casco Solar de Plomo.",
+    "advancements.solargeneration.solar_helmet_hardened": "8 cascos en 1",
+    "advancements.solargeneration.solar_helmet_hardened.desc": "Crear un Panel Solar Reforzado.",
+    "advancements.solargeneration.solar_helmet_redstone": "Mente electrica",
+    "advancements.solargeneration.solar_helmet_redstone.desc": "Crear un Panel Solar de Redstone.",
+    "advancements.solargeneration.solar_helmet_signalum": "Senales cerebrales",
+    "advancements.solargeneration.solar_helmet_signalum.desc": "Crear un Panel Solar de Signalum.",
+    "advancements.solargeneration.solar_helmet_resonant": "Melodia resonante",
+    "advancements.solargeneration.solar_helmet_resonant.desc": "Crear un Panel Solar de Resonant.",
+    "advancements.solargeneration.solar_helmet_advanced": "Corona de lujo",
+    "advancements.solargeneration.solar_helmet_advanced.desc": "Crear un Panel Solar Avanzado.",
+    "advancements.solargeneration.solar_helmet_ultimate": "El casco final",
+    "advancements.solargeneration.solar_helmet_ultimate.desc": "Crear un Panel Solar Final.",
     
     "message.solargeneration.hold_shift": "Presione @b@oShift @7para detalles",
 
