@@ -88,12 +88,15 @@ public class SolarPanel extends Block {
 		if(!worldIn.isRemote)
 		{
 			// TODO: Solve when forge allows it
-			/*
-			 * if(player.isSneaking()) {
-			 * if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new
-			 * ItemStack(ModItems.wrench, 1))) { dismantleBlock(worldIn, pos); return true;
-			 * } }
-			 */
+
+//			if(player.isSneaking())
+//			{
+//				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
+//				{
+//					dismantleBlock(worldIn, pos);
+//					return true;
+//				}
+//			}
 
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof INamedContainerProvider)
@@ -109,28 +112,28 @@ public class SolarPanel extends Block {
 		return true;
 	}
 
-	/*private void dismantleBlock(World worldIn, BlockPos pos)
-	{
-		ItemStack itemStack = new ItemStack(this);
-	
-		TileEntitySolarPanel localTileEntity = (TileEntitySolarPanel) worldIn.getTileEntity(pos);
-		int internalEnergy = localTileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-		if(internalEnergy > 0)
-		{
-			if(itemStack.getTag() == null)
-			{
-				itemStack.setTag(new CompoundNBT());
-			}
-			itemStack.getTag().putInt("energy", internalEnergy);
-		}
-	
-		worldIn.removeBlock(pos, false);
-	
-		ItemEntity entityItem = new ItemEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
-	
-		entityItem.setMotion(0, entityItem.getYOffset(), 0);
-		worldIn.addEntity(entityItem);
-	}*/
+//	private void dismantleBlock(World worldIn, BlockPos pos)
+//	{
+//		ItemStack itemStack = new ItemStack(this);
+//
+//		TileEntitySolarPanel localTileEntity = (TileEntitySolarPanel) worldIn.getTileEntity(pos);
+//		int internalEnergy = localTileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+//		if(internalEnergy > 0)
+//		{
+//			if(itemStack.getTag() == null)
+//			{
+//				itemStack.setTag(new CompoundNBT());
+//			}
+//			itemStack.getTag().putInt("energy", internalEnergy);
+//		}
+//
+//		worldIn.removeBlock(pos, false);
+//
+//		ItemEntity entityItem = new ItemEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
+//
+//		entityItem.setMotion(0, entityItem.getYOffset(), 0);
+//		worldIn.addEntity(entityItem);
+//	}
 
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)
