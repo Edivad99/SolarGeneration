@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import edivad.solargeneration.Main;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
@@ -27,7 +26,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -51,12 +49,7 @@ public class SolarPanel extends Block {
 
 		this.levelSolarPanel = levelSolarPanel;
 
-		setRegistryName(getResourceLocation(levelSolarPanel));
-	}
-
-	public static ResourceLocation getResourceLocation(SolarPanelLevel levelSolarPanel)
-	{
-		return new ResourceLocation(Main.MODID, "solar_panel_" + levelSolarPanel.name().toLowerCase());
+		setRegistryName(levelSolarPanel.getBlockResourceLocation());
 	}
 
 	public SolarPanelLevel getLevelSolarPanel()

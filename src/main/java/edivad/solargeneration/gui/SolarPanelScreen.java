@@ -35,10 +35,10 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		String clientEnergy = "Stored energy: " + this.container.getEnergy() + " FE";
-		this.font.drawString(clientEnergy, (this.xSize / 2 - this.font.getStringWidth(clientEnergy) / 2) + 14, 20, 4210752);
+		String energy = "Stored energy: " + getEnergyFormatted(this.container.getEnergy());
+		this.font.drawString(energy, (this.xSize / 2 - this.font.getStringWidth(energy) / 2) + 14, 20, 4210752);
 
-		String maxEnergy = "Max capacity: " + this.container.getMaxEnergy() + " FE";
+		String maxEnergy = "Max capacity: " + getEnergyFormatted(this.container.getMaxEnergy());
 		this.font.drawString(maxEnergy, (this.xSize / 2 - this.font.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
 
 		String generation = "Generation: " + this.container.getCurrentAmountEnergyProduced() + " FE/t";
@@ -56,6 +56,14 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 		int y = this.getEnergyScaled(60);
 		this.blit(this.guiLeft + 10, this.guiTop + 12 + y, 176, 0, 16, 60 - y);
 
+	}
+
+	private String getEnergyFormatted(int energy)
+	{
+		if(energy >= 1000000)
+			return (energy / 1000) + " kFE";
+		else
+			return energy + " FE";
 	}
 
 	private int getEnergyScaled(int pixels)

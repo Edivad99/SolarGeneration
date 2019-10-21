@@ -21,7 +21,6 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -40,16 +39,11 @@ public class SolarHelmet extends ArmorItem {
 	{
 		super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(Main.solarGenerationTab).maxStackSize(1));
 		this.levelSolarHelmet = levelSolarHelmet;
-		setRegistryName(getResourceLocation(levelSolarHelmet));
+		setRegistryName(levelSolarHelmet.getHelmetResourceLocation());
 
 		energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
 		maxEnergyOutput = energyGeneration * 2;
 		energyStorage = new MyEnergyStorage(energyGeneration * 2, energyGeneration * 1000);
-	}
-
-	public static ResourceLocation getResourceLocation(SolarPanelLevel levelSolarHelmet)
-	{
-		return new ResourceLocation(Main.MODID, "solar_helmet_" + levelSolarHelmet.name().toLowerCase());
 	}
 
 	@Override
@@ -101,8 +95,6 @@ public class SolarHelmet extends ArmorItem {
 	{
 		return this.levelSolarHelmet;
 	}
-
-	// Energy
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack)
