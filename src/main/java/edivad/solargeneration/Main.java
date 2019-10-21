@@ -67,6 +67,5 @@ public class Main {
 		{
 			ModBlocks.registerContainers(event.getRegistry());
 		}
-
 	}
 }
