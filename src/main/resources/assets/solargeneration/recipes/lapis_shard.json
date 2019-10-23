@@ -1,13 +1,17 @@
 {
     "result": {
         "item": "solargeneration:lapis_shard",
-        "count": 9
+        "count": 36
     },
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "type": "forge:ore_dict",
-            "ore": "gemLapis"
+    "pattern": [
+        "aa",
+        "aa"
+   ],
+    "type": "forge:ore_shaped",
+    "key": {
+        "a": {
+            "item": "minecraft:dye",
+            "data": 4
         }
-    ]
+    }
 }
