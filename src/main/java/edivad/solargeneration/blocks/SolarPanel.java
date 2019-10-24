@@ -3,7 +3,6 @@ package edivad.solargeneration.blocks;
 import java.util.List;
 import java.util.Random;
 
-import cofh.thermalfoundation.item.ItemWrench;
 import edivad.solargeneration.Main;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
@@ -13,6 +12,7 @@ import edivad.solargeneration.tile.TileEntityResonantSolarPanel;
 import edivad.solargeneration.tile.TileEntitySignalumSolarPanel;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
+import edivad.solargeneration.tools.Platform;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
 import edivad.solargeneration.tools.inter.IGuiTile;
@@ -34,7 +34,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -47,7 +46,7 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 
 	private final SolarPanelLevel levelSolarPanel;
 	private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
-	
+
 	public SolarPanel(SolarPanelLevel levelSolarPanel)
 	{
 		super(Material.IRON);
@@ -57,15 +56,10 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 		setHarvestLevel("pickaxe", 0);
 		this.levelSolarPanel = levelSolarPanel;
 
-		setRegistryName(getResourceLocation(levelSolarPanel));
-		setUnlocalizedName(Main.MODID + "." + getResourceLocation(levelSolarPanel).getResourcePath());
+		setRegistryName(levelSolarPanel.getBlockResourceLocation());
+		setUnlocalizedName(Main.MODID + "." + levelSolarPanel.getBlockResourceLocation().getResourcePath());
 
 		setCreativeTab(Main.solarGenerationTab);
-	}
-
-	public static ResourceLocation getResourceLocation(SolarPanelLevel levelSolarPanel)
-	{
-		return new ResourceLocation(Main.MODID, "solar_panel_" + levelSolarPanel.name().toLowerCase());
 	}
 
 	public SolarPanelLevel getLevelSolarPanel()
@@ -96,19 +90,19 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 	{
 		return false;
 	}
-	
+
 	@Override
 	public boolean isFullBlock(IBlockState state)
 	{
 		return false;
 	}
-	
+
 	@Override
 	public boolean isFullCube(IBlockState state)
 	{
 		return false;
 	}
-	
+
 	@Override
 	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side)
 	{
@@ -127,14 +121,13 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 		if(worldIn.isRemote)
 			return true;
 
-		if(playerIn.isSneaking())
+		if(playerIn != null)
 		{
-			if(ItemStack.areItemsEqual(playerIn.getHeldItemMainhand(), ItemWrench.wrenchBasic))
+			if(Platform.isWrench(playerIn, playerIn.getHeldItemMainhand(), pos) && playerIn.isSneaking())
 			{
 				dismantleBlock(worldIn, pos);
 				return true;
 			}
-
 		}
 
 		TileEntity te = worldIn.getTileEntity(pos);
@@ -143,7 +136,6 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 
 		playerIn.openGui(Main.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
-
 	}
 
 	private void dismantleBlock(World worldIn, BlockPos pos)
@@ -210,7 +202,7 @@ public class SolarPanel extends Block implements ITileEntityProvider {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-		
+
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
 
 		// Always check this!!

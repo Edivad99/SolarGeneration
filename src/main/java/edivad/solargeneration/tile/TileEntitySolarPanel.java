@@ -70,7 +70,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 	{
 		if(!energyStorage.isFullEnergy())
 			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, getPos(), getLevelSolarPanel()));
-		
+
 		return 0;
 	}
 
@@ -79,7 +79,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 		for(int i = 0; (i < EnumFacing.values().length) && (energyStorage.getEnergyStored() > 0); i++)
 		{
 			EnumFacing face = EnumFacing.values()[i];
-			
+
 			TileEntity tileEntity = world.getTileEntity(pos.offset(face));
 			if(tileEntity != null && tileEntity.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite()))
 			{
@@ -198,7 +198,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IGuiT
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
 	{
-        currenttip.add(TextFormatting.GRAY + "Energy stored: " + currentAmountEnergyProduced() + " FE");
-        return currenttip;
+		currenttip.add(TextFormatting.GRAY + "Energy stored: " + currentAmountEnergyProduced() + " FE");
+		return currenttip;
 	}
 }

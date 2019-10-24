@@ -18,7 +18,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -38,19 +37,14 @@ public class SolarHelmet extends ItemArmor {
 	{
 		super(ArmorMaterial.IRON, 0, EntityEquipmentSlot.HEAD);
 		this.levelSolarHelmet = levelSolarHelmet;
-		setRegistryName(getResourceLocation(levelSolarHelmet));
-		setUnlocalizedName(Main.MODID + "." + getResourceLocation(levelSolarHelmet).getResourcePath());
+		setRegistryName(levelSolarHelmet.getHelmetResourceLocation());
+		setUnlocalizedName(Main.MODID + "." + levelSolarHelmet.getHelmetResourceLocation().getResourcePath());
 		setCreativeTab(Main.solarGenerationTab);
 		setMaxStackSize(1);
 
 		energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
 		maxEnergyOutput = energyGeneration * 2;
 		energyStorage = new MyEnergyStorage(energyGeneration * 2, energyGeneration * 1000);
-	}
-
-	public static ResourceLocation getResourceLocation(SolarPanelLevel levelSolarHelmet)
-	{
-		return new ResourceLocation(Main.MODID, "solar_helmet_" + levelSolarHelmet.name().toLowerCase());
 	}
 
 	@Override
@@ -96,13 +90,7 @@ public class SolarHelmet extends ItemArmor {
 		return Main.MODID + ":textures/models/armor/solar_helmet_" + levelSolarHelmet.name().toLowerCase() + ".png";
 	}
 
-	public SolarPanelLevel getLevelSolarPanel()
-	{
-		return this.levelSolarHelmet;
-	}
-
 	// Energy
-
 	@Override
 	public boolean showDurabilityBar(ItemStack stack)
 	{
@@ -176,7 +164,6 @@ public class SolarHelmet extends ItemArmor {
 						if(energyStorage.getEnergyStored() <= 0)
 							break;
 					}
-
 				}
 			}
 		}
@@ -187,7 +174,7 @@ public class SolarHelmet extends ItemArmor {
 		if(!energyStorage.isFullEnergy())
 		{
 			BlockPos pos = new BlockPos(player.chasingPosX, player.chasingPosY + 1, player.chasingPosZ);
-			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, getLevelSolarPanel()));
+			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, levelSolarHelmet));
 		}
 
 		return 0;

@@ -56,7 +56,7 @@ public class SolarPanelGui extends GuiContainer {
 		this.drawTexturedModalRect(this.guiLeft + 10, this.guiTop + 12 + y, 176, 0, 16, 60 - y);
 
 	}
-	
+
 	private String getEnergyFormatted(int energy)
 	{
 		if(energy >= 1000000)
@@ -64,7 +64,7 @@ public class SolarPanelGui extends GuiContainer {
 		else
 			return energy + " FE";
 	}
-	
+
 	private int getEnergyScaled(int pixels)
 	{
 		return pixels - (pixels * getPercent() / 100);

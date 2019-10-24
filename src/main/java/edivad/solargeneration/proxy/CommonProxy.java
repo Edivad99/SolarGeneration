@@ -5,7 +5,6 @@ import com.google.common.util.concurrent.ListenableFuture;
 import edivad.solargeneration.Main;
 import edivad.solargeneration.ModBlocks;
 import edivad.solargeneration.ModItems;
-import edivad.solargeneration.compat.MainCompatHandler;
 import edivad.solargeneration.network.Messages;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +25,7 @@ public class CommonProxy {
 	{
 		Messages.registerMessages(Main.MODID);
 		MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
-		
+
 		//TODO: Test Waila
 		//MainCompatHandler.registerWaila();
 	}

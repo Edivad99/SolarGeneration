@@ -11,13 +11,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Main.MODID, name = Main.MODNAME, version = Main.MODVERSION, acceptedMinecraftVersions = Main.MCVERSION, dependencies = "required-after:forge@[14.23.5.2847,);required-after:thermalfoundation@[2.6.3,)", updateJSON = Main.UPDATE_URL, useMetadata = true)
+@Mod(modid = Main.MODID, name = Main.MODNAME, version = Main.MODVERSION, acceptedMinecraftVersions = Main.MCVERSION, dependencies = "required-after:forge@[14.23.5.2847,)", updateJSON = Main.UPDATE_URL, useMetadata = true)
 public class Main {
 
 	public static final String MODID = "solargeneration";
 	public static final String MODNAME = "Solar Generation";
 	public static final String MCVERSION = "1.12.2";
-	public static final String MODVERSION = "1.2.3";
+	public static final String MODVERSION = "1.3.0";
 	public static final String UPDATE_URL = "https://raw.githubusercontent.com/Edivad99/mod-version-controll/master/solargeneration_update.json";
 	public static final String CLIENT_PROXY_CLASS = "edivad.solargeneration.proxy.ClientProxy";
 	public static final String SERVER_PROXY_CLASS = "edivad.solargeneration.proxy.CommonProxy";

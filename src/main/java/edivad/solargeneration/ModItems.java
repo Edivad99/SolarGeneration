@@ -1,6 +1,5 @@
 package edivad.solargeneration;
 
-import edivad.solargeneration.blocks.SolarPanel;
 import edivad.solargeneration.items.LapisShard;
 import edivad.solargeneration.items.PhotovoltaicCell;
 import edivad.solargeneration.items.SolarCore;
@@ -94,12 +93,12 @@ public class ModItems {
 		registry.register(new PhotovoltaicCell());
 
 		// Blocks
-		registry.register(new ItemBlock(ModBlocks.solarPanelAdvanced).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Advanced)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelHardened).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Hardened)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelLeadstone).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Leadstone)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelRedstone).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Redstone)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelResonant).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Resonant)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelSignalum).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Signalum)));
-		registry.register(new ItemBlock(ModBlocks.solarPanelUltimate).setRegistryName(SolarPanel.getResourceLocation(SolarPanelLevel.Ultimate)));
+		registry.register(new ItemBlock(ModBlocks.solarPanelLeadstone).setRegistryName(SolarPanelLevel.Leadstone.getBlockResourceLocation()));
+		registry.register(new ItemBlock(ModBlocks.solarPanelHardened).setRegistryName(SolarPanelLevel.Hardened.getBlockResourceLocation()));
+		registry.register(new ItemBlock(ModBlocks.solarPanelRedstone).setRegistryName(SolarPanelLevel.Redstone.getBlockResourceLocation()));
+		registry.register(new ItemBlock(ModBlocks.solarPanelSignalum).setRegistryName(SolarPanelLevel.Signalum.getBlockResourceLocation()));
+		registry.register(new ItemBlock(ModBlocks.solarPanelResonant).setRegistryName(SolarPanelLevel.Resonant.getBlockResourceLocation()));
+		registry.register(new ItemBlock(ModBlocks.solarPanelAdvanced).setRegistryName(SolarPanelLevel.Advanced.getBlockResourceLocation()));
+		registry.register(new ItemBlock(ModBlocks.solarPanelUltimate).setRegistryName(SolarPanelLevel.Ultimate.getBlockResourceLocation()));
 	}
 }
