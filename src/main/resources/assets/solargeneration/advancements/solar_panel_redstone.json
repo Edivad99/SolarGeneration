@@ -1,14 +1,14 @@
-    
 {
+    "parent": "solargeneration:solar_panel_hardened",
     "display": {
         "icon": {
             "item": "solargeneration:solar_panel_redstone"
         },
         "title": {
-            "translate": "achievement.solargeneration.solar_panel_redstone"
+            "translate": "advancements.solargeneration.solar_panel_redstone"
         },
         "description": {
-            "translate": "achievement.solargeneration.solar_panel_redstone.desc"
+            "translate": "advancements.solargeneration.solar_panel_redstone.desc"
         }
     },
     "criteria": {

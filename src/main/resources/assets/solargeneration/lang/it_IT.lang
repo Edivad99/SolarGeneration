@@ -33,27 +33,39 @@ tile.solargeneration.solar_panel_signalum.name=Pannello Solare di Signalum
 tile.solargeneration.solar_panel_ultimate.name=Pannello Solare Finale
 
 
-// Achievements
-achievement.solargeneration.solar_panel_leadstone=Inizia con le basi
-achievement.solargeneration.solar_panel_leadstone.desc=Piazza un Pannello Solare di Piombo.
+//Advancements
+advancements.solargeneration.root=Solar Generation
+advancements.solargeneration.root.desc=Inizia il tuo viaggio nell'energia solare creando una cella fotovoltaica.
 
-achievement.solargeneration.solar_panel_hardened=1 e' meglio di 8
-achievement.solargeneration.solar_panel_hardened.desc=Piazza un Pannello Solare Rinforzato.
+advancements.solargeneration.solar_panel_leadstone=Inizia con le basi
+advancements.solargeneration.solar_panel_leadstone.desc=Piazza un Pannello Solare di Piombo.
+advancements.solargeneration.solar_panel_hardened=1 e' meglio di 8
+advancements.solargeneration.solar_panel_hardened.desc=Piazza un Pannello Solare Rinforzato.
+advancements.solargeneration.solar_panel_redstone=Non abbastanza energia
+advancements.solargeneration.solar_panel_redstone.desc=Piazza un Pannello Solare di Redstone.
+advancements.solargeneration.solar_panel_signalum=Alla ricerca del segnale
+advancements.solargeneration.solar_panel_signalum.desc=Piazza un Pannello Solare di Signalum.
+advancements.solargeneration.solar_panel_resonant=Escalation di potenza
+advancements.solargeneration.solar_panel_resonant.desc=Piazza un Pannello Solare di Resonant.
+advancements.solargeneration.solar_panel_advanced=Presidente dell'energia
+advancements.solargeneration.solar_panel_advanced.desc=Piazza un Pannello Solare Avanzato.
+advancements.solargeneration.solar_panel_ultimate=Oh sole, ti controllo!
+advancements.solargeneration.solar_panel_ultimate.desc=Piazza un Pannello Solare Finale.
 
-achievement.solargeneration.solar_panel_redstone=Non abbastanza energia
-achievement.solargeneration.solar_panel_redstone.desc=Piazza un Pannello Solare di Redstone.
-
-achievement.solargeneration.solar_panel_signalum=Alla ricerca del segnale
-achievement.solargeneration.solar_panel_signalum.desc=Piazza un Pannello Solare di Signalum.
-
-achievement.solargeneration.solar_panel_resonant=Escalation di potenza
-achievement.solargeneration.solar_panel_resonant.desc=Piazza un Pannello Solare di Resonant.
-
-achievement.solargeneration.solar_panel_advanced=Presidente dell'energia
-achievement.solargeneration.solar_panel_advanced.desc=Piazza un Pannello Solare Avanzato.
-
-achievement.solargeneration.solar_panel_ultimate=Oh sole, ti controllo!
-achievement.solargeneration.solar_panel_ultimate.desc=Piazza un Pannello Solare Finale.
+advancements.solargeneration.solar_helmet_leadstone=Usando la testa!
+advancements.solargeneration.solar_helmet_leadstone.desc=Crea un Elmo Solare di Piombo.
+advancements.solargeneration.solar_helmet_hardened=8 elmi in 1
+advancements.solargeneration.solar_helmet_hardened.desc=Crea un Elmo Solare Rinforzato.
+advancements.solargeneration.solar_helmet_redstone=Mente elettrica
+advancements.solargeneration.solar_helmet_redstone.desc=Crea un Elmo Solare di Redstone.
+advancements.solargeneration.solar_helmet_signalum=Segnali cerebrali
+advancements.solargeneration.solar_helmet_signalum.desc=Crea un Elmo Solare di Signalum.
+advancements.solargeneration.solar_helmet_resonant=Melodia risonante
+advancements.solargeneration.solar_helmet_resonant.desc=Crea un Elmo Solare di Resonant.
+advancements.solargeneration.solar_helmet_advanced=Cervello avanzato
+advancements.solargeneration.solar_helmet_advanced.desc=Crea un Elmo Solare Avanzato.
+advancements.solargeneration.solar_helmet_ultimate=L'elmo finale
+advancements.solargeneration.solar_helmet_ultimate.desc=Crea un Elmo Solare Finale.
 
 //Tooltip
 message.solargeneration.hold_shift=\

@@ -1,14 +1,15 @@
-    
 {
+    "parent": "solargeneration:solar_panel_signalum",
     "display": {
+        "frame": "goal",
         "icon": {
             "item": "solargeneration:solar_panel_resonant"
         },
         "title": {
-            "translate": "achievement.solargeneration.solar_panel_resonant"
+            "translate": "advancements.solargeneration.solar_panel_resonant"
         },
         "description": {
-            "translate": "achievement.solargeneration.solar_panel_resonant.desc"
+            "translate": "advancements.solargeneration.solar_panel_resonant.desc"
         }
     },
     "criteria": {

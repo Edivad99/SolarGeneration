@@ -1,14 +1,14 @@
 {
-    "parent": "solargeneration:root",
+    "parent": "solargeneration:solar_helmet_hardened",
     "display": {
         "icon": {
-            "item": "solargeneration:solar_panel_leadstone"
+            "item": "solargeneration:solar_helmet_redstone"
         },
         "title": {
-            "translate": "advancements.solargeneration.solar_panel_leadstone"
+            "translate": "advancements.solargeneration.solar_helmet_redstone"
         },
         "description": {
-            "translate": "advancements.solargeneration.solar_panel_leadstone.desc"
+            "translate": "advancements.solargeneration.solar_helmet_redstone.desc"
         }
     },
     "criteria": {
@@ -17,7 +17,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "solargeneration:solar_panel_leadstone"
+                        "item": "solargeneration:solar_helmet_redstone"
                     }
                 ]
             }
