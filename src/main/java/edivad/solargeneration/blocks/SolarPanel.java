@@ -119,14 +119,13 @@ public class SolarPanel extends Block {
 		if(internalEnergy > 0)
 		{
 			CompoundNBT energyValue = new CompoundNBT();
-			energyValue.putInt("energy", internalEnergy);
+			energyValue.putInt("value", internalEnergy);
 			
 			CompoundNBT energy = new CompoundNBT();
 			energy.put("energy", energyValue);
 			
 			CompoundNBT root = new CompoundNBT();
 			root.put("BlockEntityTag", energy);
-			System.out.println(root);
 			itemStack.setTag(root);
 		}
 
@@ -192,7 +191,7 @@ public class SolarPanel extends Block {
 		int energy = 0;
 		if(compoundnbt != null)
 			if(compoundnbt.contains("energy"))
-				energy = compoundnbt.getCompound("energy").getInt("energy");
+				energy = compoundnbt.getCompound("energy").getInt("value");
 
 		Tooltip.showInfoCtrl(energy, tooltip);
 		Tooltip.showInfoShift(this.levelSolarPanel, tooltip);
