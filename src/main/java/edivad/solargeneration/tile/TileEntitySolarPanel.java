@@ -67,12 +67,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
 	public int currentAmountEnergyProduced()
 	{
-		return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, getPos(), getLevelSolarPanel()));
-	}
-
-	private SolarPanelLevel getLevelSolarPanel()
-	{
-		return levelSolarPanel;
+		return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, getPos(), levelSolarPanel));
 	}
 
 	private void sendEnergy()

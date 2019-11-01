@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import edivad.solargeneration.ModItems;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
 import edivad.solargeneration.tile.TileEntityRedstoneSolarPanel;
 import edivad.solargeneration.tile.TileEntityResonantSolarPanel;
 import edivad.solargeneration.tile.TileEntitySignalumSolarPanel;
+import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
@@ -18,6 +20,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.IFluidState;
@@ -36,6 +39,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class SolarPanel extends Block {
@@ -82,14 +87,14 @@ public class SolarPanel extends Block {
 		{
 			// TODO: Solve when forge allows it
 
-//			if(player.isSneaking())
-//			{
-//				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
-//				{
-//					dismantleBlock(worldIn, pos);
-//					return true;
-//				}
-//			}
+			if(player.isSneaking())
+			{
+				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
+				{
+					dismantleBlock(worldIn, pos);
+					return true;
+				}
+			}
 
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if(tileEntity instanceof INamedContainerProvider)
@@ -105,28 +110,33 @@ public class SolarPanel extends Block {
 		return true;
 	}
 
-//	private void dismantleBlock(World worldIn, BlockPos pos)
-//	{
-//		ItemStack itemStack = new ItemStack(this);
-//
-//		TileEntitySolarPanel localTileEntity = (TileEntitySolarPanel) worldIn.getTileEntity(pos);
-//		int internalEnergy = localTileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-//		if(internalEnergy > 0)
-//		{
-//			if(itemStack.getTag() == null)
-//			{
-//				itemStack.setTag(new CompoundNBT());
-//			}
-//			itemStack.getTag().putInt("energy", internalEnergy);
-//		}
-//
-//		worldIn.removeBlock(pos, false);
-//
-//		ItemEntity entityItem = new ItemEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
-//
-//		entityItem.setMotion(0, entityItem.getYOffset(), 0);
-//		worldIn.addEntity(entityItem);
-//	}
+	private void dismantleBlock(World worldIn, BlockPos pos)
+	{
+		ItemStack itemStack = new ItemStack(this);
+
+		TileEntitySolarPanel localTileEntity = (TileEntitySolarPanel) worldIn.getTileEntity(pos);
+		int internalEnergy = localTileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+		if(internalEnergy > 0)
+		{
+			CompoundNBT energyValue = new CompoundNBT();
+			energyValue.putInt("energy", internalEnergy);
+			
+			CompoundNBT energy = new CompoundNBT();
+			energy.put("energy", energyValue);
+			
+			CompoundNBT root = new CompoundNBT();
+			root.put("BlockEntityTag", energy);
+			System.out.println(root);
+			itemStack.setTag(root);
+		}
+
+		worldIn.removeBlock(pos, false);
+
+		ItemEntity entityItem = new ItemEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
+
+		entityItem.setMotion(0, entityItem.getYOffset(), 0);
+		worldIn.addEntity(entityItem);
+	}
 
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)
