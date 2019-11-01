@@ -20,7 +20,7 @@ Downloads can be found on [CurseForge](https://www.curseforge.com/minecraft/mc-m
 
 ## Installation
 
-You install this mod by putting it into the `minecraft/mods/` folder. For using this mod you have to install [Thermal Foundation](https://www.curseforge.com/minecraft/mc-mods/thermal-foundation) mod.
+You install this mod by putting it into the `minecraft/mods/` folder.
 
 ## Issues
 
