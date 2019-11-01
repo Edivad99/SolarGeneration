@@ -85,8 +85,6 @@ public class SolarPanel extends Block {
 	{
 		if(!worldIn.isRemote)
 		{
-			// TODO: Solve when forge allows it
-
 			if(player.isSneaking())
 			{
 				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
@@ -120,10 +118,10 @@ public class SolarPanel extends Block {
 		{
 			CompoundNBT energyValue = new CompoundNBT();
 			energyValue.putInt("value", internalEnergy);
-			
+
 			CompoundNBT energy = new CompoundNBT();
 			energy.put("energy", energyValue);
-			
+
 			CompoundNBT root = new CompoundNBT();
 			root.put("BlockEntityTag", energy);
 			itemStack.setTag(root);

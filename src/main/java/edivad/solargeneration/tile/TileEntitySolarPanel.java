@@ -15,7 +15,6 @@ import edivad.solargeneration.blocks.containers.SolarPanelUltimateContainer;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import edivad.solargeneration.tools.inter.IRestorableTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -33,7 +32,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntitySolarPanel extends TileEntity implements ITickableTileEntity, INamedContainerProvider, IRestorableTileEntity {
+public class TileEntitySolarPanel extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	// Energy
 	private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -109,37 +108,25 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 		return super.getCapability(capability, facing);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void read(CompoundNBT compound)
 	{
-		readRestorableFromNBT(compound);
+		CompoundNBT energyTag = compound.getCompound("energy");
+		energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
 		super.read(compound);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public CompoundNBT write(CompoundNBT compound)
 	{
-		writeRestorableToNBT(compound);
-		return super.write(compound);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void readRestorableFromNBT(CompoundNBT tag)
-	{
-		CompoundNBT energyTag = tag.getCompound("energy");
-		energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void writeRestorableToNBT(CompoundNBT tag)
-	{
 		energy.ifPresent(h ->
 		{
-			CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-			tag.put("energy", compound);
+			CompoundNBT tag = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+			compound.put("energy", tag);
 		});
+		return super.write(compound);
 	}
 
 	@Nullable
