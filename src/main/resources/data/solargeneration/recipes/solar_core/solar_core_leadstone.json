@@ -3,9 +3,9 @@
         "item": "solargeneration:solar_core_leadstone"
     },
     "pattern": [
-        "cac",
+        " a ",
         "aba",
-        "cac"
+        " a "
    ],
     "type": "minecraft:crafting_shaped",
     "key": {
@@ -14,9 +14,6 @@
         },
         "b": {
 			"tag": "forge:ingots/iron"
-        },
-        "c": {
-            "item": "minecraft:glass_pane"
         }
     }
 }
