@@ -20,7 +20,7 @@ public class EventHandler {
 		CheckResult versionRAW = VersionChecker.getResult(ModList.get().getModFileById(Main.MODID).getMods().get(0));
 		Status result = versionRAW.status;
 
-		if(!(result.equals(Status.UP_TO_DATE) || result.equals(Status.PENDING)))
+		if(!(result.equals(Status.UP_TO_DATE) || result.equals(Status.PENDING) || result.equals(Status.AHEAD)))
 		{
 			event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.GREEN + "[" + Main.MODNAME + "] " + TextFormatting.WHITE + "A new version is available (" + versionRAW.target + "), please update!"));
 			event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.YELLOW + "Changelog:"));
@@ -35,6 +35,10 @@ public class EventHandler {
 					event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.WHITE + "- " + change));
 				}
 			}
+		}
+		if(result.equals(Status.AHEAD))
+		{
+			event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.GREEN + "[" + Main.MODNAME + "] " + TextFormatting.WHITE + "Version not released yet"));
 		}
 	}
 }

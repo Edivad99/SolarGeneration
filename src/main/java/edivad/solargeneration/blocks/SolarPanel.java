@@ -57,11 +57,6 @@ public class SolarPanel extends Block {
 		setRegistryName(levelSolarPanel.getBlockResourceLocation());
 	}
 
-	public SolarPanelLevel getLevelSolarPanel()
-	{
-		return this.levelSolarPanel;
-	}
-
 	@Override
 	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
 	{
