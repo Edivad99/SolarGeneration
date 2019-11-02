@@ -37,7 +37,7 @@ public class SolarHelmet extends ArmorItem {
 
 	public SolarHelmet(SolarPanelLevel levelSolarHelmet)
 	{
-		super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(Main.solarGenerationTab).maxStackSize(1));
+		super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(Main.solarGenerationTab).maxStackSize(1));
 		this.levelSolarHelmet = levelSolarHelmet;
 		setRegistryName(levelSolarHelmet.getHelmetResourceLocation());
 
