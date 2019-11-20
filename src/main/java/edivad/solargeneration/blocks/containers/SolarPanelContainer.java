@@ -3,7 +3,6 @@ package edivad.solargeneration.blocks.containers;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
@@ -12,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class SolarPanelContainer extends Container {
+public class SolarPanelContainer extends TrackedContainer {
 
 	private final TileEntitySolarPanel tileEntitySolarPanel;
 	private final PlayerEntity player;
@@ -23,7 +22,7 @@ public class SolarPanelContainer extends Container {
 		this.tileEntitySolarPanel = (TileEntitySolarPanel) world.getTileEntity(pos);
 		this.player = player;
 
-		trackInt(new IntReferenceHolder() {
+		addTracker(new IntReferenceHolder() {
 
 			@Override
 			public int get()
