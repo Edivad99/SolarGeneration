@@ -17,50 +17,60 @@ public class IntTrackerContainerMessage {
 	private final int property;
 	private final int value;
 
-	public IntTrackerContainerMessage(int id, int property, int value) {
+	public IntTrackerContainerMessage(int id, int property, int value)
+	{
 		this.id = id;
 		this.property = property;
 		this.value = value;
 	}
 
-	public static void encode(IntTrackerContainerMessage message, PacketBuffer sendBuffer) {
+	public static void encode(IntTrackerContainerMessage message, PacketBuffer sendBuffer)
+	{
 		sendBuffer.writeByte(message.id);
 		sendBuffer.writeShort(message.property);
 		sendBuffer.writeInt(message.value);
 	}
 
-	public static IntTrackerContainerMessage decode(PacketBuffer sendBuffer) {
+	public static IntTrackerContainerMessage decode(PacketBuffer sendBuffer)
+	{
 		final int id = sendBuffer.readByte();
 		final int property = sendBuffer.readShort();
 		final int value = sendBuffer.readInt();
 		return new IntTrackerContainerMessage(id, property, value);
 	}
 
-	public int getProperty() {
+	public int getProperty()
+	{
 		return property;
 	}
 
-	public int getValue() {
+	public int getValue()
+	{
 		return value;
 	}
 
 	public static class Handler {
 
-		public static void handle(IntTrackerContainerMessage message, Supplier<Context> contextSupplier) {
+		public static void handle(IntTrackerContainerMessage message, Supplier<Context> contextSupplier)
+		{
 			final Context context = contextSupplier.get();
-			context.enqueueWork(() -> {
+			context.enqueueWork(() ->
+			{
 				handle(message);
 			});
 			context.setPacketHandled(true);
 		}
 
 		@OnlyIn(Dist.CLIENT)
-		private static void handle(IntTrackerContainerMessage message) {
+		private static void handle(IntTrackerContainerMessage message)
+		{
 			getContainer(Minecraft.getInstance().player.openContainer, message.id).ifPresent(container -> container.updateValue(message));
 		}
 
-		private static final Optional<TrackedContainer> getContainer(Container container, int id) {
-			if (container instanceof TrackedContainer && container.windowId == id) {
+		private static final Optional<TrackedContainer> getContainer(Container container, int id)
+		{
+			if(container instanceof TrackedContainer && container.windowId == id)
+			{
 				return Optional.of((TrackedContainer) container);
 			}
 			return Optional.empty();

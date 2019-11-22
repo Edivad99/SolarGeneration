@@ -29,13 +29,13 @@ public class Main {
 	public static final String MODID = "solargeneration";
 	public static final String MODNAME = "Solar Generation";
 	public static final String PROTOCOL = "1.14.4-1";
-	
+
 	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
 	public static final ItemGroup solarGenerationTab = new SolarGenerationTab("solargeneration_tab");
 
 	public static final Logger logger = LogManager.getLogger();
-	
+
 	public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, "network"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
 
 	public Main()

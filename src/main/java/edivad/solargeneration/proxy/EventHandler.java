@@ -34,6 +34,10 @@ public class EventHandler {
 				{
 					event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.WHITE + "- " + change));
 				}
+				if(versionRAW.changes.size() > 1)
+				{
+					event.getPlayer().sendMessage(new StringTextComponent(TextFormatting.WHITE + "- And more..."));
+				}
 			}
 		}
 		if(result.equals(Status.AHEAD))

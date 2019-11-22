@@ -19,12 +19,14 @@ public abstract class TrackedContainer extends Container {
 
 	private final List<IntReferenceHolder> intTracker;
 
-	public TrackedContainer(ContainerType<?> type, int id) {
+	public TrackedContainer(ContainerType<?> type, int id)
+	{
 		super(type, id);
 		intTracker = new ArrayList<>();
 	}
 
-	protected <E extends IntReferenceHolder> E addTracker(E holder) {
+	protected <E extends IntReferenceHolder> E addTracker(E holder)
+	{
 		intTracker.add(holder);
 		return holder;
 	}
@@ -34,26 +36,30 @@ public abstract class TrackedContainer extends Container {
 	 * 
 	 * @param message
 	 */
-	public final void updateValue(IntTrackerContainerMessage message) {
+	public final void updateValue(IntTrackerContainerMessage message)
+	{
 		intTracker.get(message.getProperty()).set(message.getValue());
 	}
 
 	@Override
-	public void detectAndSendChanges() {
+	public void detectAndSendChanges()
+	{
 		super.detectAndSendChanges();
 
-		final List<NetworkManager> networkManagers = listeners.stream() //
-				.filter(listener -> listener instanceof ServerPlayerEntity) //
-				.map(listener -> ((ServerPlayerEntity) listener).connection.getNetworkManager()) //
+		//@formatter:off
+		final List<NetworkManager> networkManagers = listeners.stream()
+				.filter(listener -> listener instanceof ServerPlayerEntity)
+				.map(listener -> ((ServerPlayerEntity) listener).connection.getNetworkManager())
 				.collect(Collectors.toList());
 
-		IntStream.range(0, intTracker.size()) //
-				.filter(index -> intTracker.get(index).isDirty()) //
-				.boxed() //
-				.collect(Collectors.toMap(Function.identity(), index -> intTracker.get(index))) //
+		IntStream.range(0, intTracker.size())
+				.filter(index -> intTracker.get(index).isDirty())
+				.boxed()
+				.collect(Collectors.toMap(Function.identity(), index -> intTracker.get(index)))
 				.forEach((property, holder) -> {
 					Main.NETWORK.send(PacketDistributor.NMLIST.with(() -> networkManagers),	new IntTrackerContainerMessage(windowId, property, holder.get()));
 				});
+		//@formatter:on
 	}
 
 }
