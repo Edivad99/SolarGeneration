@@ -3,9 +3,9 @@
         "item": "solargeneration:solar_core_hardened"
     },
     "pattern": [
-        "cac",
+        " a ",
         "aba",
-        "cac"
+        " a "
    ],
     "type": "forge:ore_shaped",
     "key": {
@@ -15,10 +15,6 @@
         },
         "b": {
             "item": "solargeneration:solar_core_leadstone"
-        },
-        "c": {
-            "type": "forge:ore_dict",
-            "ore": "paneGlassColorless"
         }
     }
 }
