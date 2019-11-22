@@ -24,7 +24,7 @@ public class EventHandler {
 			event.player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "Changelog:"));
 
 			String changes = result.changes.get(result.target);
-
+			
 			if(changes != null)
 			{
 				String changesFormat[] = changes.split("\n");
@@ -33,7 +33,15 @@ public class EventHandler {
 				{
 					event.player.sendMessage(new TextComponentString(TextFormatting.WHITE + "- " + change));
 				}
+				if(result.changes.size() > 1)
+				{
+					event.player.sendMessage(new TextComponentString(TextFormatting.WHITE + "- And more..."));
+				}
 			}
+		}
+		if(result.status.equals(Status.AHEAD))
+		{
+			event.player.sendMessage(new TextComponentString(TextFormatting.GREEN + "[" + Main.MODNAME + "] " + TextFormatting.WHITE + "Version not released yet"));
 		}
 	}
 
