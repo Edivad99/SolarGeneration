@@ -35,7 +35,7 @@ public class SolarHelmet extends ItemArmor {
 
 	public SolarHelmet(SolarPanelLevel levelSolarHelmet)
 	{
-		super(ArmorMaterial.IRON, 0, EntityEquipmentSlot.HEAD);
+		super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, 0, EntityEquipmentSlot.HEAD);
 		this.levelSolarHelmet = levelSolarHelmet;
 		setRegistryName(levelSolarHelmet.getHelmetResourceLocation());
 		setUnlocalizedName(Main.MODID + "." + levelSolarHelmet.getHelmetResourceLocation().getResourcePath());
