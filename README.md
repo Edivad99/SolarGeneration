@@ -1,4 +1,5 @@
-# Solar Generation
+# Solar Generation 
+[![CircleCI](https://circleci.com/gh/Edivad99/SolarGeneration/tree/master.svg?style=svg)](https://circleci.com/gh/Edivad99/SolarGeneration/tree/master)
 ## Table of Contents
 
 * [About](#about)
