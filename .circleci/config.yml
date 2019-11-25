@@ -31,7 +31,9 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
+      - run: chmod +x ./gradlew
       - run: rm -rf build/libs
+      - run: ./gradlew clean
       - run: ./gradlew build
 
       - save_cache:
