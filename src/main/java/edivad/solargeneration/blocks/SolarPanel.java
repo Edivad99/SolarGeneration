@@ -74,34 +74,35 @@ public class SolarPanel extends Block {
 	{
 		return BOX;
 	}
+	
 
-	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
-	{
-		if(!worldIn.isRemote)
-		{
-			if(player.isSneaking())
-			{
-				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
-				{
-					dismantleBlock(worldIn, pos);
-					return true;
-				}
-			}
-
-			TileEntity tileEntity = worldIn.getTileEntity(pos);
-			if(tileEntity instanceof INamedContainerProvider)
-			{
-				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-				return true;
-			}
-			else
-			{
-				throw new IllegalStateException("Our named container provider is missing!");
-			}
-		}
-		return true;
-	}
+//	@Override
+//	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+//	{
+//		if(!worldIn.isRemote)
+//		{
+//			if(player.isSneaking())
+//			{
+//				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
+//				{
+//					dismantleBlock(worldIn, pos);
+//					return true;
+//				}
+//			}
+//
+//			TileEntity tileEntity = worldIn.getTileEntity(pos);
+//			if(tileEntity instanceof INamedContainerProvider)
+//			{
+//				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+//				return true;
+//			}
+//			else
+//			{
+//				throw new IllegalStateException("Our named container provider is missing!");
+//			}
+//		}
+//		return true;
+//	}
 
 	private void dismantleBlock(World worldIn, BlockPos pos)
 	{
