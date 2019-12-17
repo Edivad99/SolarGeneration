@@ -28,7 +28,7 @@ public class Main {
 
 	public static final String MODID = "solargeneration";
 	public static final String MODNAME = "Solar Generation";
-	public static final String PROTOCOL = "1.14.4-1";
+	public static final String PROTOCOL = "1.15.0-1";
 
 	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 

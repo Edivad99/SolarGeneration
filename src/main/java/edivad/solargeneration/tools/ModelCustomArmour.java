@@ -21,13 +21,13 @@ public class ModelCustomArmour extends BipedModel<LivingEntity> {
 
 		this.bipedHead.addChild(shape15);
 	}
-	
+
 	//	public void render(LivingEntity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	@Override
-	public void func_225597_a_(LivingEntity entity, float f, float f1, float f2, float f3, float f4) {
+	public void func_225597_a_(LivingEntity entity, float f, float f1, float f2, float f3, float f4)
+	{
 		super.func_225597_a_(entity, f, f1, f2, f3, f4);
 	}
-
 
 	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z)
 	{
