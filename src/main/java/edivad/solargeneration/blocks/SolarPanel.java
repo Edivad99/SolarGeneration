@@ -28,6 +28,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -75,34 +76,32 @@ public class SolarPanel extends Block {
 		return BOX;
 	}
 	
+	@Override
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if(!worldIn.isRemote)
+		{
+			//if(player.isSneaking())
+			if(player.func_225608_bj_())
+			{
+				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
+				{
+					dismantleBlock(worldIn, pos);
+					return ActionResultType.SUCCESS;
+				}
+			}
 
-//	@Override
-//	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
-//	{
-//		if(!worldIn.isRemote)
-//		{
-//			if(player.isSneaking())
-//			{
-//				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
-//				{
-//					dismantleBlock(worldIn, pos);
-//					return true;
-//				}
-//			}
-//
-//			TileEntity tileEntity = worldIn.getTileEntity(pos);
-//			if(tileEntity instanceof INamedContainerProvider)
-//			{
-//				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-//				return true;
-//			}
-//			else
-//			{
-//				throw new IllegalStateException("Our named container provider is missing!");
-//			}
-//		}
-//		return true;
-//	}
+			TileEntity tileEntity = worldIn.getTileEntity(pos);
+			if(tileEntity instanceof INamedContainerProvider)
+			{
+				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+			}
+			else
+			{
+				throw new IllegalStateException("Our named container provider is missing!");
+			}
+		}
+		return ActionResultType.SUCCESS;
+	}
 
 	private void dismantleBlock(World worldIn, BlockPos pos)
 	{
