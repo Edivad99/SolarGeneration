@@ -73,8 +73,8 @@ public class ModItems {
 		registry.register(new BlockItem(ModBlocks.solarPanelLeadstone, property).setRegistryName(SolarPanelLevel.Leadstone.getBlockResourceLocation()));
 		registry.register(new BlockItem(ModBlocks.solarPanelHardened, property).setRegistryName(SolarPanelLevel.Hardened.getBlockResourceLocation()));
 		registry.register(new BlockItem(ModBlocks.solarPanelRedstone, property).setRegistryName(SolarPanelLevel.Redstone.getBlockResourceLocation()));
-		registry.register(new BlockItem(ModBlocks.solarPanelResonant, property).setRegistryName(SolarPanelLevel.Resonant.getBlockResourceLocation()));
 		registry.register(new BlockItem(ModBlocks.solarPanelSignalum, property).setRegistryName(SolarPanelLevel.Signalum.getBlockResourceLocation()));
+		registry.register(new BlockItem(ModBlocks.solarPanelResonant, property).setRegistryName(SolarPanelLevel.Resonant.getBlockResourceLocation()));
 		registry.register(new BlockItem(ModBlocks.solarPanelAdvanced, property).setRegistryName(SolarPanelLevel.Advanced.getBlockResourceLocation()));
 		registry.register(new BlockItem(ModBlocks.solarPanelUltimate, property).setRegistryName(SolarPanelLevel.Ultimate.getBlockResourceLocation()));
 	}

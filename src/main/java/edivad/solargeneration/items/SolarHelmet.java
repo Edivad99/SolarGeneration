@@ -157,21 +157,36 @@ public class SolarHelmet extends ArmorItem {
 
 	private void sendEnergy(World world, PlayerEntity player)
 	{
-		for(int i = 0; i < (player.inventory.getSizeInventory()) && energyStorage.getEnergyStored() > 0; i++)
+		//Armor priority
+		for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++)
 		{
 			ItemStack slot = player.inventory.getStackInSlot(i);
-			if(slot.getCount() == 1)
+			chargegItem(slot);
+		}
+		//Inventory
+		for(int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++)
+		{
+			ItemStack slot = player.inventory.getStackInSlot(i);
+			chargegItem(slot);
+		}
+	}
+	
+	private void chargegItem(ItemStack slot)
+	{
+		if(slot.getCount() == 1)
+		{
+			slot.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler ->
 			{
-				slot.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler ->
+				if(handler.canReceive())
 				{
-					if(handler.canReceive())
+					while(handler.getEnergyStored() < handler.getMaxEnergyStored() && energyStorage.getEnergyStored() > 0)
 					{
 						int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
 						energyStorage.consumePower(accepted);
 						handler.receiveEnergy(accepted, false);
 					}
-				});
-			}
+				}
+			});
 		}
 	}
 
