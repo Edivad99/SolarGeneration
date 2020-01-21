@@ -1,5 +1,5 @@
 # Solar Generation 
-[![CircleCI](https://circleci.com/gh/Edivad99/SolarGeneration/tree/1.15.svg?style=svg)](https://circleci.com/gh/Edivad99/SolarGeneration/tree/1.15)
+[![CircleCI](https://circleci.com/gh/Edivad99/SolarGeneration/tree/1.15.x.svg?style=svg)](https://circleci.com/gh/Edivad99/SolarGeneration/tree/1.15.x)
 ## Table of Contents
 
 * [About](#about)
