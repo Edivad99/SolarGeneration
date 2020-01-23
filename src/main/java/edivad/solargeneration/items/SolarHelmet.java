@@ -76,8 +76,7 @@ public class SolarHelmet extends ArmorItem {
 
 				model.isChild = _default.isChild;
 				model.isSitting = _default.isSitting;
-				//model.isSneak = _default.isSneak;
-				model.field_228270_o_ = _default.field_228270_o_;
+				model.isSneak = _default.isSneak;
 				model.rightArmPose = _default.rightArmPose;
 				model.leftArmPose = _default.leftArmPose;
 				return (A) model;
@@ -170,7 +169,7 @@ public class SolarHelmet extends ArmorItem {
 			chargegItem(slot);
 		}
 	}
-	
+
 	private void chargegItem(ItemStack slot)
 	{
 		if(slot.getCount() == 1)

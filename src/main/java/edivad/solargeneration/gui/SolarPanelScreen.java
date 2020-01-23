@@ -2,7 +2,7 @@ package edivad.solargeneration.gui;
 
 import java.util.Collections;
 
-import org.lwjgl.opengl.GL11;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import edivad.solargeneration.Main;
 import edivad.solargeneration.blocks.containers.SolarPanelContainer;
@@ -48,8 +48,7 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		//GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
