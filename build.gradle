@@ -20,7 +20,7 @@ archivesBaseName = 'SolarGeneration-1.15.2'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200123-1.15.1'
+    mappings channel: 'snapshot', version: '20200131-1.15.1'
 	accessTransformer = file("$rootDir/src/main/resources/META-INF/accesstransformer.cfg")
     
     runs {
@@ -77,7 +77,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.0.0'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.0.14'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
