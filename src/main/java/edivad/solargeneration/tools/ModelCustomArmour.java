@@ -1,10 +1,13 @@
 package edivad.solargeneration.tools;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
-public class ModelCustomArmour extends BipedModel<LivingEntity> {
+public class ModelCustomArmour extends BipedModel<PlayerEntity> {
 
 	public ModelRenderer shape15;
 
@@ -22,10 +25,9 @@ public class ModelCustomArmour extends BipedModel<LivingEntity> {
 	}
 
 	@Override
-	public void render(LivingEntity entity, float f, float f1, float f2, float f3, float f4)
+	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha)
 	{
-		// TODO Auto-generated method stub
-		super.render(entity, f, f1, f2, f3, f4);
+		super.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 
 	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z)
