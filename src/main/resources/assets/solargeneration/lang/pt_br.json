@@ -1,0 +1,72 @@
+{
+    "itemGroup.solargeneration_tab": "Solar Generation",
+
+    "item.solargeneration.solar_core_advanced": "Núcleo Solar Avançado",
+    "item.solargeneration.solar_core_hardened": "Núcleo Solar Endurecido",
+    "item.solargeneration.solar_core_leadstone": "Núcleo Solar de Leadstone",
+    "item.solargeneration.solar_core_redstone": "Núcleo Solar de Redstone",
+    "item.solargeneration.solar_core_resonant": "Núcleo Solar Ressonante",
+    "item.solargeneration.solar_core_signalum": "Núcleo Solar de Signalo",
+    "item.solargeneration.solar_core_ultimate": "Núcleo Solar Ultimate",
+
+    "item.solargeneration.solar_helmet_advanced": "Capacete Solar Avançado",
+    "item.solargeneration.solar_helmet_hardened": "Capacete Solar Endurecido",
+    "item.solargeneration.solar_helmet_leadstone": "Capacete Solar de Leadstone",
+    "item.solargeneration.solar_helmet_redstone": "Capacete Solar de Redstone",
+    "item.solargeneration.solar_helmet_resonant": "Capacete Solar Ressonante",
+    "item.solargeneration.solar_helmet_signalum": "Capacete Solar de Signalo",
+    "item.solargeneration.solar_helmet_ultimate": "Capacete Solar Ultimate",
+
+    "item.solargeneration.lapis_shard": "Estilhaço de Lápis-Lazúli",
+    "item.solargeneration.photovoltaic_cell": "Célula Fotovoltaica",
+    "item.solargeneration.wrench": "Chave Inglesa",
+
+    "block.solargeneration.solar_panel_advanced": "Painel Solar Avançado",
+    "block.solargeneration.solar_panel_hardened": "Painel Solar Endurecido",
+    "block.solargeneration.solar_panel_leadstone": "Painel Solar de Leadstone",
+    "block.solargeneration.solar_panel_redstone": "Painel Solar de Redstone",
+    "block.solargeneration.solar_panel_resonant": "Painel Solar Ressonante",
+    "block.solargeneration.solar_panel_signalum": "Painel Solar de Signalo",
+    "block.solargeneration.solar_panel_ultimate": "Painel Solar Ultimate",
+    
+    "advancements.solargeneration.root": "Geração Solar",
+    "advancements.solargeneration.root.desc": "Comece sua jornada de energia solar criando uma Célula Fotovoltaica.",
+
+    "advancements.solargeneration.solar_panel_leadstone": "Começando com o básico",
+    "advancements.solargeneration.solar_panel_leadstone.desc": "Criando um Painel Solar de Leadstone.",
+    "advancements.solargeneration.solar_panel_hardened": "1 é melhor do que 8",
+    "advancements.solargeneration.solar_panel_hardened.desc": "Criando um Painel Solar Endurecido .",
+    "advancements.solargeneration.solar_panel_redstone": "Energia não suficiente",
+    "advancements.solargeneration.solar_panel_redstone.desc": "Criando um Painel Solar de Redstone.",
+    "advancements.solargeneration.solar_panel_signalum": "Procurando o sinal",
+    "advancements.solargeneration.solar_panel_signalum.desc": "Criando um Painel Solar de Signalo.",
+    "advancements.solargeneration.solar_panel_resonant": "Escalada de poder",
+    "advancements.solargeneration.solar_panel_resonant.desc": "Crinado um Painel Solar Ressonante.",
+    "advancements.solargeneration.solar_panel_advanced": "Presidente da energia",
+    "advancements.solargeneration.solar_panel_advanced.desc": "Criando um Painel Solar Avançado.",
+    "advancements.solargeneration.solar_panel_ultimate": "Oh sol, eu controlo você!",
+    "advancements.solargeneration.solar_panel_ultimate.desc": "Criando um Painel Sonal Ultimate.",
+    
+    "advancements.solargeneration.solar_helmet_leadstone": "Usando sua cabeça!",
+    "advancements.solargeneration.solar_helmet_leadstone.desc": "Criando um Capacete Solar de Leadstone.",
+    "advancements.solargeneration.solar_helmet_hardened": "8 capacetes em 1",
+    "advancements.solargeneration.solar_helmet_hardened.desc": "Criando um Capacete Solar Endurecido.",
+    "advancements.solargeneration.solar_helmet_redstone": "Mente elétrica",
+    "advancements.solargeneration.solar_helmet_redstone.desc": "Criando um Capacete Solar de Redstone.",
+    "advancements.solargeneration.solar_helmet_signalum": "Sinais cerebrais",
+    "advancements.solargeneration.solar_helmet_signalum.desc": "Criando um Capacete Solar de Signalo.",
+    "advancements.solargeneration.solar_helmet_resonant": "Sintonia ressonante",
+    "advancements.solargeneration.solar_helmet_resonant.desc": "Criando um Capacete Solar Ressonante.",
+    "advancements.solargeneration.solar_helmet_advanced": "Coroa avançada",
+    "advancements.solargeneration.solar_helmet_advanced.desc": "Criando um Capacete Solar Avançado.",
+    "advancements.solargeneration.solar_helmet_ultimate": "O capacete ultimate",
+    "advancements.solargeneration.solar_helmet_ultimate.desc": "Criando um Capacete Solar Ultimate.",
+
+    "message.solargeneration.hold_shift": "Segure @b@oShift @7para mais detalhes",
+
+    "message.solargeneration.hold_ctrl": "Segure @b@oCtrl @7para ver a energia armazenada",
+
+    "message.solargeneration.shift_info": "@fGeração: @a%d @4FE/t\n@fTransferir: @a%d @4FE/t\n@fCapacidade: @a%d @4FE",
+
+    "message.solargeneration.ctrl_info": "@fEnergia Armazenada: @a%d @4FE"
+}
