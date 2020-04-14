@@ -1,4 +1,4 @@
-package edivad.solargeneration.proxy;
+package edivad.solargeneration.setup;
 
 import edivad.solargeneration.Main;
 import net.minecraft.util.text.StringTextComponent;

@@ -25,7 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -57,11 +57,11 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 	@Override
 	public void tick()
 	{
-		if(world.isRemote)
-			return;
-
-		energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced()));
-		sendEnergy();
+		if(!world.isRemote)
+		{
+			energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced()));
+			sendEnergy();
+		}
 	}
 
 	public int currentAmountEnergyProduced()
@@ -157,6 +157,6 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 	@Override
 	public ITextComponent getDisplayName()
 	{
-		return new StringTextComponent("solar_panel_" + levelSolarPanel.name().toLowerCase());
+		return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
 	}
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import edivad.solargeneration.ModItems;
+import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
@@ -53,8 +53,6 @@ public class SolarPanel extends Block {
 		super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5F, 30F));
 
 		this.levelSolarPanel = levelSolarPanel;
-
-		setRegistryName(levelSolarPanel.getBlockResourceLocation());
 	}
 
 	@Override
@@ -82,7 +80,7 @@ public class SolarPanel extends Block {
 		{
 			if(player.isSneaking())
 			{
-				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
+				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(Registration.WRENCH.get(), 1)))
 				{
 					dismantleBlock(worldIn, pos);
 					return true;

@@ -1,15 +1,9 @@
-package edivad.solargeneration.proxy;
+package edivad.solargeneration.setup.proxy;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
-public class ServerProxy implements IProxy {
-
-	@Override
-	public void init()
-	{
-
-	}
+public class Proxy implements IProxy {
 
 	@Override
 	public PlayerEntity getClientPlayer()
@@ -22,5 +16,4 @@ public class ServerProxy implements IProxy {
 	{
 		throw new IllegalStateException("This should only be called from client side");
 	}
-
 }

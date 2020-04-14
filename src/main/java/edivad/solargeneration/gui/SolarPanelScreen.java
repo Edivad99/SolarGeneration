@@ -80,5 +80,4 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
 		return (int) result;
 	}
-
 }
