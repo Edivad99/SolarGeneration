@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import edivad.solargeneration.Main;
+import edivad.solargeneration.setup.ModSetup;
 import edivad.solargeneration.tools.ModelCustomArmour;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
@@ -37,9 +38,8 @@ public class SolarHelmet extends ArmorItem {
 
 	public SolarHelmet(SolarPanelLevel levelSolarHelmet)
 	{
-		super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(Main.solarGenerationTab).maxStackSize(1));
+		super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(ModSetup.solarGenerationTab).maxStackSize(1));
 		this.levelSolarHelmet = levelSolarHelmet;
-		setRegistryName(levelSolarHelmet.getHelmetResourceLocation());
 
 		energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
 		maxEnergyOutput = energyGeneration * 2;

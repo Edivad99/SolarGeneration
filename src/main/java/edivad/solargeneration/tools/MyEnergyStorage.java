@@ -8,7 +8,6 @@ public class MyEnergyStorage extends EnergyStorage implements INBTSerializable<C
 
 	public MyEnergyStorage(int energyTransfer, int energyCapacity)
 	{
-
 		super(energyCapacity, energyTransfer);
 		this.maxReceive = 0;
 	}

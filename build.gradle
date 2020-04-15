@@ -13,14 +13,14 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.2.0'
-group = 'edivad.solargeneration'
-archivesBaseName = 'SolarGeneration-1.15.2'
+version = "${mod_version}"
+group = "edivad.solargeneration"
+archivesBaseName = "SolarGeneration-${minecraft_version}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200218-1.15.1'
+    mappings channel: "snapshot", version: "${mappings_version}"
 	accessTransformer = file("$rootDir/src/main/resources/META-INF/accesstransformer.cfg")
     
     runs {
@@ -77,7 +77,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.14'
+	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

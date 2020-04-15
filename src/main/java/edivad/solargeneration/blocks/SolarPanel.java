@@ -1,10 +1,11 @@
 package edivad.solargeneration.blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-import edivad.solargeneration.ModItems;
+import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
@@ -32,6 +33,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -47,21 +49,38 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class SolarPanel extends Block {
 
 	private final SolarPanelLevel levelSolarPanel;
-	private static final VoxelShape BOX = VoxelShapes.create(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
+	private static final VoxelShape BOX = createShape();
 
 	public SolarPanel(SolarPanelLevel levelSolarPanel)
 	{
 		super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5F, 30F));
 
 		this.levelSolarPanel = levelSolarPanel;
-
-		setRegistryName(levelSolarPanel.getBlockResourceLocation());
 	}
 
 	@Override
 	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
 	{
 		return false;
+	}
+
+	private static VoxelShape createShape()
+	{
+		ArrayList<VoxelShape> shapes = new ArrayList<VoxelShape>();
+		shapes.add(makeCuboidShape(0, 0, 0, 16, 1, 16));//bottom
+		shapes.add(makeCuboidShape(7, 1, 7, 9, 9, 9));//mainpillar
+		shapes.add(makeCuboidShape(6, 1, 9, 7, 9, 10));//pillar1
+		shapes.add(makeCuboidShape(9, 1, 9, 10, 9, 10));//pillar2
+		shapes.add(makeCuboidShape(9, 1, 6, 10, 9, 7));//pillar3
+		shapes.add(makeCuboidShape(6, 1, 6, 7, 9, 7));//pillar4
+		shapes.add(makeCuboidShape(0, 9, 0, 16, 12, 16));//top
+
+		VoxelShape combinedShape = VoxelShapes.empty();
+		for(VoxelShape shape : shapes)
+		{
+			combinedShape = VoxelShapes.combine(combinedShape, shape, IBooleanFunction.OR);
+		}
+		return combinedShape;
 	}
 
 	@Override
@@ -83,7 +102,7 @@ public class SolarPanel extends Block {
 		{
 			if(player.isShiftKeyDown())
 			{
-				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(ModItems.wrench, 1)))
+				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(Registration.WRENCH.get(), 1)))
 				{
 					dismantleBlock(worldIn, pos);
 					return ActionResultType.SUCCESS;
@@ -133,9 +152,7 @@ public class SolarPanel extends Block {
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)
 	{
-		if(willHarvest)
-			return true;
-		return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
+		return willHarvest || super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
 	}
 
 	@Override
