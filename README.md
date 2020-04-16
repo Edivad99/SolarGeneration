@@ -1,5 +1,5 @@
 # Solar Generation 
-[![CircleCI](https://circleci.com/gh/Edivad99/SolarGeneration/tree/1.15.x.svg?style=svg)](https://circleci.com/gh/Edivad99/SolarGeneration/tree/1.15.x)
+![](https://github.com/Edivad99/SolarGeneration/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=1.15.x)
 ## Table of Contents
 
 * [About](#about)
@@ -10,7 +10,7 @@
 
 ## About
 
-Produce energy from the sun, use your head for recharging your inventory and clean the environment :)
+Produce energy from the sun, use your head for recharging your inventory
 
 ## Contacts
 * [GitHub](https://github.com/Edivad99/SolarGeneration)
