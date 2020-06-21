@@ -17,16 +17,21 @@ import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -39,6 +44,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -46,17 +52,18 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class SolarPanel extends Block {
+public class SolarPanel extends Block implements IWaterLoggable {
 
 	private final SolarPanelLevel levelSolarPanel;
 	private static final VoxelShape BOX = createShape();
 	//https://twitter.com/McJty/status/1251439077787869188
 	private static final ResourceLocation WRENCH = new ResourceLocation("forge", "wrench");
+	private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
 
 	public SolarPanel(SolarPanelLevel levelSolarPanel)
 	{
 		super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5F, 30F));
-
+		this.setDefaultState(getDefaultState().with(WATERLOGGED, false));
 		this.levelSolarPanel = levelSolarPanel;
 	}
 
@@ -207,5 +214,31 @@ public class SolarPanel extends Block {
 
 		Tooltip.showInfoCtrl(energy, tooltip);
 		Tooltip.showInfoShift(this.levelSolarPanel, tooltip);
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public IFluidState getFluidState(BlockState state)
+	{
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	}
+
+	@Override
+	public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn)
+	{
+		return IWaterLoggable.super.receiveFluid(worldIn, pos, state, fluidStateIn);
+	}
+
+	@Override
+	public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn)
+	{
+		return IWaterLoggable.super.canContainFluid(worldIn, pos, state, fluidIn);
+	}
+	
+	@Override
+	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	{
+		super.fillStateContainer(builder);
+		builder.add(WATERLOGGED);
 	}
 }
