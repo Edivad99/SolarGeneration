@@ -10,7 +10,6 @@ import edivad.solargeneration.blocks.containers.SolarPanelResonantContainer;
 import edivad.solargeneration.blocks.containers.SolarPanelSignalumContainer;
 import edivad.solargeneration.blocks.containers.SolarPanelUltimateContainer;
 import edivad.solargeneration.items.SolarHelmet;
-import edivad.solargeneration.items.Wrench;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
@@ -121,5 +120,4 @@ public class Registration {
 
 	public static final RegistryObject<Item> LAPIS_SHARD = ITEMS.register("lapis_shard", () -> new Item(property));
 	public static final RegistryObject<Item> PHOTOVOLTAIC_CELL = ITEMS.register("photovoltaic_cell", () -> new Item(property));
-	public static final RegistryObject<Item> WRENCH = ITEMS.register("wrench", Wrench::new);
 }

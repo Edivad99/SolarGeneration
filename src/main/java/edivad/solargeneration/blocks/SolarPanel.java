@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
 import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
 import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
@@ -31,6 +30,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -50,6 +50,8 @@ public class SolarPanel extends Block {
 
 	private final SolarPanelLevel levelSolarPanel;
 	private static final VoxelShape BOX = createShape();
+	//https://twitter.com/McJty/status/1251439077787869188
+	private static final ResourceLocation WRENCH = new ResourceLocation("forge", "wrench");
 
 	public SolarPanel(SolarPanelLevel levelSolarPanel)
 	{
@@ -102,7 +104,7 @@ public class SolarPanel extends Block {
 		{
 			if(player.isCrouching())
 			{
-				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(Registration.WRENCH.get(), 1)))
+				if(player.getHeldItemMainhand().getItem().getTags().contains(WRENCH))
 				{
 					dismantleBlock(worldIn, pos);
 					return ActionResultType.SUCCESS;

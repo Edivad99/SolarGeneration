@@ -193,8 +193,7 @@ public class SolarHelmet extends ArmorItem {
 	{
 		if(!energyStorage.isFullEnergy())
 		{
-			BlockPos pos = new BlockPos(player.chasingPosX, player.chasingPosY + 1, player.chasingPosZ);
-			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, getLevelSolarPanel()));
+			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, player.getPosition().add(0, 1, 0), getLevelSolarPanel()));
 		}
 		return 0;
 	}
