@@ -100,7 +100,7 @@ public class SolarPanel extends Block {
 	{
 		if(!worldIn.isRemote)
 		{
-			if(player.isShiftKeyDown())
+			if(player.isCrouching())
 			{
 				if(ItemStack.areItemsEqual(player.getHeldItemMainhand(), new ItemStack(Registration.WRENCH.get(), 1)))
 				{

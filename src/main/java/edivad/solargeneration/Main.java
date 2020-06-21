@@ -10,7 +10,6 @@ import edivad.solargeneration.setup.proxy.IProxy;
 import edivad.solargeneration.setup.proxy.Proxy;
 import edivad.solargeneration.setup.proxy.ProxyClient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -24,7 +23,7 @@ public class Main {
 	public static final String MODNAME = "Solar Generation";
 	public static final String PROTOCOL = "1";
 
-	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ProxyClient(), () -> () -> new Proxy());
+	public static IProxy proxy = DistExecutor.safeRunForDist(() -> ProxyClient::new, () -> Proxy::new);
 
 	public static final Logger logger = LogManager.getLogger();
 
@@ -33,10 +32,7 @@ public class Main {
 	public Main()
 	{
 		Registration.init();
-		DistExecutor.runWhenOn(Dist.CLIENT, () -> () ->
-		{
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
-		});
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
 		NETWORK.registerMessage(0, IntTrackerContainerMessage.class, IntTrackerContainerMessage::encode, IntTrackerContainerMessage::decode, IntTrackerContainerMessage.Handler::handle);
 	}
 }
