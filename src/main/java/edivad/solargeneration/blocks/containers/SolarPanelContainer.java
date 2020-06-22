@@ -23,6 +23,6 @@ public class SolarPanelContainer extends Container {
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn)
 	{
-		return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), this.player, tile.getBlockState().getBlock());
+		return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), player, tile.getBlockState().getBlock());
 	}
 }
