@@ -215,7 +215,7 @@ public class SolarPanel extends Block implements IWaterLoggable {
 		Tooltip.showInfoCtrl(energy, tooltip);
 		Tooltip.showInfoShift(this.levelSolarPanel, tooltip);
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public IFluidState getFluidState(BlockState state)
@@ -234,7 +234,7 @@ public class SolarPanel extends Block implements IWaterLoggable {
 	{
 		return IWaterLoggable.super.canContainFluid(worldIn, pos, state, fluidIn);
 	}
-	
+
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder)
 	{

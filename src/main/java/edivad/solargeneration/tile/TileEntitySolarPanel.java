@@ -74,12 +74,12 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 			}
 		}
 	}
-	
+
 	private int getMaxEnergy()
 	{
 		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
 	}
-	
+
 	private int getEnergy()
 	{
 		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);

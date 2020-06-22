@@ -15,7 +15,7 @@ public class UpdateSolarPanel {
 	private BlockPos pos;
 	private int currentEnergy;
 	private int currentProduction;
-	
+
 	public UpdateSolarPanel(PacketBuffer buf)
 	{
 		pos = buf.readBlockPos();
@@ -39,7 +39,8 @@ public class UpdateSolarPanel {
 
 	public void handle(Supplier<NetworkEvent.Context> ctx)
 	{
-		ctx.get().enqueueWork(() -> {
+		ctx.get().enqueueWork(() ->
+		{
 			World world = Main.proxy.getClientWorld();
 			if(world.isBlockPresent(pos))
 			{

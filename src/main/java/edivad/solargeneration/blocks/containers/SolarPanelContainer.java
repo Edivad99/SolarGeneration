@@ -19,7 +19,6 @@ public class SolarPanelContainer extends Container {
 		this.tile = (TileEntitySolarPanel) world.getTileEntity(pos);
 		this.player = player;
 	}
-	
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn)
