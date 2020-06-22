@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import edivad.solargeneration.Main;
 import edivad.solargeneration.blocks.containers.SolarPanelContainer;
+import edivad.solargeneration.tile.TileEntitySolarPanel;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -14,12 +15,12 @@ import net.minecraft.util.text.ITextComponent;
 public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MODID, "textures/gui/solar_panel.png");
-	private final SolarPanelContainer container;
+	private final TileEntitySolarPanel tile;
 
 	public SolarPanelScreen(SolarPanelContainer container, PlayerInventory inv, ITextComponent name)
 	{
 		super(container, inv, name);
-		this.container = container;
+		this.tile = container.tile;
 	}
 
 	@Override
@@ -35,14 +36,14 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		String energy = "Stored energy: " + getEnergyFormatted(this.container.getEnergy());
-		this.font.drawString(energy, (this.xSize / 2 - this.font.getStringWidth(energy) / 2) + 14, 20, 4210752);
+		String energy = "Stored energy: " + getEnergyFormatted(tile.energyClient);
+		this.font.drawString(energy, (xSize / 2 - font.getStringWidth(energy) / 2) + 14, 20, 4210752);
 
-		String maxEnergy = "Max capacity: " + getEnergyFormatted(this.container.getMaxEnergy());
-		this.font.drawString(maxEnergy, (this.xSize / 2 - this.font.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
+		String maxEnergy = "Max capacity: " + getEnergyFormatted(tile.maxEnergy);
+		this.font.drawString(maxEnergy, (xSize / 2 - font.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
 
-		String generation = "Generation: " + this.container.getCurrentAmountEnergyProduced() + " FE/t";
-		this.font.drawString(generation, (this.xSize / 2 - this.font.getStringWidth(generation) / 2) + 14, 40, 4210752);
+		String generation = "Generation: " + tile.energyProductionClient + " FE/t";
+		this.font.drawString(generation, (xSize / 2 - font.getStringWidth(generation) / 2) + 14, 40, 4210752);
 	}
 
 	@Override
@@ -73,8 +74,8 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
 	private int getPercent()
 	{
-		Long currentEnergy = new Long(this.container.getEnergy());
-		int maxEnergy = this.container.getMaxEnergy();
+		Long currentEnergy = new Long(tile.energyClient);
+		int maxEnergy = tile.maxEnergy;
 
 		long result = currentEnergy * 100 / maxEnergy;
 

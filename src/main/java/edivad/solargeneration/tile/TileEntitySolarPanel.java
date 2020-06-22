@@ -12,6 +12,8 @@ import edivad.solargeneration.blocks.containers.SolarPanelRedstoneContainer;
 import edivad.solargeneration.blocks.containers.SolarPanelResonantContainer;
 import edivad.solargeneration.blocks.containers.SolarPanelSignalumContainer;
 import edivad.solargeneration.blocks.containers.SolarPanelUltimateContainer;
+import edivad.solargeneration.network.PacketHandler;
+import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
@@ -31,15 +33,17 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class TileEntitySolarPanel extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	// Energy
 	private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-	private int energyGeneration;
-	private int maxEnergyOutput;
+	private int energyGeneration, maxEnergyOutput;
+	public int maxEnergy;
 
 	private SolarPanelLevel levelSolarPanel;
+	public int energyClient, energyProductionClient;
 
 	public TileEntitySolarPanel(SolarPanelLevel levelSolarPanel, TileEntityType<?> tileEntitySolarPanel)
 	{
@@ -47,11 +51,13 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 		this.levelSolarPanel = levelSolarPanel;
 		energyGeneration = (int) Math.pow(8, levelSolarPanel.ordinal());
 		maxEnergyOutput = energyGeneration * 2;
+		maxEnergy = energyGeneration * 1000;
+		energyClient = energyProductionClient = -1;
 	}
 
 	private IEnergyStorage createEnergy()
 	{
-		return new MyEnergyStorage(maxEnergyOutput, energyGeneration * 1000);
+		return new MyEnergyStorage(maxEnergyOutput, maxEnergy);
 	}
 
 	@Override
@@ -61,10 +67,25 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 		{
 			energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced()));
 			sendEnergy();
+			if(energyClient != getEnergy() || energyProductionClient != currentAmountEnergyProduced())
+			{
+				int energyProduced = (getEnergy() != getMaxEnergy()) ? currentAmountEnergyProduced() : 0;
+				PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(getPos(), getEnergy(), energyProduced));
+			}
 		}
 	}
+	
+	private int getMaxEnergy()
+	{
+		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
+	}
+	
+	private int getEnergy()
+	{
+		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+	}
 
-	public int currentAmountEnergyProduced()
+	private int currentAmountEnergyProduced()
 	{
 		return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, getPos(), levelSolarPanel));
 	}
