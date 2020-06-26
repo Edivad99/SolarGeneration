@@ -25,8 +25,8 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -67,11 +67,11 @@ public class SolarPanel extends Block implements IWaterLoggable {
 		this.levelSolarPanel = levelSolarPanel;
 	}
 
-	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
-	{
-		return false;
-	}
+//	@Override
+//	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
+//	{
+//		return false;
+//	}
 
 	private static VoxelShape createShape()
 	{
@@ -159,7 +159,7 @@ public class SolarPanel extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)
+	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid)
 	{
 		return willHarvest || super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
 	}
@@ -218,13 +218,13 @@ public class SolarPanel extends Block implements IWaterLoggable {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public IFluidState getFluidState(BlockState state)
+	public FluidState getFluidState(BlockState state)
 	{
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
 	}
 
 	@Override
-	public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn)
+	public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn)
 	{
 		return IWaterLoggable.super.receiveFluid(worldIn, pos, state, fluidStateIn);
 	}

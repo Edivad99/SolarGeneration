@@ -2,6 +2,7 @@ package edivad.solargeneration.gui;
 
 import java.util.Collections;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import edivad.solargeneration.Main;
@@ -11,6 +12,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
@@ -22,40 +24,44 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 		super(container, inv, name);
 		this.tile = container.tile;
 	}
-
+	
+	//render
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks)
+	public void func_230430_a_(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-		this.renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
-		this.renderHoveredToolTip(mouseX, mouseY);
+		this.func_230446_a_(mStack);//this.renderBackground();
+		super.func_230430_a_(mStack, mouseX, mouseY, partialTicks);
+		this.func_230459_a_(mStack, mouseX, mouseY);//this.renderHoveredToolTip(mouseX, mouseY);
 		if(mouseX > guiLeft + 7 && mouseX < guiLeft + 29 && mouseY > guiTop + 10 && mouseY < guiTop + 77)
-			this.renderTooltip(Collections.singletonList("Energy: " + getPercent() + "%"), mouseX, mouseY, font);
+			this.func_238654_b_(mStack, Collections.singletonList(new StringTextComponent("Energy: " + getPercent() + "%")), mouseX, mouseY, field_230712_o_);
 	}
-
+	
+	//drawGuiContainerForegroundLayer
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+	protected void func_230451_b_(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		String energy = "Stored energy: " + getEnergyFormatted(tile.energyClient);
-		this.font.drawString(energy, (xSize / 2 - font.getStringWidth(energy) / 2) + 14, 20, 4210752);
+		StringTextComponent energy = new StringTextComponent("Stored energy: " + getEnergyFormatted(tile.energyClient));
+		this.field_230712_o_.func_238422_b_(mStack, energy, (xSize / 2 - field_230712_o_.getStringWidth(energy.getString()) / 2) + 14, 20, 4210752);
 
-		String maxEnergy = "Max capacity: " + getEnergyFormatted(tile.maxEnergy);
-		this.font.drawString(maxEnergy, (xSize / 2 - font.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
+		StringTextComponent maxEnergy = new StringTextComponent("Max capacity: " + getEnergyFormatted(tile.maxEnergy));
+		this.field_230712_o_.func_238422_b_(mStack, maxEnergy, (xSize / 2 - field_230712_o_.getStringWidth(maxEnergy.getString()) / 2) + 14, 30, 4210752);//this.font.drawstring
 
-		String generation = "Generation: " + tile.energyProductionClient + " FE/t";
-		this.font.drawString(generation, (xSize / 2 - font.getStringWidth(generation) / 2) + 14, 40, 4210752);
+		StringTextComponent generation = new StringTextComponent("Generation: " + tile.energyProductionClient + " FE/t");
+		this.field_230712_o_.func_238422_b_(mStack, generation, (xSize / 2 - field_230712_o_.getStringWidth(generation.getString()) / 2) + 14, 40, 4210752);
 	}
-
+	
+	
+	//drawGuiContainerBackgroundLayer
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	protected void func_230450_a_(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.minecraft.getTextureManager().bindTexture(TEXTURES);
-		this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		this.field_230706_i_.getTextureManager().bindTexture(TEXTURES);
+		this.func_238474_b_(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
 		// Energy
 		int y = this.getEnergyScaled(60);
-		this.blit(this.guiLeft + 10, this.guiTop + 12 + y, 176, 0, 16, 60 - y);
+		this.func_238474_b_(mStack, this.guiLeft + 10, this.guiTop + 12 + y, 176, 0, 16, 60 - y);
 
 	}
 

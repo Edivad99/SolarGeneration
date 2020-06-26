@@ -17,6 +17,7 @@ import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -131,11 +132,10 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void read(CompoundNBT compound)
-	{
+	public void func_230337_a_(BlockState state, CompoundNBT compound) {
 		CompoundNBT energyTag = compound.getCompound("energy");
 		energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
-		super.read(compound);
+		super.func_230337_a_(state, compound);
 	}
 
 	@SuppressWarnings("unchecked")
