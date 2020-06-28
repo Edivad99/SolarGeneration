@@ -3,7 +3,6 @@ package edivad.solargeneration.gui;
 import java.util.Collections;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import edivad.solargeneration.Main;
 import edivad.solargeneration.blocks.containers.SolarPanelContainer;
@@ -55,7 +54,6 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 	@Override
 	protected void func_230450_a_(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		this.field_230706_i_.getTextureManager().bindTexture(TEXTURES);
 		this.func_238474_b_(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
