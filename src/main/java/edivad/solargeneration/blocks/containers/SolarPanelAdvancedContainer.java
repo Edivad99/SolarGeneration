@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 public class SolarPanelAdvancedContainer extends SolarPanelContainer {
 
-	public SolarPanelAdvancedContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
-	{
-		super(Registration.ADVANCED_CONTAINER.get(), windowId, world, pos, player);
-	}
+    public SolarPanelAdvancedContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
+    {
+        super(Registration.ADVANCED_CONTAINER.get(), windowId, world, pos, player);
+    }
 }

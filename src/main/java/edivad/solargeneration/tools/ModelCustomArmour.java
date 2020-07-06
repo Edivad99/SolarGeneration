@@ -9,31 +9,31 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class ModelCustomArmour extends BipedModel<PlayerEntity> {
 
-	public ModelRenderer shape15;
+    public ModelRenderer shape15;
 
-	public ModelCustomArmour()
-	{
-		super(0.0F, 0.0F, 64, 32);
-		this.textureWidth = 128;
-		this.textureHeight = 128;
+    public ModelCustomArmour()
+    {
+        super(0.0F, 0.0F, 64, 32);
+        this.textureWidth = 128;
+        this.textureHeight = 128;
 
-		this.shape15 = new ModelRenderer(this, 82, 0);
-		this.shape15.setRotationPoint(-4.0F, -8.0F, -4.0F);
-		this.shape15.addBox(-1.0F, -5.0F, -1.0F, 10, 5, 12, 0.0F);
+        this.shape15 = new ModelRenderer(this, 82, 0);
+        this.shape15.setRotationPoint(-4.0F, -8.0F, -4.0F);
+        this.shape15.addBox(-1.0F, -5.0F, -1.0F, 10, 5, 12, 0.0F);
 
-		this.bipedHead.addChild(shape15);
-	}
+        this.bipedHead.addChild(shape15);
+    }
 
-	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha)
-	{
-		super.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-	}
+    @Override
+    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha)
+    {
+        super.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+    }
 
-	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z)
-	{
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
-	}
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z)
+    {
+        modelRenderer.rotateAngleX = x;
+        modelRenderer.rotateAngleY = y;
+        modelRenderer.rotateAngleZ = z;
+    }
 }

@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 public class SolarPanelHardenedContainer extends SolarPanelContainer {
 
-	public SolarPanelHardenedContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
-	{
-		super(Registration.HARDENED_CONTAINER.get(), windowId, world, pos, player);
-	}
+    public SolarPanelHardenedContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
+    {
+        super(Registration.HARDENED_CONTAINER.get(), windowId, world, pos, player);
+    }
 }

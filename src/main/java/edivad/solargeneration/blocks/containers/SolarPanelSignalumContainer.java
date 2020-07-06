@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 public class SolarPanelSignalumContainer extends SolarPanelContainer {
 
-	public SolarPanelSignalumContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
-	{
-		super(Registration.SIGNALUM_CONTAINER.get(), windowId, world, pos, player);
-	}
+    public SolarPanelSignalumContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
+    {
+        super(Registration.SIGNALUM_CONTAINER.get(), windowId, world, pos, player);
+    }
 }

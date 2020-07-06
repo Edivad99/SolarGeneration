@@ -16,17 +16,17 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(Main.MODID)
 public class Main {
 
-	public static final String MODID = "solargeneration";
-	public static final String MODNAME = "Solar Generation";
+    public static final String MODID = "solargeneration";
+    public static final String MODNAME = "Solar Generation";
 
-	public static IProxy proxy = DistExecutor.safeRunForDist(() -> ProxyClient::new, () -> Proxy::new);
+    public static IProxy proxy = DistExecutor.safeRunForDist(() -> ProxyClient::new, () -> Proxy::new);
 
-	public static final Logger logger = LogManager.getLogger();
+    public static final Logger logger = LogManager.getLogger();
 
-	public Main()
-	{
-		Registration.init();
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
-		PacketHandler.init();
-	}
+    public Main()
+    {
+        Registration.init();
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+        PacketHandler.init();
+    }
 }

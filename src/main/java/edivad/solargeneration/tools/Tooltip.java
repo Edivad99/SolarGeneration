@@ -10,36 +10,36 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class Tooltip {
 
-	private static final Pattern COMPILE = Pattern.compile("@", Pattern.LITERAL);
+    private static final Pattern COMPILE = Pattern.compile("@", Pattern.LITERAL);
 
-	public static void showInfoShift(SolarPanelLevel solarPanelLevel, List<ITextComponent> tooltip)
-	{
-		if(Screen.func_231173_s_()) // hasShiftDown
-		{
-			int generation = (int) Math.pow(8, solarPanelLevel.ordinal());
-			int transfer = generation * 2;
-			int capacity = generation * 1000;
+    public static void showInfoShift(SolarPanelLevel solarPanelLevel, List<ITextComponent> tooltip)
+    {
+        if(Screen.func_231173_s_()) // hasShiftDown
+        {
+            int generation = (int) Math.pow(8, solarPanelLevel.ordinal());
+            int transfer = generation * 2;
+            int capacity = generation * 1000;
 
-			addInformationLocalized(tooltip, "message.solargeneration.shift_info", generation, transfer, capacity);
-		}
-		else
-			addInformationLocalized(tooltip, "message.solargeneration.hold_shift");
-	}
+            addInformationLocalized(tooltip, "message.solargeneration.shift_info", generation, transfer, capacity);
+        }
+        else
+            addInformationLocalized(tooltip, "message.solargeneration.hold_shift");
+    }
 
-	public static void showInfoCtrl(int energy, List<ITextComponent> tooltip)
-	{
-		if(Screen.func_231172_r_())
-			addInformationLocalized(tooltip, "message.solargeneration.ctrl_info", energy);
-		else
-			addInformationLocalized(tooltip, "message.solargeneration.hold_ctrl");
-	}
+    public static void showInfoCtrl(int energy, List<ITextComponent> tooltip)
+    {
+        if(Screen.func_231172_r_())
+            addInformationLocalized(tooltip, "message.solargeneration.ctrl_info", energy);
+        else
+            addInformationLocalized(tooltip, "message.solargeneration.hold_ctrl");
+    }
 
-	private static void addInformationLocalized(List<ITextComponent> tooltip, String key, Object... parameters)
-	{
-		String translated = I18n.format(key, parameters);
-		translated = COMPILE.matcher(translated).replaceAll("\u00a7");
-		String[] formatted = translated.split("\n");
-		for(String line : formatted)
-			tooltip.add(new TranslationTextComponent(line));
-	}
+    private static void addInformationLocalized(List<ITextComponent> tooltip, String key, Object... parameters)
+    {
+        String translated = I18n.format(key, parameters);
+        translated = COMPILE.matcher(translated).replaceAll("\u00a7");
+        String[] formatted = translated.split("\n");
+        for(String line : formatted)
+            tooltip.add(new TranslationTextComponent(line));
+    }
 }

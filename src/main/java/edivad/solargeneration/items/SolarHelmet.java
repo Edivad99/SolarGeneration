@@ -30,170 +30,169 @@ import net.minecraftforge.energy.CapabilityEnergy;
 
 public class SolarHelmet extends ArmorItem {
 
-	private SolarPanelLevel levelSolarHelmet;
-	private MyEnergyStorage energyStorage;
-	private int energyGeneration;
-	private int maxEnergyOutput;
+    private SolarPanelLevel levelSolarHelmet;
+    private MyEnergyStorage energyStorage;
+    private int energyGeneration;
+    private int maxEnergyOutput;
 
-	public SolarHelmet(SolarPanelLevel levelSolarHelmet)
-	{
-		super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(ModSetup.solarGenerationTab).maxStackSize(1));
-		this.levelSolarHelmet = levelSolarHelmet;
+    public SolarHelmet(SolarPanelLevel levelSolarHelmet)
+    {
+        super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(ModSetup.solarGenerationTab).maxStackSize(1));
+        this.levelSolarHelmet = levelSolarHelmet;
 
-		energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
-		maxEnergyOutput = energyGeneration * 2;
-		energyStorage = new MyEnergyStorage(energyGeneration * 2, energyGeneration * 1000);
-	}
+        energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
+        maxEnergyOutput = energyGeneration * 2;
+        energyStorage = new MyEnergyStorage(energyGeneration * 2, energyGeneration * 1000);
+    }
 
-	@Override
-	public boolean isDamageable()
-	{
-		return false;
-	}
+    @Override
+    public boolean isDamageable()
+    {
+        return false;
+    }
 
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
-	{
-		Tooltip.showInfoCtrl(getEnergyStored(stack), tooltip);
-		Tooltip.showInfoShift(levelSolarHelmet, tooltip);
-	}
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    {
+        Tooltip.showInfoCtrl(getEnergyStored(stack), tooltip);
+        Tooltip.showInfoShift(levelSolarHelmet, tooltip);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Nullable
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)
-	{
-		if(itemStack != ItemStack.EMPTY)
-		{
-			if(itemStack.getItem() instanceof ArmorItem)
-			{
-				ModelCustomArmour model = new ModelCustomArmour();
+    @SuppressWarnings("unchecked")
+    @Nullable
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)
+    {
+        if(itemStack != ItemStack.EMPTY)
+        {
+            if(itemStack.getItem() instanceof ArmorItem)
+            {
+                ModelCustomArmour model = new ModelCustomArmour();
 
-				model.bipedHead.showModel = armorSlot == EquipmentSlotType.HEAD;
+                model.bipedHead.showModel = armorSlot == EquipmentSlotType.HEAD;
 
-				model.isChild = _default.isChild;
-				model.isSitting = _default.isSitting;
-				model.isSneak = _default.isSneak;
-				model.rightArmPose = _default.rightArmPose;
-				model.leftArmPose = _default.leftArmPose;
-				return (A) model;
-			}
-		}
-		return null;
-	}
+                model.isChild = _default.isChild;
+                model.isSitting = _default.isSitting;
+                model.isSneak = _default.isSneak;
+                model.rightArmPose = _default.rightArmPose;
+                model.leftArmPose = _default.leftArmPose;
+                return (A) model;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type)
-	{
-		return Main.MODID + ":textures/models/armor/solar_helmet_" + levelSolarHelmet.name().toLowerCase() + ".png";
-	}
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type)
+    {
+        return Main.MODID + ":textures/models/armor/solar_helmet_" + levelSolarHelmet.name().toLowerCase() + ".png";
+    }
 
-	public SolarPanelLevel getLevelSolarPanel()
-	{
-		return this.levelSolarHelmet;
-	}
+    public SolarPanelLevel getLevelSolarPanel()
+    {
+        return this.levelSolarHelmet;
+    }
 
-	@Override
-	public boolean showDurabilityBar(ItemStack stack)
-	{
-		return !(getEnergyStored(stack) == getMaxEnergyStored());
-	}
+    @Override
+    public boolean showDurabilityBar(ItemStack stack)
+    {
+        return !(getEnergyStored(stack) == getMaxEnergyStored());
+    }
 
-	@Override
-	public double getDurabilityForDisplay(ItemStack stack)
-	{
-		return 1D - ((double) getEnergyStored(stack) / (double) getMaxEnergyStored());
-	}
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        return 1D - ((double) getEnergyStored(stack) / (double) getMaxEnergyStored());
+    }
 
-	public void saveEnergyItem(ItemStack container)
-	{
-		if(container.getTag() == null)
-			container.setTag(new CompoundNBT());
-		container.getTag().putInt("energy", energyStorage.getEnergyStored());
-	}
+    public void saveEnergyItem(ItemStack container)
+    {
+        if(container.getTag() == null)
+            container.setTag(new CompoundNBT());
+        container.getTag().putInt("energy", energyStorage.getEnergyStored());
+    }
 
-	public int getEnergyStored(ItemStack container)
-	{
-		if(container.getTag() == null)
-			return 0;
-		return container.getTag().getInt("energy");
-	}
+    public int getEnergyStored(ItemStack container)
+    {
+        if(container.getTag() == null)
+            return 0;
+        return container.getTag().getInt("energy");
+    }
 
-	public int getMaxEnergyStored()
-	{
-		return energyStorage.getMaxEnergyStored();
-	}
+    public int getMaxEnergyStored()
+    {
+        return energyStorage.getMaxEnergyStored();
+    }
 
-	@Override
-	public void onArmorTick(ItemStack itemStack, World world, PlayerEntity player)
-	{
-		if(world.isRemote)
-			return;
+    @Override
+    public void onArmorTick(ItemStack itemStack, World world, PlayerEntity player)
+    {
+        if(world.isRemote)
+            return;
 
-		if(!(getEnergyStored(itemStack) == getMaxEnergyStored()))
-		{
-			energyStorage.generatePower(currentAmountEnergyProduced(world, player));
-		}
-		sendEnergy(world, player);
-		saveEnergyItem(itemStack);
-	}
+        if(!(getEnergyStored(itemStack) == getMaxEnergyStored()))
+        {
+            energyStorage.generatePower(currentAmountEnergyProduced(world, player));
+        }
+        sendEnergy(world, player);
+        saveEnergyItem(itemStack);
+    }
 
-	@Override
-	public EquipmentSlotType getEquipmentSlot(ItemStack stack)
-	{
-		if(stack.getTag() == null)
-		{
-			energyStorage.setEnergy(0);
-			saveEnergyItem(stack);
-		}
-		else
-			energyStorage.setEnergy(getEnergyStored(stack));
-		return super.getEquipmentSlot(stack);
-	}
+    @Override
+    public EquipmentSlotType getEquipmentSlot(ItemStack stack)
+    {
+        if(stack.getTag() == null)
+        {
+            energyStorage.setEnergy(0);
+            saveEnergyItem(stack);
+        }
+        else
+            energyStorage.setEnergy(getEnergyStored(stack));
+        return super.getEquipmentSlot(stack);
+    }
 
-	private void sendEnergy(World world, PlayerEntity player)
-	{
-		//Armor priority
-		for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++)
-		{
-			ItemStack slot = player.inventory.getStackInSlot(i);
-			chargegItem(slot);
-		}
-		//Inventory
-		for(int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++)
-		{
-			ItemStack slot = player.inventory.getStackInSlot(i);
-			chargegItem(slot);
-		}
-	}
+    private void sendEnergy(World world, PlayerEntity player)
+    {
+        //Armor priority
+        for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++)
+        {
+            ItemStack slot = player.inventory.getStackInSlot(i);
+            chargegItem(slot);
+        }
+        //Inventory
+        for(int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++)
+        {
+            ItemStack slot = player.inventory.getStackInSlot(i);
+            chargegItem(slot);
+        }
+    }
 
-	private void chargegItem(ItemStack slot)
-	{
-		if(slot.getCount() == 1)
-		{
-			slot.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler ->
-			{
-				if(handler.canReceive())
-				{
-					while(handler.getEnergyStored() < handler.getMaxEnergyStored() && energyStorage.getEnergyStored() > 0)
-					{
-						int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
-						energyStorage.consumePower(accepted);
-						handler.receiveEnergy(accepted, false);
-					}
-				}
-			});
-		}
-	}
+    private void chargegItem(ItemStack slot)
+    {
+        if(slot.getCount() == 1)
+        {
+            slot.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler -> {
+                if(handler.canReceive())
+                {
+                    while(handler.getEnergyStored() < handler.getMaxEnergyStored() && energyStorage.getEnergyStored() > 0)
+                    {
+                        int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
+                        energyStorage.consumePower(accepted);
+                        handler.receiveEnergy(accepted, false);
+                    }
+                }
+            });
+        }
+    }
 
-	private int currentAmountEnergyProduced(World world, PlayerEntity player)
-	{
-		if(!energyStorage.isFullEnergy())
-		{
-			return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, player.func_233580_cy_().add(0, 1, 0), getLevelSolarPanel()));
-		}
-		return 0;
-	}
+    private int currentAmountEnergyProduced(World world, PlayerEntity player)
+    {
+        if(!energyStorage.isFullEnergy())
+        {
+            return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, player.func_233580_cy_().add(0, 1, 0), getLevelSolarPanel()));
+        }
+        return 0;
+    }
 }

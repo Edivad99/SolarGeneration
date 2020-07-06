@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 public class SolarPanelLeadstoneContainer extends SolarPanelContainer {
 
-	public SolarPanelLeadstoneContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
-	{
-		super(Registration.LEADSTONE_CONTAINER.get(), windowId, world, pos, player);
-	}
+    public SolarPanelLeadstoneContainer(int windowId, World world, BlockPos pos, PlayerEntity player)
+    {
+        super(Registration.LEADSTONE_CONTAINER.get(), windowId, world, pos, player);
+    }
 }

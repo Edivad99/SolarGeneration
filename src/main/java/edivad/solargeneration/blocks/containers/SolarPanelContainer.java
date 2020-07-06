@@ -10,19 +10,19 @@ import net.minecraft.world.World;
 
 public class SolarPanelContainer extends Container {
 
-	public final TileEntitySolarPanel tile;
-	private final PlayerEntity player;
+    public final TileEntitySolarPanel tile;
+    private final PlayerEntity player;
 
-	public SolarPanelContainer(ContainerType<?> type, int windowId, World world, BlockPos pos, PlayerEntity player)
-	{
-		super(type, windowId);
-		this.tile = (TileEntitySolarPanel) world.getTileEntity(pos);
-		this.player = player;
-	}
+    public SolarPanelContainer(ContainerType<?> type, int windowId, World world, BlockPos pos, PlayerEntity player)
+    {
+        super(type, windowId);
+        this.tile = (TileEntitySolarPanel) world.getTileEntity(pos);
+        this.player = player;
+    }
 
-	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
-	{
-		return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), player, tile.getBlockState().getBlock());
-	}
+    @Override
+    public boolean canInteractWith(PlayerEntity playerIn)
+    {
+        return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), player, tile.getBlockState().getBlock());
+    }
 }
