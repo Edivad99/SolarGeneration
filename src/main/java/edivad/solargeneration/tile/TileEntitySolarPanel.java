@@ -130,11 +130,11 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
     @SuppressWarnings("unchecked")
     @Override
-    public void func_230337_a_(BlockState state, CompoundNBT compound)
+    public void read(BlockState state, CompoundNBT compound)
     {
         CompoundNBT energyTag = compound.getCompound("energy");
         energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
-        super.func_230337_a_(state, compound);
+        super.read(state, compound);
     }
 
     @SuppressWarnings("unchecked")

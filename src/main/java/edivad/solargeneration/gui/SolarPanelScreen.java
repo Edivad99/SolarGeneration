@@ -24,41 +24,38 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
         this.tile = container.tile;
     }
 
-    //render
     @Override
-    public void func_230430_a_(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
+    public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
     {
-        this.func_230446_a_(mStack);//this.renderBackground();
-        super.func_230430_a_(mStack, mouseX, mouseY, partialTicks);
+        this.renderBackground(mStack);
+        super.render(mStack, mouseX, mouseY, partialTicks);
         this.func_230459_a_(mStack, mouseX, mouseY);//this.renderHoveredToolTip(mouseX, mouseY);
         if(mouseX > guiLeft + 7 && mouseX < guiLeft + 29 && mouseY > guiTop + 10 && mouseY < guiTop + 77)
-            this.func_238654_b_(mStack, Collections.singletonList(new StringTextComponent("Energy: " + getPercent() + "%")), mouseX, mouseY, field_230712_o_);
+            this.renderTooltip(mStack, Collections.singletonList(new StringTextComponent("Energy: " + getPercent() + "%")), mouseX, mouseY, font);
     }
 
-    //drawGuiContainerForegroundLayer
     @Override
-    protected void func_230451_b_(MatrixStack mStack, int mouseX, int mouseY)
+    protected void func_230451_b_(MatrixStack mStack, int mouseX, int mouseY)//drawGuiContainerForegroundLayer
     {
-        StringTextComponent energy = new StringTextComponent("Stored energy: " + getEnergyFormatted(tile.energyClient));
-        this.field_230712_o_.func_238422_b_(mStack, energy, (xSize / 2 - field_230712_o_.getStringWidth(energy.getString()) / 2) + 14, 20, 4210752);
+        String energy = "Stored energy: " + getEnergyFormatted(tile.energyClient);
+        this.font.drawString(mStack, energy, (xSize / 2 - font.getStringWidth(energy) / 2) + 14, 20, 4210752);
 
-        StringTextComponent maxEnergy = new StringTextComponent("Max capacity: " + getEnergyFormatted(tile.maxEnergy));
-        this.field_230712_o_.func_238422_b_(mStack, maxEnergy, (xSize / 2 - field_230712_o_.getStringWidth(maxEnergy.getString()) / 2) + 14, 30, 4210752);//this.font.drawstring
+        String maxEnergy = "Max capacity: " + getEnergyFormatted(tile.maxEnergy);
+        this.font.drawString(mStack, maxEnergy, (xSize / 2 - font.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
 
-        StringTextComponent generation = new StringTextComponent("Generation: " + tile.energyProductionClient + " FE/t");
-        this.field_230712_o_.func_238422_b_(mStack, generation, (xSize / 2 - field_230712_o_.getStringWidth(generation.getString()) / 2) + 14, 40, 4210752);
+        String generation = "Generation: " + tile.energyProductionClient + " FE/t";
+        this.font.drawString(mStack, generation, (xSize / 2 - font.getStringWidth(generation) / 2) + 14, 40, 4210752);
     }
 
-    //drawGuiContainerBackgroundLayer
     @Override
-    protected void func_230450_a_(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+    protected void func_230450_a_(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)//drawGuiContainerBackgroundLayer
     {
-        this.field_230706_i_.getTextureManager().bindTexture(TEXTURES);
-        this.func_238474_b_(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.minecraft.getTextureManager().bindTexture(TEXTURES);
+        this.blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         // Energy
         int y = this.getEnergyScaled(60);
-        this.func_238474_b_(mStack, this.guiLeft + 10, this.guiTop + 12 + y, 176, 0, 16, 60 - y);
+        this.blit(mStack, this.guiLeft + 10, this.guiTop + 12 + y, 176, 0, 16, 60 - y);
 
     }
 
