@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
@@ -31,19 +32,19 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
         super.render(mStack, mouseX, mouseY, partialTicks);
         this.func_230459_a_(mStack, mouseX, mouseY);//this.renderHoveredToolTip(mouseX, mouseY);
         if(mouseX > guiLeft + 7 && mouseX < guiLeft + 29 && mouseY > guiTop + 10 && mouseY < guiTop + 77)
-            this.renderTooltip(mStack, Collections.singletonList(new StringTextComponent("Energy: " + getPercent() + "%")), mouseX, mouseY, font);
+            this.renderTooltip(mStack, Collections.singletonList(new StringTextComponent("Energy: " + getPercent() + "%")), mouseX, mouseY);
     }
 
     @Override
     protected void func_230451_b_(MatrixStack mStack, int mouseX, int mouseY)//drawGuiContainerForegroundLayer
     {
-        String energy = "Stored energy: " + getEnergyFormatted(tile.energyClient);
+        String energy = new TranslationTextComponent("gui." + Main.MODID + ".stored_energy").func_240702_b_(" " + getEnergyFormatted(tile.energyClient)).getString();
         this.font.drawString(mStack, energy, (xSize / 2 - font.getStringWidth(energy) / 2) + 14, 20, 4210752);
 
-        String maxEnergy = "Max capacity: " + getEnergyFormatted(tile.maxEnergy);
+        String maxEnergy = new TranslationTextComponent("gui." + Main.MODID + ".max_capacity").func_240702_b_(" " + getEnergyFormatted(tile.maxEnergy)).getString();
         this.font.drawString(mStack, maxEnergy, (xSize / 2 - font.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
 
-        String generation = "Generation: " + tile.energyProductionClient + " FE/t";
+        String generation = new TranslationTextComponent("gui." + Main.MODID + ".generation").func_240702_b_(" " + tile.energyProductionClient + " FE/t").getString();
         this.font.drawString(mStack, generation, (xSize / 2 - font.getStringWidth(generation) / 2) + 14, 40, 4210752);
     }
 
@@ -55,8 +56,7 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
         // Energy
         int y = this.getEnergyScaled(60);
-        this.blit(mStack, this.guiLeft + 10, this.guiTop + 12 + y, 176, 0, 16, 60 - y);
-
+        this.blit(mStack, this.guiLeft + 10, this.guiTop + 12 + y, this.xSize, 0, 16, 60 - y);
     }
 
     private String getEnergyFormatted(int energy)

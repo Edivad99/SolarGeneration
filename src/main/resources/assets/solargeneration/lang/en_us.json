@@ -67,5 +67,9 @@
 
     "message.solargeneration.shift_info": "@fGeneration: @a%d @4FE/t\n@fTransfer: @a%d @4FE/t\n@fCapacity: @a%d @4FE",
 
-    "message.solargeneration.ctrl_info": "@fEnergy stored: @a%d @4FE"
+    "message.solargeneration.ctrl_info": "@fEnergy stored: @a%d @4FE",
+    
+    "gui.solargeneration.stored_energy": "Stored energy:",
+    "gui.solargeneration.max_capacity": "Max capacity:",
+    "gui.solargeneration.generation": "Generation: "
 }
