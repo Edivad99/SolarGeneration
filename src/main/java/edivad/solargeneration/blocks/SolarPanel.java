@@ -67,12 +67,6 @@ public class SolarPanel extends Block implements IWaterLoggable {
         this.levelSolarPanel = levelSolarPanel;
     }
 
-    //	@Override
-    //	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
-    //	{
-    //		return false;
-    //	}
-
     private static VoxelShape createShape()
     {
         ArrayList<VoxelShape> shapes = new ArrayList<VoxelShape>();

@@ -36,20 +36,20 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
     }
 
     @Override
-    protected void func_230451_b_(MatrixStack mStack, int mouseX, int mouseY)//drawGuiContainerForegroundLayer
+    protected void drawGuiContainerForegroundLayer(MatrixStack mStack, int mouseX, int mouseY)
     {
-        String energy = new TranslationTextComponent("gui." + Main.MODID + ".stored_energy").func_240702_b_(" " + getEnergyFormatted(tile.energyClient)).getString();
+        String energy = new TranslationTextComponent("gui." + Main.MODID + ".stored_energy").appendString(" " + getEnergyFormatted(tile.energyClient)).getString();
         this.font.drawString(mStack, energy, (xSize / 2 - font.getStringWidth(energy) / 2) + 14, 20, 4210752);
 
-        String maxEnergy = new TranslationTextComponent("gui." + Main.MODID + ".max_capacity").func_240702_b_(" " + getEnergyFormatted(tile.maxEnergy)).getString();
+        String maxEnergy = new TranslationTextComponent("gui." + Main.MODID + ".max_capacity").appendString(" " + getEnergyFormatted(tile.maxEnergy)).getString();
         this.font.drawString(mStack, maxEnergy, (xSize / 2 - font.getStringWidth(maxEnergy) / 2) + 14, 30, 4210752);
 
-        String generation = new TranslationTextComponent("gui." + Main.MODID + ".generation").func_240702_b_(" " + tile.energyProductionClient + " FE/t").getString();
+        String generation = new TranslationTextComponent("gui." + Main.MODID + ".generation").appendString(" " + tile.energyProductionClient + " FE/t").getString();
         this.font.drawString(mStack, generation, (xSize / 2 - font.getStringWidth(generation) / 2) + 14, 40, 4210752);
     }
 
     @Override
-    protected void func_230450_a_(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)//drawGuiContainerBackgroundLayer
+    protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
     {
         this.minecraft.getTextureManager().bindTexture(TEXTURES);
         this.blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
