@@ -1,5 +1,5 @@
 {
-	"parent": "block/block",
+	"parent": "minecraft:block/block",
 	"textures": {
 		"main": "solargeneration:blocks/solar_panel/resonant",
 		"particle": "solargeneration:blocks/solar_panel/particle_resonant"
