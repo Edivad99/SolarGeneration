@@ -88,7 +88,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
     private int currentAmountEnergyProduced()
     {
-        return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, getPos(), levelSolarPanel));
+        return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, levelSolarPanel));
     }
 
     private void sendEnergy()
@@ -154,19 +154,19 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
     {
         switch (levelSolarPanel)
         {
-            case Advanced:
+            case ADVANCED:
                 return new SolarPanelAdvancedContainer(id, world, pos, playerEntity);
-            case Hardened:
+            case HARDENED:
                 return new SolarPanelHardenedContainer(id, world, pos, playerEntity);
-            case Leadstone:
+            case LEADSTONE:
                 return new SolarPanelLeadstoneContainer(id, world, pos, playerEntity);
-            case Redstone:
+            case REDSTONE:
                 return new SolarPanelRedstoneContainer(id, world, pos, playerEntity);
-            case Resonant:
+            case RESONANT:
                 return new SolarPanelResonantContainer(id, world, pos, playerEntity);
-            case Signalum:
+            case SIGNALUM:
                 return new SolarPanelSignalumContainer(id, world, pos, playerEntity);
-            case Ultimate:
+            case ULTIMATE:
                 return new SolarPanelUltimateContainer(id, world, pos, playerEntity);
             default:
                 return null;

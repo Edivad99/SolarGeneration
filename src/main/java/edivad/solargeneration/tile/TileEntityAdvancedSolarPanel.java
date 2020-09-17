@@ -7,6 +7,6 @@ public class TileEntityAdvancedSolarPanel extends TileEntitySolarPanel {
 
     public TileEntityAdvancedSolarPanel()
     {
-        super(SolarPanelLevel.Advanced, Registration.ADVANCED_TILE.get());
+        super(SolarPanelLevel.ADVANCED, Registration.ADVANCED_TILE.get());
     }
 }

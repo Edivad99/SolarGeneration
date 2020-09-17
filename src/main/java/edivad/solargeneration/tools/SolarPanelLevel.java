@@ -2,5 +2,5 @@ package edivad.solargeneration.tools;
 
 public enum SolarPanelLevel {
 
-    Leadstone, Hardened, Redstone, Signalum, Resonant, Advanced, Ultimate;
+    LEADSTONE, HARDENED, REDSTONE, SIGNALUM, RESONANT, ADVANCED, ULTIMATE;
 }

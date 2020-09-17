@@ -7,6 +7,6 @@ public class TileEntityUltimateSolarPanel extends TileEntitySolarPanel {
 
     public TileEntityUltimateSolarPanel()
     {
-        super(SolarPanelLevel.Ultimate, Registration.ULTIMATE_TILE.get());
+        super(SolarPanelLevel.ULTIMATE, Registration.ULTIMATE_TILE.get());
     }
 }

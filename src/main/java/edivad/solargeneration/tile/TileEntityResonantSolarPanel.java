@@ -7,6 +7,6 @@ public class TileEntityResonantSolarPanel extends TileEntitySolarPanel {
 
     public TileEntityResonantSolarPanel()
     {
-        super(SolarPanelLevel.Resonant, Registration.RESONANT_TILE.get());
+        super(SolarPanelLevel.RESONANT, Registration.RESONANT_TILE.get());
     }
 }

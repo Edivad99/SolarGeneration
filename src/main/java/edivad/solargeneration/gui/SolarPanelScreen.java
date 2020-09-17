@@ -30,7 +30,7 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
     {
         this.renderBackground(mStack);
         super.render(mStack, mouseX, mouseY, partialTicks);
-        this.func_230459_a_(mStack, mouseX, mouseY);//this.renderHoveredToolTip(mouseX, mouseY);
+        this.renderHoveredTooltip(mStack, mouseX, mouseY);
         if(mouseX > guiLeft + 7 && mouseX < guiLeft + 29 && mouseY > guiTop + 10 && mouseY < guiTop + 77)
             this.renderTooltip(mStack, new StringTextComponent("Energy: " + getPercent() + "%"), mouseX, mouseY);
     }

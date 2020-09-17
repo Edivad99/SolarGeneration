@@ -7,6 +7,6 @@ public class TileEntitySignalumSolarPanel extends TileEntitySolarPanel {
 
     public TileEntitySignalumSolarPanel()
     {
-        super(SolarPanelLevel.Signalum, Registration.SIGNALUM_TILE.get());
+        super(SolarPanelLevel.SIGNALUM, Registration.SIGNALUM_TILE.get());
     }
 }

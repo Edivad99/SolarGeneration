@@ -27,7 +27,7 @@ public class ProductionSolarPanel {
 
             if(sunIntensity > 0)
             {
-                if(solarPanelLevel == SolarPanelLevel.Leadstone)
+                if(solarPanelLevel == SolarPanelLevel.LEADSTONE)
                     sunIntensity = 1;
 
                 if(world.isRaining())

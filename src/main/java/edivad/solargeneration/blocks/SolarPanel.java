@@ -69,7 +69,7 @@ public class SolarPanel extends Block implements IWaterLoggable {
 
     private static VoxelShape createShape()
     {
-        ArrayList<VoxelShape> shapes = new ArrayList<VoxelShape>();
+        ArrayList<VoxelShape> shapes = new ArrayList<>();
         shapes.add(makeCuboidShape(0, 0, 0, 16, 1, 16));//bottom
         shapes.add(makeCuboidShape(7, 1, 7, 9, 9, 9));//mainpillar
         shapes.add(makeCuboidShape(6, 1, 9, 7, 9, 10));//pillar1
@@ -177,19 +177,19 @@ public class SolarPanel extends Block implements IWaterLoggable {
     {
         switch (this.levelSolarPanel)
         {
-            case Leadstone:
+            case LEADSTONE:
                 return new TileEntityLeadstoneSolarPanel();
-            case Hardened:
+            case HARDENED:
                 return new TileEntityHardenedSolarPanel();
-            case Redstone:
+            case REDSTONE:
                 return new TileEntityRedstoneSolarPanel();
-            case Signalum:
+            case SIGNALUM:
                 return new TileEntitySignalumSolarPanel();
-            case Resonant:
+            case RESONANT:
                 return new TileEntityResonantSolarPanel();
-            case Advanced:
+            case ADVANCED:
                 return new TileEntityAdvancedSolarPanel();
-            case Ultimate:
+            case ULTIMATE:
                 return new TileEntityUltimateSolarPanel();
             default:
                 return null;

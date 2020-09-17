@@ -7,6 +7,6 @@ public class TileEntityLeadstoneSolarPanel extends TileEntitySolarPanel {
 
     public TileEntityLeadstoneSolarPanel()
     {
-        super(SolarPanelLevel.Leadstone, Registration.LEADSTONE_TILE.get());
+        super(SolarPanelLevel.LEADSTONE, Registration.LEADSTONE_TILE.get());
     }
 }

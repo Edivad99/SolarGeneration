@@ -7,6 +7,6 @@ public class TileEntityHardenedSolarPanel extends TileEntitySolarPanel {
 
     public TileEntityHardenedSolarPanel()
     {
-        super(SolarPanelLevel.Hardened, Registration.HARDENED_TILE.get());
+        super(SolarPanelLevel.HARDENED, Registration.HARDENED_TILE.get());
     }
 }
