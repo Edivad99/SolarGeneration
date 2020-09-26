@@ -5,15 +5,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import edivad.solargeneration.blocks.containers.SolarPanelAdvancedContainer;
-import edivad.solargeneration.blocks.containers.SolarPanelHardenedContainer;
-import edivad.solargeneration.blocks.containers.SolarPanelLeadstoneContainer;
-import edivad.solargeneration.blocks.containers.SolarPanelRedstoneContainer;
-import edivad.solargeneration.blocks.containers.SolarPanelResonantContainer;
-import edivad.solargeneration.blocks.containers.SolarPanelSignalumContainer;
-import edivad.solargeneration.blocks.containers.SolarPanelUltimateContainer;
+import edivad.solargeneration.container.SolarPanelContainer;
 import edivad.solargeneration.network.PacketHandler;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
+import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
@@ -25,7 +20,6 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -46,9 +40,9 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
     private SolarPanelLevel levelSolarPanel;
     public int energyClient, energyProductionClient;
 
-    public TileEntitySolarPanel(SolarPanelLevel levelSolarPanel, TileEntityType<?> tileEntitySolarPanel)
+    public TileEntitySolarPanel(SolarPanelLevel levelSolarPanel)
     {
-        super(tileEntitySolarPanel);
+        super(Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get());
         this.levelSolarPanel = levelSolarPanel;
         energyGeneration = (int) Math.pow(8, levelSolarPanel.ordinal());
         maxEnergyOutput = energyGeneration * 2;
@@ -152,25 +146,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
     @Override
     public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity)
     {
-        switch (levelSolarPanel)
-        {
-            case ADVANCED:
-                return new SolarPanelAdvancedContainer(id, world, pos, playerEntity);
-            case HARDENED:
-                return new SolarPanelHardenedContainer(id, world, pos, playerEntity);
-            case LEADSTONE:
-                return new SolarPanelLeadstoneContainer(id, world, pos, playerEntity);
-            case REDSTONE:
-                return new SolarPanelRedstoneContainer(id, world, pos, playerEntity);
-            case RESONANT:
-                return new SolarPanelResonantContainer(id, world, pos, playerEntity);
-            case SIGNALUM:
-                return new SolarPanelSignalumContainer(id, world, pos, playerEntity);
-            case ULTIMATE:
-                return new SolarPanelUltimateContainer(id, world, pos, playerEntity);
-            default:
-                return null;
-        }
+        return new SolarPanelContainer(id, playerEntity, this, levelSolarPanel);
     }
 
     @Override

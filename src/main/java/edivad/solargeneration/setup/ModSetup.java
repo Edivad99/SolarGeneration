@@ -1,6 +1,7 @@
 package edivad.solargeneration.setup;
 
 import edivad.solargeneration.Main;
+import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
@@ -13,7 +14,7 @@ public class ModSetup {
         @Override
         public ItemStack createIcon()
         {
-            return new ItemStack(Registration.ADVANCED.get());
+            return new ItemStack(Registration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.ADVANCED).get());
         }
     };
 }

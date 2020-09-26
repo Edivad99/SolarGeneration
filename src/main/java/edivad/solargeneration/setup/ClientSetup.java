@@ -1,6 +1,7 @@
 package edivad.solargeneration.setup;
 
-import edivad.solargeneration.gui.SolarPanelScreen;
+import edivad.solargeneration.client.screen.SolarPanelScreen;
+import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -13,12 +14,7 @@ public class ClientSetup {
         MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
 
         //GUI
-        ScreenManager.registerFactory(Registration.LEADSTONE_CONTAINER.get(), SolarPanelScreen::new);
-        ScreenManager.registerFactory(Registration.HARDENED_CONTAINER.get(), SolarPanelScreen::new);
-        ScreenManager.registerFactory(Registration.REDSTONE_CONTAINER.get(), SolarPanelScreen::new);
-        ScreenManager.registerFactory(Registration.SIGNALUM_CONTAINER.get(), SolarPanelScreen::new);
-        ScreenManager.registerFactory(Registration.RESONANT_CONTAINER.get(), SolarPanelScreen::new);
-        ScreenManager.registerFactory(Registration.ADVANCED_CONTAINER.get(), SolarPanelScreen::new);
-        ScreenManager.registerFactory(Registration.ULTIMATE_CONTAINER.get(), SolarPanelScreen::new);
+        for(SolarPanelLevel level : SolarPanelLevel.values())
+            ScreenManager.registerFactory(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), SolarPanelScreen::new);
     }
 }

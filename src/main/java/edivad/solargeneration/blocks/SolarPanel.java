@@ -5,14 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import edivad.solargeneration.tile.TileEntityAdvancedSolarPanel;
-import edivad.solargeneration.tile.TileEntityHardenedSolarPanel;
-import edivad.solargeneration.tile.TileEntityLeadstoneSolarPanel;
-import edivad.solargeneration.tile.TileEntityRedstoneSolarPanel;
-import edivad.solargeneration.tile.TileEntityResonantSolarPanel;
-import edivad.solargeneration.tile.TileEntitySignalumSolarPanel;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
-import edivad.solargeneration.tile.TileEntityUltimateSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
 import net.minecraft.block.Block;
@@ -175,25 +168,7 @@ public class SolarPanel extends Block implements IWaterLoggable {
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        switch (this.levelSolarPanel)
-        {
-            case LEADSTONE:
-                return new TileEntityLeadstoneSolarPanel();
-            case HARDENED:
-                return new TileEntityHardenedSolarPanel();
-            case REDSTONE:
-                return new TileEntityRedstoneSolarPanel();
-            case SIGNALUM:
-                return new TileEntitySignalumSolarPanel();
-            case RESONANT:
-                return new TileEntityResonantSolarPanel();
-            case ADVANCED:
-                return new TileEntityAdvancedSolarPanel();
-            case ULTIMATE:
-                return new TileEntityUltimateSolarPanel();
-            default:
-                return null;
-        }
+        return new TileEntitySolarPanel(levelSolarPanel);
     }
 
     @OnlyIn(Dist.CLIENT)

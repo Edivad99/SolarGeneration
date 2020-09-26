@@ -1,11 +1,9 @@
-package edivad.solargeneration.gui;
-
-import java.util.Collections;
+package edivad.solargeneration.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import edivad.solargeneration.Main;
-import edivad.solargeneration.blocks.containers.SolarPanelContainer;
+import edivad.solargeneration.container.SolarPanelContainer;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
