@@ -76,8 +76,18 @@ minecraft {
     }
 }
 
+repositories {
+    maven {
+        name 'JEI'
+        url 'https://dvs1.progwml6.com/files/maven'
+    }
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    compileOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
