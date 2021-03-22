@@ -1,0 +1,75 @@
+{
+    "itemGroup.solargeneration_tab": "Solar Generation",
+
+    "item.solargeneration.solar_core_advanced": "Продвинутое солнечное ядро",
+    "item.solargeneration.solar_core_hardened": "Укреплённое солнечное ядро",
+    "item.solargeneration.solar_core_leadstone": "Свинцовое солнечное ядро",
+    "item.solargeneration.solar_core_redstone": "Редстоуновое солнечное ядро",
+    "item.solargeneration.solar_core_resonant": "Резонирующее солнечное ядро",
+    "item.solargeneration.solar_core_signalum": "Сигнальное солнечное ядро",
+    "item.solargeneration.solar_core_ultimate": "Ультимативнное солнечное ядро",
+
+    "item.solargeneration.solar_helmet_advanced": "Продвинутый солнечный шлем",
+    "item.solargeneration.solar_helmet_hardened": "Укреплённый солнечный шлем",
+    "item.solargeneration.solar_helmet_leadstone": "Свинцовый солнечный шлем",
+    "item.solargeneration.solar_helmet_redstone": "Редстоуновый солнечный шлем",
+    "item.solargeneration.solar_helmet_resonant": "Резонирующий солнечный шлем",
+    "item.solargeneration.solar_helmet_signalum": "Сигнальный солнечный шлем",
+    "item.solargeneration.solar_helmet_ultimate": "Ультимативный солнечный шлем",
+
+    "item.solargeneration.lapis_shard": "Лазуритовый осколок",
+    "item.solargeneration.photovoltaic_cell": "Фотоэлектрическая ячейка",
+
+    "block.solargeneration.solar_panel_advanced": "Продвинутая солнечная панель",
+    "block.solargeneration.solar_panel_hardened": "Укреплённая солнечная панель",
+    "block.solargeneration.solar_panel_leadstone": "Свинцовая солнечная панель",
+    "block.solargeneration.solar_panel_redstone": "Редстоуновая солнечная панель",
+    "block.solargeneration.solar_panel_resonant": "Резонирующая солнечная панель",
+    "block.solargeneration.solar_panel_signalum": "Сигнальная солнечная панель",
+    "block.solargeneration.solar_panel_ultimate": "Ультимативная солнечная панель",
+    
+    "advancements.solargeneration.root": "Solar Generation",
+    "advancements.solargeneration.root.desc": "Начни своё путешевствие в мир Солнечной Энергии с создания Фотоэлектрической ячейки",
+
+    "advancements.solargeneration.solar_panel_leadstone": "Начните с основ",
+    "advancements.solargeneration.solar_panel_leadstone.desc": "Создайте свинцовую солнечную панель.",
+    "advancements.solargeneration.solar_panel_hardened": "Одна лучше чем восемь!",
+    "advancements.solargeneration.solar_panel_hardened.desc": "Создайте укреплённую солнечную панель.",
+    "advancements.solargeneration.solar_panel_redstone": "Нужно больше энергии...",
+    "advancements.solargeneration.solar_panel_redstone.desc": "Создайте солнечную панель из красного камня.",
+    "advancements.solargeneration.solar_panel_signalum": "В поисках сигнала",
+    "advancements.solargeneration.solar_panel_signalum.desc": "Создайте сигнальную солнечную панель.",
+    "advancements.solargeneration.solar_panel_resonant": "Расширение энергии",
+    "advancements.solargeneration.solar_panel_resonant.desc": "Создайте резонирующую солнечную панель.",
+    "advancements.solargeneration.solar_panel_advanced": "Президент энергии",
+    "advancements.solargeneration.solar_panel_advanced.desc": "Создайте продвинутую солнечную панель.",
+    "advancements.solargeneration.solar_panel_ultimate": "Солнце, я тебя контролирую!",
+    "advancements.solargeneration.solar_panel_ultimate.desc": "Создайте ультимативную солнечную панель.",
+    
+    "advancements.solargeneration.solar_helmet_leadstone": "Используй голову!",
+    "advancements.solargeneration.solar_helmet_leadstone.desc": "Создайте свинцовый солнечный шлем.",
+    "advancements.solargeneration.solar_helmet_hardened": "Восемь шлемов в одном",
+    "advancements.solargeneration.solar_helmet_hardened.desc": "Создайте укреплённый солнечный шлем.",
+    "advancements.solargeneration.solar_helmet_redstone": "Элестрический разум",
+    "advancements.solargeneration.solar_helmet_redstone.desc": "Создайте шлем из красного камня.",
+    "advancements.solargeneration.solar_helmet_signalum": "Мозговые сигналы",
+    "advancements.solargeneration.solar_helmet_signalum.desc": "Создайте сигнальный солнечный шлем.",
+    "advancements.solargeneration.solar_helmet_resonant": "Резонирующая мелодия",
+    "advancements.solargeneration.solar_helmet_resonant.desc": "Создайте резонирубщий солнечный шлем.",
+    "advancements.solargeneration.solar_helmet_advanced": "Забавная корона",
+    "advancements.solargeneration.solar_helmet_advanced.desc": "Создайте продвинутый солнечный шлем.",
+    "advancements.solargeneration.solar_helmet_ultimate": "Бесконечный Шлем",
+    "advancements.solargeneration.solar_helmet_ultimate.desc": "Создайте ультимативный солнечный шлем.",
+
+    "message.solargeneration.hold_shift": "Удерживай @b@oShift @7для подробностей",
+
+    "message.solargeneration.hold_ctrl": "Удерживай @b@oCtrl @7чтобы узнать сколько энергии хранится",
+
+    "message.solargeneration.shift_info": "@fГенерируется: @a%d @4FE/t\n@fПередаётся: @a%d @4FE/t\n@fМаксимальная вместимость: @a%d @4FE",
+
+    "message.solargeneration.ctrl_info": "@fЭнергии хранится: @a%d @4FE",
+    
+    "gui.solargeneration.stored_energy": "Хранится:",
+    "gui.solargeneration.max_capacity": "Максимальная вместимость:",
+    "gui.solargeneration.generation": "Генерируется: "
+}
