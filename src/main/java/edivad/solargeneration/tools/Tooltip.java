@@ -36,7 +36,7 @@ public class Tooltip {
 
     private static void addInformationLocalized(List<ITextComponent> tooltip, String key, Object... parameters)
     {
-        String translated = I18n.format(key, parameters);
+        String translated = I18n.get(key, parameters);
         translated = COMPILE.matcher(translated).replaceAll("\u00a7");
         String[] formatted = translated.split("\n");
         for(String line : formatted)

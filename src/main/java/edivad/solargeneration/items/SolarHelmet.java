@@ -37,7 +37,7 @@ public class SolarHelmet extends ArmorItem {
 
     public SolarHelmet(SolarPanelLevel levelSolarHelmet)
     {
-        super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).group(ModSetup.solarGenerationTab).maxStackSize(1));
+        super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).tab(ModSetup.solarGenerationTab).stacksTo(1));
         this.levelSolarHelmet = levelSolarHelmet;
 
         energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
@@ -46,14 +46,14 @@ public class SolarHelmet extends ArmorItem {
     }
 
     @Override
-    public boolean isDamageable()
+    public boolean canBeDepleted()
     {
         return false;
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         Tooltip.showInfoCtrl(getEnergyStored(stack), tooltip);
         Tooltip.showInfoShift(levelSolarHelmet, tooltip);
@@ -71,11 +71,11 @@ public class SolarHelmet extends ArmorItem {
             {
                 ModelCustomArmour model = new ModelCustomArmour();
 
-                model.bipedHead.showModel = armorSlot == EquipmentSlotType.HEAD;
+                model.head.visible = armorSlot == EquipmentSlotType.HEAD;
 
-                model.isChild = _default.isChild;
-                model.isSitting = _default.isSitting;
-                model.isSneak = _default.isSneak;
+                model.young = _default.young;
+                model.riding = _default.riding;
+                model.crouching = _default.crouching;
                 model.rightArmPose = _default.rightArmPose;
                 model.leftArmPose = _default.leftArmPose;
                 return (A) model;
@@ -129,7 +129,7 @@ public class SolarHelmet extends ArmorItem {
     @Override
     public void onArmorTick(ItemStack itemStack, World world, PlayerEntity player)
     {
-        if(world.isRemote)
+        if(world.isClientSide)
             return;
 
         if(!(getEnergyStored(itemStack) == getMaxEnergyStored()))
@@ -158,13 +158,13 @@ public class SolarHelmet extends ArmorItem {
         //Armor priority
         for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++)
         {
-            ItemStack slot = player.inventory.getStackInSlot(i);
+            ItemStack slot = player.inventory.getItem(i);
             chargegItem(slot);
         }
         //Inventory
         for(int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++)
         {
-            ItemStack slot = player.inventory.getStackInSlot(i);
+            ItemStack slot = player.inventory.getItem(i);
             chargegItem(slot);
         }
     }
@@ -191,7 +191,7 @@ public class SolarHelmet extends ArmorItem {
     {
         if(!energyStorage.isFullEnergy())
         {
-            return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, player.getPosition().add(0, 1, 0), getLevelSolarPanel()));
+            return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, player.blockPosition().offset(0, 1, 0), getLevelSolarPanel()));
         }
         return 0;
     }

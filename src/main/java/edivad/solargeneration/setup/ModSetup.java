@@ -12,7 +12,7 @@ public class ModSetup {
     public static final ItemGroup solarGenerationTab = new ItemGroup(Main.MODID + "_tab") {
 
         @Override
-        public ItemStack createIcon()
+        public ItemStack makeIcon()
         {
             return new ItemStack(Registration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.ADVANCED).get());
         }

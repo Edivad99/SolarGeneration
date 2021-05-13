@@ -15,6 +15,6 @@ public class ClientSetup {
 
         //GUI
         for(SolarPanelLevel level : SolarPanelLevel.values())
-            ScreenManager.registerFactory(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), SolarPanelScreen::new);
+            ScreenManager.register(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), SolarPanelScreen::new);
     }
 }

@@ -10,12 +10,12 @@ public class ProductionSolarPanel {
     {
         float sunIntensity = 0;
 
-        if(world.canBlockSeeSky(pos))
+        if(world.canSeeSkyFromBelowWater(pos))
         {
             float multiplicator = 1.5f;
             float displacement = 1.2f;
             // Celestial angle == 0 at zenith.
-            float celestialAngleRadians = world.getCelestialAngleRadians(1.0f);
+            float celestialAngleRadians = world.getSunAngle(1.0f);
             if(celestialAngleRadians > Math.PI)
             {
                 celestialAngleRadians = (2 * 3.141592f - celestialAngleRadians);

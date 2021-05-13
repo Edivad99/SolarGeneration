@@ -58,14 +58,14 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
     @Override
     public void tick()
     {
-        if(!world.isRemote)
+        if(!level.isClientSide)
         {
             energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced()));
             sendEnergy();
             if(energyClient != getEnergy() || energyProductionClient != currentAmountEnergyProduced())
             {
                 int energyProduced = (getEnergy() != getMaxEnergy()) ? currentAmountEnergyProduced() : 0;
-                PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(getPos(), getEnergy(), energyProduced));
+                PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(getBlockPos(), getEnergy(), energyProduced));
             }
         }
     }
@@ -82,7 +82,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
     private int currentAmountEnergyProduced()
     {
-        return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, pos, levelSolarPanel));
+        return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(level, worldPosition, levelSolarPanel));
     }
 
     private void sendEnergy()
@@ -95,7 +95,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
                 Direction facing = Direction.values()[i];
                 if(facing != Direction.UP)
                 {
-                    TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
+                    TileEntity tileEntity = level.getBlockEntity(worldPosition.relative(facing));
                     if(tileEntity != null)
                     {
                         tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler -> {
@@ -124,22 +124,22 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
     @SuppressWarnings("unchecked")
     @Override
-    public void read(BlockState state, CompoundNBT compound)
+    public void load(BlockState state, CompoundNBT compound)
     {
         CompoundNBT energyTag = compound.getCompound("energy");
         energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
-        super.read(state, compound);
+        super.load(state, compound);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public CompoundNBT write(CompoundNBT compound)
+    public CompoundNBT save(CompoundNBT compound)
     {
         energy.ifPresent(h -> {
             CompoundNBT tag = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
             compound.put("energy", tag);
         });
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Nullable
@@ -152,6 +152,6 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
     @Override
     public ITextComponent getDisplayName()
     {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+        return new TranslationTextComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 }

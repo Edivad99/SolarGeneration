@@ -55,26 +55,26 @@ public class SolarPanel extends Block implements IWaterLoggable {
 
     public SolarPanel(SolarPanelLevel levelSolarPanel)
     {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5F, 30F));
-        this.setDefaultState(getDefaultState().with(WATERLOGGED, false));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(5F, 30F));
+        this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
         this.levelSolarPanel = levelSolarPanel;
     }
 
     private static VoxelShape createShape()
     {
         ArrayList<VoxelShape> shapes = new ArrayList<>();
-        shapes.add(makeCuboidShape(0, 0, 0, 16, 1, 16));//bottom
-        shapes.add(makeCuboidShape(7, 1, 7, 9, 9, 9));//mainpillar
-        shapes.add(makeCuboidShape(6, 1, 9, 7, 9, 10));//pillar1
-        shapes.add(makeCuboidShape(9, 1, 9, 10, 9, 10));//pillar2
-        shapes.add(makeCuboidShape(9, 1, 6, 10, 9, 7));//pillar3
-        shapes.add(makeCuboidShape(6, 1, 6, 7, 9, 7));//pillar4
-        shapes.add(makeCuboidShape(0, 9, 0, 16, 12, 16));//top
+        shapes.add(box(0, 0, 0, 16, 1, 16));//bottom
+        shapes.add(box(7, 1, 7, 9, 9, 9));//mainpillar
+        shapes.add(box(6, 1, 9, 7, 9, 10));//pillar1
+        shapes.add(box(9, 1, 9, 10, 9, 10));//pillar2
+        shapes.add(box(9, 1, 6, 10, 9, 7));//pillar3
+        shapes.add(box(6, 1, 6, 7, 9, 7));//pillar4
+        shapes.add(box(0, 9, 0, 16, 12, 16));//top
 
         VoxelShape combinedShape = VoxelShapes.empty();
         for(VoxelShape shape : shapes)
         {
-            combinedShape = VoxelShapes.combine(combinedShape, shape, IBooleanFunction.OR);
+            combinedShape = VoxelShapes.joinUnoptimized(combinedShape, shape, IBooleanFunction.OR);
         }
         return combinedShape;
     }
@@ -92,23 +92,23 @@ public class SolarPanel extends Block implements IWaterLoggable {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
-        if(!worldIn.isRemote)
+        if(!worldIn.isClientSide)
         {
             if(player.isCrouching())
             {
-                if(player.getHeldItemMainhand().getItem().getTags().contains(WRENCH))
+                if(player.getMainHandItem().getItem().getTags().contains(WRENCH))
                 {
                     dismantleBlock(worldIn, pos);
                     return ActionResultType.SUCCESS;
                 }
             }
 
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            TileEntity tileEntity = worldIn.getBlockEntity(pos);
             if(tileEntity instanceof INamedContainerProvider)
             {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getBlockPos());
             }
             else
             {
@@ -122,7 +122,7 @@ public class SolarPanel extends Block implements IWaterLoggable {
     {
         ItemStack itemStack = new ItemStack(this);
 
-        TileEntitySolarPanel localTileEntity = (TileEntitySolarPanel) worldIn.getTileEntity(pos);
+        TileEntitySolarPanel localTileEntity = (TileEntitySolarPanel) worldIn.getBlockEntity(pos);
         int internalEnergy = localTileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
         if(internalEnergy > 0)
         {
@@ -141,8 +141,8 @@ public class SolarPanel extends Block implements IWaterLoggable {
 
         ItemEntity entityItem = new ItemEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
 
-        entityItem.setMotion(0, entityItem.getYOffset(), 0);
-        worldIn.addEntity(entityItem);
+        entityItem.setDeltaMovement(0, entityItem.getMyRidingOffset(), 0);
+        worldIn.addFreshEntity(entityItem);
     }
 
     @Override
@@ -152,9 +152,9 @@ public class SolarPanel extends Block implements IWaterLoggable {
     }
 
     @Override
-    public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack)
+    public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack)
     {
-        super.harvestBlock(worldIn, player, pos, state, te, stack);
+        super.playerDestroy(worldIn, player, pos, state, te, stack);
         worldIn.removeBlock(pos, false);
     }
 
@@ -173,9 +173,9 @@ public class SolarPanel extends Block implements IWaterLoggable {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-        CompoundNBT compoundnbt = stack.getChildTag("BlockEntityTag");
+        CompoundNBT compoundnbt = stack.getTagElement("BlockEntityTag");
         int energy = 0;
         if(compoundnbt != null)
             if(compoundnbt.contains("energy"))
@@ -189,25 +189,25 @@ public class SolarPanel extends Block implements IWaterLoggable {
     @Override
     public FluidState getFluidState(BlockState state)
     {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn)
+    public boolean placeLiquid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn)
     {
-        return IWaterLoggable.super.receiveFluid(worldIn, pos, state, fluidStateIn);
+        return IWaterLoggable.super.placeLiquid(worldIn, pos, state, fluidStateIn);
     }
 
     @Override
-    public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn)
+    public boolean canPlaceLiquid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn)
     {
-        return IWaterLoggable.super.canContainFluid(worldIn, pos, state, fluidIn);
+        return IWaterLoggable.super.canPlaceLiquid(worldIn, pos, state, fluidIn);
     }
 
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
     {
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(WATERLOGGED);
     }
 }
