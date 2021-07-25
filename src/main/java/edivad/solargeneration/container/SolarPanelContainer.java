@@ -3,16 +3,16 @@ package edivad.solargeneration.container;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 
-public class SolarPanelContainer extends Container {
+public class SolarPanelContainer extends AbstractContainerMenu {
 
     public final TileEntitySolarPanel tile;
-    private final PlayerEntity player;
+    private final Player player;
 
-    public SolarPanelContainer(int windowId, PlayerEntity player, TileEntitySolarPanel tile, SolarPanelLevel level)
+    public SolarPanelContainer(int windowId, Player player, TileEntitySolarPanel tile, SolarPanelLevel level)
     {
         super(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), windowId);
         this.tile = tile;
@@ -20,8 +20,8 @@ public class SolarPanelContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn)
+    public boolean stillValid(Player playerIn)
     {
-        return stillValid(IWorldPosCallable.create(tile.getLevel(), tile.getBlockPos()), player, tile.getBlockState().getBlock());
+        return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), player, tile.getBlockState().getBlock());
     }
 }

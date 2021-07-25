@@ -1,10 +1,11 @@
 package edivad.solargeneration.tools;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.EnergyStorage;
 
-public class MyEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT> {
+public class MyEnergyStorage extends EnergyStorage /*implements INBTSerializable<CompoundTag>*/ {
 
     public MyEnergyStorage(int energyTransfer, int energyCapacity)
     {
@@ -38,17 +39,17 @@ public class MyEnergyStorage extends EnergyStorage implements INBTSerializable<C
         return getEnergyStored() >= getMaxEnergyStored();
     }
 
-    @Override
-    public CompoundNBT serializeNBT()
-    {
-        CompoundNBT tag = new CompoundNBT();
-        tag.putInt("value", getEnergyStored());
-        return tag;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundNBT nbt)
-    {
-        setEnergy(nbt.getInt("value"));
-    }
+//    @Override
+//    public CompoundTag serializeNBT()
+//    {
+//        CompoundTag tag = new CompoundTag();
+//        tag.putInt("value", getEnergyStored());
+//        return tag;
+//    }
+//
+//    @Override
+//    public void deserializeNBT(CompoundTag nbt)
+//    {
+//        setEnergy(nbt.getInt("value"));
+//    }
 }

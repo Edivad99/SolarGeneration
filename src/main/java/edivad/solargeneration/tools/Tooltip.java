@@ -3,16 +3,16 @@ package edivad.solargeneration.tools;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class Tooltip {
 
     private static final Pattern COMPILE = Pattern.compile("@", Pattern.LITERAL);
 
-    public static void showInfoShift(SolarPanelLevel solarPanelLevel, List<ITextComponent> tooltip)
+    public static void showInfoShift(SolarPanelLevel solarPanelLevel, List<Component> tooltip)
     {
         if(Screen.hasShiftDown())
         {
@@ -26,7 +26,7 @@ public class Tooltip {
             addInformationLocalized(tooltip, "message.solargeneration.hold_shift");
     }
 
-    public static void showInfoCtrl(int energy, List<ITextComponent> tooltip)
+    public static void showInfoCtrl(int energy, List<Component> tooltip)
     {
         if(Screen.hasControlDown())
             addInformationLocalized(tooltip, "message.solargeneration.ctrl_info", energy);
@@ -34,12 +34,12 @@ public class Tooltip {
             addInformationLocalized(tooltip, "message.solargeneration.hold_ctrl");
     }
 
-    private static void addInformationLocalized(List<ITextComponent> tooltip, String key, Object... parameters)
+    private static void addInformationLocalized(List<Component> tooltip, String key, Object... parameters)
     {
         String translated = I18n.get(key, parameters);
         translated = COMPILE.matcher(translated).replaceAll("\u00a7");
         String[] formatted = translated.split("\n");
         for(String line : formatted)
-            tooltip.add(new TranslationTextComponent(line));
+            tooltip.add(new TranslatableComponent(line));
     }
 }

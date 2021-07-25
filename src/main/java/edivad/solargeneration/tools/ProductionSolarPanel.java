@@ -1,12 +1,12 @@
 package edivad.solargeneration.tools;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class ProductionSolarPanel {
 
-    public static float computeSunIntensity(World world, BlockPos pos, SolarPanelLevel solarPanelLevel)
+    public static float computeSunIntensity(Level world, BlockPos pos, SolarPanelLevel solarPanelLevel)
     {
         float sunIntensity = 0;
 
@@ -21,7 +21,7 @@ public class ProductionSolarPanel {
                 celestialAngleRadians = (2 * 3.141592f - celestialAngleRadians);
             }
 
-            sunIntensity = multiplicator * MathHelper.cos(celestialAngleRadians / displacement);
+            sunIntensity = multiplicator * Mth.cos(celestialAngleRadians / displacement);
             sunIntensity = Math.max(0, sunIntensity);
             sunIntensity = Math.min(1, sunIntensity);
 

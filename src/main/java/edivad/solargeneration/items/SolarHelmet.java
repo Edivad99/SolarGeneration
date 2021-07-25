@@ -6,24 +6,24 @@ import javax.annotation.Nullable;
 
 import edivad.solargeneration.Main;
 import edivad.solargeneration.setup.ModSetup;
-import edivad.solargeneration.tools.ModelCustomArmour;
+//import edivad.solargeneration.tools.ModelCustomArmour;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -37,7 +37,7 @@ public class SolarHelmet extends ArmorItem {
 
     public SolarHelmet(SolarPanelLevel levelSolarHelmet)
     {
-        super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterial.DIAMOND : ArmorMaterial.IRON, EquipmentSlotType.HEAD, (new Item.Properties()).tab(ModSetup.solarGenerationTab).stacksTo(1));
+        super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterials.DIAMOND : ArmorMaterials.IRON, EquipmentSlot.HEAD, (new Item.Properties()).tab(ModSetup.solarGenerationTab).stacksTo(1));
         this.levelSolarHelmet = levelSolarHelmet;
 
         energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
@@ -53,39 +53,39 @@ public class SolarHelmet extends ArmorItem {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
         Tooltip.showInfoCtrl(getEnergyStored(stack), tooltip);
         Tooltip.showInfoShift(levelSolarHelmet, tooltip);
     }
 
-    @SuppressWarnings("unchecked")
-    @Nullable
-    @OnlyIn(Dist.CLIENT)
+//    @SuppressWarnings("unchecked")
+//    @Nullable
+//    @OnlyIn(Dist.CLIENT)
+//    //@Override
+//    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default)
+//    {
+//        if(itemStack != ItemStack.EMPTY)
+//        {
+//            if(itemStack.getItem() instanceof ArmorItem)
+//            {
+//                ModelCustomArmour model = new ModelCustomArmour();
+//
+//                model.head.visible = armorSlot == EquipmentSlot.HEAD;
+//
+//                model.young = _default.young;
+//                model.riding = _default.riding;
+//                model.crouching = _default.crouching;
+//                model.rightArmPose = _default.rightArmPose;
+//                model.leftArmPose = _default.leftArmPose;
+//                return (A) model;
+//            }
+//        }
+//        return null;
+//    }
+
     @Override
-    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)
-    {
-        if(itemStack != ItemStack.EMPTY)
-        {
-            if(itemStack.getItem() instanceof ArmorItem)
-            {
-                ModelCustomArmour model = new ModelCustomArmour();
-
-                model.head.visible = armorSlot == EquipmentSlotType.HEAD;
-
-                model.young = _default.young;
-                model.riding = _default.riding;
-                model.crouching = _default.crouching;
-                model.rightArmPose = _default.rightArmPose;
-                model.leftArmPose = _default.leftArmPose;
-                return (A) model;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type)
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type)
     {
         return Main.MODID + ":textures/models/armor/solar_helmet_" + levelSolarHelmet.name().toLowerCase() + ".png";
     }
@@ -110,7 +110,7 @@ public class SolarHelmet extends ArmorItem {
     public void saveEnergyItem(ItemStack container)
     {
         if(container.getTag() == null)
-            container.setTag(new CompoundNBT());
+            container.setTag(new CompoundTag());
         container.getTag().putInt("energy", energyStorage.getEnergyStored());
     }
 
@@ -127,7 +127,7 @@ public class SolarHelmet extends ArmorItem {
     }
 
     @Override
-    public void onArmorTick(ItemStack itemStack, World world, PlayerEntity player)
+    public void onArmorTick(ItemStack itemStack, Level world, Player player)
     {
         if(world.isClientSide)
             return;
@@ -141,7 +141,7 @@ public class SolarHelmet extends ArmorItem {
     }
 
     @Override
-    public EquipmentSlotType getEquipmentSlot(ItemStack stack)
+    public EquipmentSlot getEquipmentSlot(ItemStack stack)
     {
         if(stack.getTag() == null)
         {
@@ -153,18 +153,20 @@ public class SolarHelmet extends ArmorItem {
         return super.getEquipmentSlot(stack);
     }
 
-    private void sendEnergy(World world, PlayerEntity player)
+    private void sendEnergy(Level world, Player player)
     {
         //Armor priority
         for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++)
         {
-            ItemStack slot = player.inventory.getItem(i);
+            //ItemStack slot = player.inventory.getItem(i);
+            ItemStack slot = player.inventoryMenu.getItems().get(i);
             chargegItem(slot);
         }
         //Inventory
         for(int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++)
         {
-            ItemStack slot = player.inventory.getItem(i);
+            //ItemStack slot = player.inventory.getItem(i);
+            ItemStack slot = player.inventoryMenu.getItems().get(i);
             chargegItem(slot);
         }
     }
@@ -187,7 +189,7 @@ public class SolarHelmet extends ArmorItem {
         }
     }
 
-    private int currentAmountEnergyProduced(World world, PlayerEntity player)
+    private int currentAmountEnergyProduced(Level world, Player player)
     {
         if(!energyStorage.isFullEnergy())
         {

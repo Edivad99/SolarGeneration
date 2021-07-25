@@ -12,25 +12,29 @@ import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
-public class TileEntitySolarPanel extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
 
     // Energy
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -40,9 +44,9 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
     private SolarPanelLevel levelSolarPanel;
     public int energyClient, energyProductionClient;
 
-    public TileEntitySolarPanel(SolarPanelLevel levelSolarPanel)
+    public TileEntitySolarPanel(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state)
     {
-        super(Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get());
+        super(Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get(), pos, state);
         this.levelSolarPanel = levelSolarPanel;
         energyGeneration = (int) Math.pow(8, levelSolarPanel.ordinal());
         maxEnergyOutput = energyGeneration * 2;
@@ -55,18 +59,14 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
         return new MyEnergyStorage(maxEnergyOutput, maxEnergy);
     }
 
-    @Override
-    public void tick()
+    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEntitySolarPanel tile)
     {
-        if(!level.isClientSide)
+        tile.energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(tile.currentAmountEnergyProduced()));
+        tile.sendEnergy();
+        if(tile.energyClient != tile.getEnergy() || tile.energyProductionClient != tile.currentAmountEnergyProduced())
         {
-            energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(currentAmountEnergyProduced()));
-            sendEnergy();
-            if(energyClient != getEnergy() || energyProductionClient != currentAmountEnergyProduced())
-            {
-                int energyProduced = (getEnergy() != getMaxEnergy()) ? currentAmountEnergyProduced() : 0;
-                PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(getBlockPos(), getEnergy(), energyProduced));
-            }
+            int energyProduced = (tile.getEnergy() != tile.getMaxEnergy()) ? tile.currentAmountEnergyProduced() : 0;
+            PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(tile.getBlockPos(), tile.getEnergy(), energyProduced));
         }
     }
 
@@ -95,7 +95,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
                 Direction facing = Direction.values()[i];
                 if(facing != Direction.UP)
                 {
-                    TileEntity tileEntity = level.getBlockEntity(worldPosition.relative(facing));
+                    BlockEntity tileEntity = level.getBlockEntity(worldPosition.relative(facing));
                     if(tileEntity != null)
                     {
                         tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler -> {
@@ -122,21 +122,19 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
         return super.getCapability(capability, facing);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void load(BlockState state, CompoundNBT compound)
+    public void load(CompoundTag compound)
     {
-        CompoundNBT energyTag = compound.getCompound("energy");
-        energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
-        super.load(state, compound);
+        super.load(compound);
+        Tag energyTag = compound.get("energy");
+        energy.ifPresent(h -> ((EnergyStorage)h).deserializeNBT(energyTag));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public CompoundNBT save(CompoundNBT compound)
+    public CompoundTag save(CompoundTag compound)
     {
         energy.ifPresent(h -> {
-            CompoundNBT tag = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+            Tag tag = ((EnergyStorage)h).serializeNBT();
             compound.put("energy", tag);
         });
         return super.save(compound);
@@ -144,14 +142,16 @@ public class TileEntitySolarPanel extends TileEntity implements ITickableTileEnt
 
     @Nullable
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity)
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player playerEntity)
     {
         return new SolarPanelContainer(id, playerEntity, this, levelSolarPanel);
     }
 
     @Override
-    public ITextComponent getDisplayName()
+    public Component getDisplayName()
     {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getDescriptionId());
+        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
+
+
 }

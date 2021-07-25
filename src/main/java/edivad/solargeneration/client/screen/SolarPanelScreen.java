@@ -1,55 +1,59 @@
 package edivad.solargeneration.client.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import edivad.solargeneration.Main;
 import edivad.solargeneration.container.SolarPanelContainer;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
-public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
+public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelContainer> {
 
     private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MODID, "textures/gui/solar_panel.png");
     private final TileEntitySolarPanel tile;
 
-    public SolarPanelScreen(SolarPanelContainer container, PlayerInventory inv, ITextComponent name)
+    public SolarPanelScreen(SolarPanelContainer container, Inventory inv, Component name)
     {
         super(container, inv, name);
         this.tile = container.tile;
     }
 
     @Override
-    public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
+    public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks)
     {
         this.renderBackground(mStack);
         super.render(mStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(mStack, mouseX, mouseY);
         if(mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10 && mouseY < topPos + 77)
-            this.renderTooltip(mStack, new StringTextComponent("Energy: " + getPercent() + "%"), mouseX, mouseY);
+            this.renderTooltip(mStack, new TextComponent("Energy: " + getPercent() + "%"), mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(MatrixStack mStack, int mouseX, int mouseY)
+    protected void renderLabels(PoseStack mStack, int mouseX, int mouseY)
     {
-        String energy = new TranslationTextComponent("gui." + Main.MODID + ".stored_energy").append(" " + getEnergyFormatted(tile.energyClient)).getString();
+        String energy = new TranslatableComponent("gui." + Main.MODID + ".stored_energy").append(" " + getEnergyFormatted(tile.energyClient)).getString();
         this.font.draw(mStack, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20, 4210752);
 
-        String maxEnergy = new TranslationTextComponent("gui." + Main.MODID + ".max_capacity").append(" " + getEnergyFormatted(tile.maxEnergy)).getString();
+        String maxEnergy = new TranslatableComponent("gui." + Main.MODID + ".max_capacity").append(" " + getEnergyFormatted(tile.maxEnergy)).getString();
         this.font.draw(mStack, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30, 4210752);
 
-        String generation = new TranslationTextComponent("gui." + Main.MODID + ".generation").append(" " + tile.energyProductionClient + " FE/t").getString();
+        String generation = new TranslatableComponent("gui." + Main.MODID + ".generation").append(" " + tile.energyProductionClient + " FE/t").getString();
         this.font.draw(mStack, generation, (imageWidth / 2 - font.width(generation) / 2) + 14, 40, 4210752);
     }
 
     @Override
-    protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+    protected void renderBg(PoseStack mStack, float partialTicks, int mouseX, int mouseY)
     {
-        this.minecraft.getTextureManager().bind(TEXTURES);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F,1.0F,1.0F,1.0F);
+        RenderSystem.setShaderTexture(0, TEXTURES);
         this.blit(mStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
         // Energy
@@ -72,7 +76,7 @@ public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer> {
 
     private int getPercent()
     {
-        Long currentEnergy = new Long(tile.energyClient);
+        long currentEnergy = (long) tile.energyClient;
         int maxEnergy = tile.maxEnergy;
 
         long result = currentEnergy * 100 / maxEnergy;

@@ -5,47 +5,48 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class SolarPanel extends Block implements IWaterLoggable {
+public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
     private final SolarPanelLevel levelSolarPanel;
     private static final VoxelShape BOX = createShape();
@@ -55,7 +56,7 @@ public class SolarPanel extends Block implements IWaterLoggable {
 
     public SolarPanel(SolarPanelLevel levelSolarPanel)
     {
-        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(5F, 30F));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(1.5F, 6.0F));
         this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
         this.levelSolarPanel = levelSolarPanel;
     }
@@ -71,28 +72,28 @@ public class SolarPanel extends Block implements IWaterLoggable {
         shapes.add(box(6, 1, 6, 7, 9, 7));//pillar4
         shapes.add(box(0, 9, 0, 16, 12, 16));//top
 
-        VoxelShape combinedShape = VoxelShapes.empty();
+        VoxelShape combinedShape = Shapes.empty();
         for(VoxelShape shape : shapes)
         {
-            combinedShape = VoxelShapes.joinUnoptimized(combinedShape, shape, IBooleanFunction.OR);
+            combinedShape = Shapes.joinUnoptimized(combinedShape, shape, BooleanOp.OR);
         }
         return combinedShape;
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
     {
         return BOX;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
     {
         return BOX;
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
     {
         if(!worldIn.isClientSide)
         {
@@ -101,24 +102,24 @@ public class SolarPanel extends Block implements IWaterLoggable {
                 if(player.getMainHandItem().getItem().getTags().contains(WRENCH))
                 {
                     dismantleBlock(worldIn, pos);
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
 
-            TileEntity tileEntity = worldIn.getBlockEntity(pos);
-            if(tileEntity instanceof INamedContainerProvider)
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+            if(tileEntity instanceof MenuProvider)
             {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getBlockPos());
+                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
             }
             else
             {
                 throw new IllegalStateException("Our named container provider is missing!");
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
-    private void dismantleBlock(World worldIn, BlockPos pos)
+    private void dismantleBlock(Level worldIn, BlockPos pos)
     {
         ItemStack itemStack = new ItemStack(this);
 
@@ -126,13 +127,13 @@ public class SolarPanel extends Block implements IWaterLoggable {
         int internalEnergy = localTileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
         if(internalEnergy > 0)
         {
-            CompoundNBT energyValue = new CompoundNBT();
+            CompoundTag energyValue = new CompoundTag();
             energyValue.putInt("value", internalEnergy);
 
-            CompoundNBT energy = new CompoundNBT();
+            CompoundTag energy = new CompoundTag();
             energy.put("energy", energyValue);
 
-            CompoundNBT root = new CompoundNBT();
+            CompoundTag root = new CompoundTag();
             root.put("BlockEntityTag", energy);
             itemStack.setTag(root);
         }
@@ -146,36 +147,43 @@ public class SolarPanel extends Block implements IWaterLoggable {
     }
 
     @Override
-    public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid)
+    public boolean removedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest, FluidState fluid)
     {
         return willHarvest || super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
     }
 
     @Override
-    public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack)
+    public void playerDestroy(Level worldIn, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack)
     {
         super.playerDestroy(worldIn, player, pos, state, te, stack);
         worldIn.removeBlock(pos, false);
     }
 
+    @Nullable
     @Override
-    public boolean hasTileEntity(BlockState state)
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState)
     {
-        return true;
+        return new TileEntitySolarPanel(levelSolarPanel, blockPos, blockState);
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType)
     {
-        return new TileEntitySolarPanel(levelSolarPanel);
+        return createSolarPanelTicker(level, blockEntityType, Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get());
+    }
+
+    @Nullable
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createSolarPanelTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends TileEntitySolarPanel> tile) {
+        BlockEntityTicker<TileEntitySolarPanel> ticker = TileEntitySolarPanel::serverTick;
+        return level.isClientSide ? null : tile == blockEntityType ? (BlockEntityTicker<T>) ticker : null;
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
-        CompoundNBT compoundnbt = stack.getTagElement("BlockEntityTag");
+        CompoundTag compoundnbt = stack.getTagElement("BlockEntityTag");
         int energy = 0;
         if(compoundnbt != null)
             if(compoundnbt.contains("energy"))
@@ -185,7 +193,6 @@ public class SolarPanel extends Block implements IWaterLoggable {
         Tooltip.showInfoShift(this.levelSolarPanel, tooltip);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state)
     {
@@ -193,15 +200,15 @@ public class SolarPanel extends Block implements IWaterLoggable {
     }
 
     @Override
-    public boolean placeLiquid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn)
+    public boolean placeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn)
     {
-        return IWaterLoggable.super.placeLiquid(worldIn, pos, state, fluidStateIn);
+        return SimpleWaterloggedBlock.super.placeLiquid(worldIn, pos, state, fluidStateIn);
     }
 
     @Override
-    public boolean canPlaceLiquid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn)
+    public boolean canPlaceLiquid(BlockGetter worldIn, BlockPos pos, BlockState state, Fluid fluidIn)
     {
-        return IWaterLoggable.super.canPlaceLiquid(worldIn, pos, state, fluidIn);
+        return SimpleWaterloggedBlock.super.canPlaceLiquid(worldIn, pos, state, fluidIn);
     }
 
     @Override
