@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import edivad.solargeneration.Main;
 import edivad.solargeneration.setup.ModSetup;
-//import edivad.solargeneration.tools.ModelCustomArmour;
 import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelLevel;
@@ -59,35 +58,10 @@ public class SolarHelmet extends ArmorItem {
         Tooltip.showInfoShift(levelSolarHelmet, tooltip);
     }
 
-//    @SuppressWarnings("unchecked")
-//    @Nullable
-//    @OnlyIn(Dist.CLIENT)
-//    //@Override
-//    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default)
-//    {
-//        if(itemStack != ItemStack.EMPTY)
-//        {
-//            if(itemStack.getItem() instanceof ArmorItem)
-//            {
-//                ModelCustomArmour model = new ModelCustomArmour();
-//
-//                model.head.visible = armorSlot == EquipmentSlot.HEAD;
-//
-//                model.young = _default.young;
-//                model.riding = _default.riding;
-//                model.crouching = _default.crouching;
-//                model.rightArmPose = _default.rightArmPose;
-//                model.leftArmPose = _default.leftArmPose;
-//                return (A) model;
-//            }
-//        }
-//        return null;
-//    }
-
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type)
     {
-        return Main.MODID + ":textures/models/armor/solar_helmet_" + levelSolarHelmet.name().toLowerCase() + ".png";
+        return Main.MODID + levelSolarHelmet.getArmorTexture();
     }
 
     public SolarPanelLevel getLevelSolarPanel()

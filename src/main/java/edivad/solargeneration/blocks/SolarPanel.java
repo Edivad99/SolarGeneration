@@ -50,8 +50,6 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
 
     private final SolarPanelLevel levelSolarPanel;
     private static final VoxelShape BOX = createShape();
-    //https://twitter.com/McJty/status/1251439077787869188
-    private static final ResourceLocation WRENCH = new ResourceLocation("forge", "wrench");
     private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
 
     public SolarPanel(SolarPanelLevel levelSolarPanel)
@@ -93,28 +91,19 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
     {
-        if(!worldIn.isClientSide)
-        {
-            if(player.isCrouching())
-            {
-                if(player.getMainHandItem().getItem().getTags().contains(WRENCH))
-                {
-                    dismantleBlock(worldIn, pos);
-                    return InteractionResult.SUCCESS;
-                }
-            }
+        if(level.isClientSide)
+            return InteractionResult.SUCCESS;
 
-            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            if(tileEntity instanceof MenuProvider)
-            {
-                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
-            }
-            else
-            {
-                throw new IllegalStateException("Our named container provider is missing!");
-            }
+        BlockEntity tileEntity = level.getBlockEntity(pos);
+        if(tileEntity instanceof MenuProvider menu)
+        {
+            NetworkHooks.openGui((ServerPlayer) player, menu, tileEntity.getBlockPos());
+        }
+        else
+        {
+            throw new IllegalStateException("Our named container provider is missing!");
         }
         return InteractionResult.SUCCESS;
     }

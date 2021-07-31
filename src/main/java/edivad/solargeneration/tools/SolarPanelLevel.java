@@ -19,6 +19,11 @@ public enum SolarPanelLevel {
         return "solar_core_" + getCorrectName(this.ordinal());
     }
 
+    public String getArmorTexture()
+    {
+        return ":textures/models/armor/solar_helmet_" + getCorrectName(this.ordinal()) + ".png";
+    }
+
     private String getCorrectName(int index)
     {
         switch (index)

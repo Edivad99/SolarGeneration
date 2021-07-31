@@ -65,7 +65,7 @@ public class Registration {
                 return new SolarPanelContainer(windowId, inv.player, tile, level);
             })));
 
-            //HELMET.put(level, ITEMS.register(level.getSolarHelmetName(), () -> new SolarHelmet(level)));
+            HELMET.put(level, ITEMS.register(level.getSolarHelmetName(), () -> new SolarHelmet(level)));
             CORE.put(level, ITEMS.register(level.getSolarCoreName(), () -> new Item(property)));
         }
     }
