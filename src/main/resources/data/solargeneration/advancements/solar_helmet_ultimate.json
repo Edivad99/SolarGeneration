@@ -1,27 +1,34 @@
 {
-    "parent": "solargeneration:solar_helmet_advanced",
-    "display": {
-        "frame": "challenge",
-        "icon": {
-            "item": "solargeneration:solar_helmet_ultimate"
-        },
-        "title": {
-            "translate": "advancements.solargeneration.solar_helmet_ultimate"
-        },
-        "description": {
-            "translate": "advancements.solargeneration.solar_helmet_ultimate.desc"
-        }
+  "parent": "solargeneration:solar_helmet_advanced",
+  "display": {
+    "frame": "challenge",
+    "icon": {
+      "item": "solargeneration:solar_helmet_ultimate"
     },
-    "criteria": {
-        "certus": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "solargeneration:solar_helmet_ultimate"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "advancements.solargeneration.solar_helmet_ultimate"
+    },
+    "description": {
+      "translate": "advancements.solargeneration.solar_helmet_ultimate.desc"
     }
+  },
+  "criteria": {
+    "inv_changed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_helmet_ultimate"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ]
 }

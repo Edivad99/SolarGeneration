@@ -1,26 +1,33 @@
 {
-    "parent": "solargeneration:solar_panel_leadstone",
-    "display": {
-        "icon": {
-            "item": "solargeneration:solar_panel_hardened"
-        },
-        "title": {
-            "translate": "advancements.solargeneration.solar_panel_hardened"
-        },
-        "description": {
-            "translate": "advancements.solargeneration.solar_panel_hardened.desc"
-        }
+  "parent": "solargeneration:solar_panel_leadstone",
+  "display": {
+    "icon": {
+      "item": "solargeneration:solar_panel_hardened"
     },
-    "criteria": {
-        "certus": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "solargeneration:solar_panel_hardened"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "advancements.solargeneration.solar_panel_hardened"
+    },
+    "description": {
+      "translate": "advancements.solargeneration.solar_panel_hardened.desc"
     }
+  },
+  "criteria": {
+    "inv_changed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_panel_hardened"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ]
 }

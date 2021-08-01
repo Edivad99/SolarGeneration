@@ -1,27 +1,34 @@
 {
-    "parent": "solargeneration:solar_helmet_redstone",
-    "display": {
-        "frame": "goal",
-        "icon": {
-            "item": "solargeneration:solar_helmet_signalum"
-        },
-        "title": {
-            "translate": "advancements.solargeneration.solar_helmet_signalum"
-        },
-        "description": {
-            "translate": "advancements.solargeneration.solar_helmet_signalum.desc"
-        }
+  "parent": "solargeneration:solar_helmet_redstone",
+  "display": {
+    "frame": "goal",
+    "icon": {
+      "item": "solargeneration:solar_helmet_signalum"
     },
-    "criteria": {
-        "certus": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "solargeneration:solar_helmet_signalum"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "advancements.solargeneration.solar_helmet_signalum"
+    },
+    "description": {
+      "translate": "advancements.solargeneration.solar_helmet_signalum.desc"
     }
+  },
+  "criteria": {
+    "inv_changed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_helmet_signalum"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ]
 }

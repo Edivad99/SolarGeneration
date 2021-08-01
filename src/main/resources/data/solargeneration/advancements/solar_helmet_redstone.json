@@ -1,26 +1,33 @@
 {
-    "parent": "solargeneration:solar_helmet_hardened",
-    "display": {
-        "icon": {
-            "item": "solargeneration:solar_helmet_redstone"
-        },
-        "title": {
-            "translate": "advancements.solargeneration.solar_helmet_redstone"
-        },
-        "description": {
-            "translate": "advancements.solargeneration.solar_helmet_redstone.desc"
-        }
+  "parent": "solargeneration:solar_helmet_hardened",
+  "display": {
+    "icon": {
+      "item": "solargeneration:solar_helmet_redstone"
     },
-    "criteria": {
-        "certus": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "solargeneration:solar_helmet_redstone"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "advancements.solargeneration.solar_helmet_redstone"
+    },
+    "description": {
+      "translate": "advancements.solargeneration.solar_helmet_redstone.desc"
     }
+  },
+  "criteria": {
+    "inv_changed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_helmet_redstone"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ]
 }

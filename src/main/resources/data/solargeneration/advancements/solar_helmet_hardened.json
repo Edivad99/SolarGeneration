@@ -1,26 +1,33 @@
 {
-    "parent": "solargeneration:solar_helmet_leadstone",
-    "display": {
-        "icon": {
-            "item": "solargeneration:solar_helmet_hardened"
-        },
-        "title": {
-            "translate": "advancements.solargeneration.solar_helmet_hardened"
-        },
-        "description": {
-            "translate": "advancements.solargeneration.solar_helmet_hardened.desc"
-        }
+  "parent": "solargeneration:solar_helmet_leadstone",
+  "display": {
+    "icon": {
+      "item": "solargeneration:solar_helmet_hardened"
     },
-    "criteria": {
-        "certus": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "solargeneration:solar_helmet_hardened"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "advancements.solargeneration.solar_helmet_hardened"
+    },
+    "description": {
+      "translate": "advancements.solargeneration.solar_helmet_hardened.desc"
     }
+  },
+  "criteria": {
+    "inv_changed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_helmet_hardened"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ]
 }

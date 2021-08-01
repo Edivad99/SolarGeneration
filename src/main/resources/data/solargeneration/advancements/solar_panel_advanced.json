@@ -1,27 +1,34 @@
 {
-    "parent": "solargeneration:solar_panel_resonant",
-    "display": {
-        "frame": "challenge",
-        "icon": {
-            "item": "solargeneration:solar_panel_advanced"
-        },
-        "title": {
-            "translate": "advancements.solargeneration.solar_panel_advanced"
-        },
-        "description": {
-            "translate": "advancements.solargeneration.solar_panel_advanced.desc"
-        }
+  "parent": "solargeneration:solar_panel_resonant",
+  "display": {
+    "frame": "challenge",
+    "icon": {
+      "item": "solargeneration:solar_panel_advanced"
     },
-    "criteria": {
-        "certus": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "solargeneration:solar_panel_advanced"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "advancements.solargeneration.solar_panel_advanced"
+    },
+    "description": {
+      "translate": "advancements.solargeneration.solar_panel_advanced.desc"
     }
+  },
+  "criteria": {
+    "inv_changed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_panel_advanced"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ]
 }
