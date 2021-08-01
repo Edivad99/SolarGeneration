@@ -1,5 +1,5 @@
 # Solar Generation 
-![](https://github.com/Edivad99/SolarGeneration/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=1.16.x)
+![](https://github.com/Edivad99/SolarGeneration/workflows/SolarGeneration%20CI/badge.svg?branch=1.17.x)
 ## Table of Contents
 
 * [About](#about)
