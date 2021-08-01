@@ -1,19 +1,19 @@
 {
-    "result": {
-        "item": "solargeneration:solar_core_leadstone"
+  "result": {
+    "item": "solargeneration:solar_core_leadstone"
+  },
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "tag": "forge:nuggets/lead"
     },
-    "pattern": [
-        " a ",
-        "aba",
-        " a "
-   ],
-    "type": "minecraft:crafting_shaped",
-    "key": {
-        "a": {
-            "tag": "forge:nuggets/lead"
-        },
-        "b": {
-			"tag": "forge:ingots/iron"
-        }
+    "b": {
+      "tag": "forge:ingots/iron"
     }
+  }
 }

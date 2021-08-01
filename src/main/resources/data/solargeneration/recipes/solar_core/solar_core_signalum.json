@@ -1,19 +1,19 @@
 {
-    "result": {
-        "item": "solargeneration:solar_core_signalum"
+  "result": {
+    "item": "solargeneration:solar_core_signalum"
+  },
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "tag": "forge:nuggets/signalum"
     },
-    "pattern": [
-        " a ",
-        "aba",
-        " a "
-   ],
-    "type": "minecraft:crafting_shaped",
-    "key": {
-        "a": {
-            "tag": "forge:nuggets/signalum"
-        },
-        "b": {
-            "item": "solargeneration:solar_core_redstone"
-        }
+    "b": {
+      "item": "solargeneration:solar_core_redstone"
     }
+  }
 }

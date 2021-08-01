@@ -1,19 +1,19 @@
 {
-    "result": {
-        "item": "solargeneration:solar_panel_signalum"
+  "result": {
+    "item": "solargeneration:solar_panel_signalum"
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "solargeneration:solar_panel_redstone"
     },
-    "pattern": [
-        "aaa",
-        "aba",
-        "aaa"
-   ],
-    "type": "minecraft:crafting_shaped",
-    "key": {
-        "a": {
-            "item": "solargeneration:solar_panel_redstone"
-        },
-        "b": {
-            "item": "solargeneration:solar_core_signalum"
-        }
+    "b": {
+      "item": "solargeneration:solar_core_signalum"
     }
+  }
 }

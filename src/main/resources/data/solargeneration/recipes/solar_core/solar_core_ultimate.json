@@ -1,19 +1,19 @@
 {
-    "result": {
-        "item": "solargeneration:solar_core_ultimate"
+  "result": {
+    "item": "solargeneration:solar_core_ultimate"
+  },
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "tag": "forge:nuggets/platinum"
     },
-    "pattern": [
-        " a ",
-        "aba",
-        " a "
-   ],
-    "type": "minecraft:crafting_shaped",
-    "key": {
-        "a": {
-            "tag": "forge:nuggets/platinum"
-        },
-        "b": {
-            "item": "solargeneration:solar_core_advanced"
-        }
+    "b": {
+      "item": "solargeneration:solar_core_advanced"
     }
+  }
 }

@@ -1,14 +1,14 @@
 {
-    "result": {
-        "item": "solargeneration:solar_helmet_signalum"
+  "result": {
+    "item": "solargeneration:solar_helmet_signalum"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_helmet"
     },
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "minecraft:iron_helmet"
-        },
-        {
-            "item": "solargeneration:solar_panel_signalum"
-        }
-    ]
+    {
+      "item": "solargeneration:solar_panel_signalum"
+    }
+  ]
 }

@@ -1,14 +1,14 @@
 {
-    "result": {
-        "item": "solargeneration:solar_helmet_leadstone"
+  "result": {
+    "item": "solargeneration:solar_helmet_leadstone"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_helmet"
     },
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "minecraft:iron_helmet"
-        },
-        {
-            "item": "solargeneration:solar_panel_leadstone"
-        }
-    ]
+    {
+      "item": "solargeneration:solar_panel_leadstone"
+    }
+  ]
 }

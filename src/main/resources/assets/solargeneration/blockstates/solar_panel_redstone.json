@@ -1,5 +1,5 @@
 {
-    "variants": {
-        "": { "model" : "solargeneration:block/solar_panel_redstone" }
-    }
+  "variants": {
+    "": { "model" : "solargeneration:block/solar_panel_redstone" }
+  }
 }

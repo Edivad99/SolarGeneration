@@ -1,11 +1,11 @@
 {
-    "result": {
-        "item": "solargeneration:solar_panel_hardened"
-    },
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "solargeneration:solar_helmet_hardened"
-        }
-    ]
+  "result": {
+    "item": "solargeneration:solar_panel_hardened"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "solargeneration:solar_helmet_hardened"
+    }
+  ]
 }

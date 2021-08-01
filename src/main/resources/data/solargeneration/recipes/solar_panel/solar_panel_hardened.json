@@ -1,19 +1,19 @@
 {
-    "result": {
-        "item": "solargeneration:solar_panel_hardened"
+  "result": {
+    "item": "solargeneration:solar_panel_hardened"
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "solargeneration:solar_panel_leadstone"
     },
-    "pattern": [
-        "aaa",
-        "aba",
-        "aaa"
-   ],
-    "type": "minecraft:crafting_shaped",
-    "key": {
-        "a": {
-            "item": "solargeneration:solar_panel_leadstone"
-        },
-        "b": {
-            "item": "solargeneration:solar_core_hardened"
-        }
+    "b": {
+      "item": "solargeneration:solar_core_hardened"
     }
+  }
 }

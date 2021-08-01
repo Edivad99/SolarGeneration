@@ -1,11 +1,11 @@
 {
-    "result": {
-        "item": "solargeneration:solar_panel_resonant"
-    },
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "solargeneration:solar_helmet_resonant"
-        }
-    ]
+  "result": {
+    "item": "solargeneration:solar_panel_resonant"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "solargeneration:solar_helmet_resonant"
+    }
+  ]
 }

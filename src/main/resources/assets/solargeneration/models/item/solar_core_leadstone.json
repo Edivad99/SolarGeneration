@@ -1,6 +1,6 @@
 {
-   "parent": "minecraft:item/generated",
-   "textures": {
-       "layer0": "solargeneration:items/solar_core_leadstone"
-   }
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "solargeneration:items/solar_core_leadstone"
+  }
 }

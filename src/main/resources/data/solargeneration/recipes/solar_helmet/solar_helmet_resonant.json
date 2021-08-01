@@ -1,14 +1,14 @@
 {
-    "result": {
-        "item": "solargeneration:solar_helmet_resonant"
+  "result": {
+    "item": "solargeneration:solar_helmet_resonant"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_helmet"
     },
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "minecraft:iron_helmet"
-        },
-        {
-            "item": "solargeneration:solar_panel_resonant"
-        }
-    ]
+    {
+      "item": "solargeneration:solar_panel_resonant"
+    }
+  ]
 }

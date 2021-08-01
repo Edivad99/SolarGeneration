@@ -1,16 +1,16 @@
 {
-    "result": {
-        "item": "minecraft:lapis_lazuli"
-    },
-    "pattern": [
-        "aaa",
-        "aaa",
-        "aaa"
-   ],
-    "type": "minecraft:crafting_shaped",
-    "key": {
-        "a": {
-            "item": "solargeneration:lapis_shard"
-        }
+  "result": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "solargeneration:lapis_shard"
     }
+  }
 }

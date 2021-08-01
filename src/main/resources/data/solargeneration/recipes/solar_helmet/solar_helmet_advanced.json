@@ -1,14 +1,14 @@
 {
-    "result": {
-        "item": "solargeneration:solar_helmet_advanced"
+  "result": {
+    "item": "solargeneration:solar_helmet_advanced"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_helmet"
     },
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "minecraft:diamond_helmet"
-        },
-        {
-            "item": "solargeneration:solar_panel_advanced"
-        }
-    ]
+    {
+      "item": "solargeneration:solar_panel_advanced"
+    }
+  ]
 }

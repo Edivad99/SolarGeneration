@@ -1,5 +1,5 @@
 {
-    "variants": {
-        "": { "model" : "solargeneration:block/solar_panel_signalum" }
-    }
+  "variants": {
+    "": { "model" : "solargeneration:block/solar_panel_signalum" }
+  }
 }
