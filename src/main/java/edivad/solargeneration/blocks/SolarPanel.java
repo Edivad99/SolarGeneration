@@ -7,8 +7,10 @@ import javax.annotation.Nullable;
 
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
+import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -108,37 +110,10 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
         return InteractionResult.SUCCESS;
     }
 
-    private void dismantleBlock(Level worldIn, BlockPos pos)
-    {
-        ItemStack itemStack = new ItemStack(this);
-
-        TileEntitySolarPanel localTileEntity = (TileEntitySolarPanel) worldIn.getBlockEntity(pos);
-        int internalEnergy = localTileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-        if(internalEnergy > 0)
-        {
-            CompoundTag energyValue = new CompoundTag();
-            energyValue.putInt("value", internalEnergy);
-
-            CompoundTag energy = new CompoundTag();
-            energy.put("energy", energyValue);
-
-            CompoundTag root = new CompoundTag();
-            root.put("BlockEntityTag", energy);
-            itemStack.setTag(root);
-        }
-
-        worldIn.removeBlock(pos, false);
-
-        ItemEntity entityItem = new ItemEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
-
-        entityItem.setDeltaMovement(0, entityItem.getMyRidingOffset(), 0);
-        worldIn.addFreshEntity(entityItem);
-    }
-
     @Override
     public boolean removedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest, FluidState fluid)
     {
-        return willHarvest || super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
+        return willHarvest || super.removedByPlayer(state, world, pos, player, false, fluid);
     }
 
     @Override
@@ -168,17 +143,30 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
         return level.isClientSide ? null : tile == blockEntityType ? (BlockEntityTicker<T>) ticker : null;
     }
 
+    @Override
+    public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack)
+    {
+        if(!level.isClientSide)
+        {
+            TileEntitySolarPanel tile = ((TileEntitySolarPanel) level.getBlockEntity(blockPos));
+            if(itemStack.hasTag())
+            {
+                tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(t -> {
+                    MyEnergyStorage energyStorage = (MyEnergyStorage) t;
+                    energyStorage.setEnergy(itemStack.getTag().getInt("energy"));
+                });
+            }
+        }
+        super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
+    }
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
-        CompoundTag compoundnbt = stack.getTagElement("BlockEntityTag");
-        int energy = 0;
-        if(compoundnbt != null)
-            if(compoundnbt.contains("energy"))
-                energy = compoundnbt.getCompound("energy").getInt("value");
-
-        Tooltip.showInfoCtrl(energy, tooltip);
+        int energy = stack.hasTag() ? stack.getTag().getInt("energy") : 0;
+        if (energy != 0)
+            Tooltip.showInfoCtrl(energy, tooltip);
         Tooltip.showInfoShift(this.levelSolarPanel, tooltip);
     }
 

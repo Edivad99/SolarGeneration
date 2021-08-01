@@ -1,5 +1,6 @@
 package edivad.solargeneration;
 
+import edivad.solargeneration.setup.SGLootFunctions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,5 +29,6 @@ public class Main {
         Registration.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
         PacketHandler.init();
+        SGLootFunctions.register();
     }
 }

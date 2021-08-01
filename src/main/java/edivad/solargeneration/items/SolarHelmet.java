@@ -36,7 +36,7 @@ public class SolarHelmet extends ArmorItem {
 
     public SolarHelmet(SolarPanelLevel levelSolarHelmet)
     {
-        super((levelSolarHelmet.ordinal() > 4) ? ArmorMaterials.DIAMOND : ArmorMaterials.IRON, EquipmentSlot.HEAD, (new Item.Properties()).tab(ModSetup.solarGenerationTab).stacksTo(1));
+        super(levelSolarHelmet.getArmorMaterial(), EquipmentSlot.HEAD, (new Item.Properties()).tab(ModSetup.solarGenerationTab).stacksTo(1));
         this.levelSolarHelmet = levelSolarHelmet;
 
         energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
@@ -54,7 +54,9 @@ public class SolarHelmet extends ArmorItem {
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
-        Tooltip.showInfoCtrl(getEnergyStored(stack), tooltip);
+        int energy = getEnergyStored(stack);
+        if(energy != 0)
+            Tooltip.showInfoCtrl(energy, tooltip);
         Tooltip.showInfoShift(levelSolarHelmet, tooltip);
     }
 
@@ -110,7 +112,7 @@ public class SolarHelmet extends ArmorItem {
         {
             energyStorage.generatePower(currentAmountEnergyProduced(world, player));
         }
-        sendEnergy(world, player);
+        sendEnergy(player);
         saveEnergyItem(itemStack);
     }
 
@@ -127,7 +129,7 @@ public class SolarHelmet extends ArmorItem {
         return super.getEquipmentSlot(stack);
     }
 
-    private void sendEnergy(Level world, Player player)
+    private void sendEnergy(Player player)
     {
         //Armor priority
         for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++)

@@ -15,7 +15,6 @@ import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +26,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
@@ -37,9 +35,9 @@ import net.minecraftforge.fmllegacy.network.PacketDistributor;
 public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
 
     // Energy
-    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
     private int energyGeneration, maxEnergyOutput;
     public int maxEnergy;
+    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> new MyEnergyStorage(maxEnergyOutput, maxEnergy));
 
     private SolarPanelLevel levelSolarPanel;
     public int energyClient, energyProductionClient;
@@ -52,11 +50,6 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
         maxEnergyOutput = energyGeneration * 2;
         maxEnergy = energyGeneration * 1000;
         energyClient = energyProductionClient = -1;
-    }
-
-    private IEnergyStorage createEnergy()
-    {
-        return new MyEnergyStorage(maxEnergyOutput, maxEnergy);
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEntitySolarPanel tile)
@@ -75,7 +68,7 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
         return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
     }
 
-    private int getEnergy()
+    public int getEnergy()
     {
         return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
@@ -126,7 +119,7 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
     public void load(CompoundTag compound)
     {
         super.load(compound);
-        Tag energyTag = compound.get("energy");
+        CompoundTag energyTag = compound.getCompound("energy");
         energy.ifPresent(h -> ((EnergyStorage)h).deserializeNBT(energyTag));
     }
 
@@ -152,6 +145,4 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
     {
         return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
-
-
 }

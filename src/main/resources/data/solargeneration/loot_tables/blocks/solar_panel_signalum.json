@@ -2,36 +2,29 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "main",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "solargeneration:solar_panel_signalum",
           "functions": [
             {
               "function": "minecraft:copy_name",
               "source": "block_entity"
             },
             {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "energy",
-                  "target": "BlockEntityTag.energy",
-                  "op": "replace"
-                }
-              ]
+              "function": "solargeneration:solar_panel"
             }
-          ]
+          ],
+          "name": "solargeneration:solar_panel_signalum"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }
-      ]
+      ],
+      "functions": []
     }
   ]
 }
