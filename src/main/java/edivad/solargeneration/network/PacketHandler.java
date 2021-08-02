@@ -18,6 +18,4 @@ public class PacketHandler {
         int id = 0;
         INSTANCE.registerMessage(id++, UpdateSolarPanel.class, UpdateSolarPanel::toBytes, UpdateSolarPanel::new, UpdateSolarPanel::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
-
-    ;
 }
