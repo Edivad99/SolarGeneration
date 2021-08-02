@@ -8,8 +8,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientSetup {
 
-    public static void init(FMLClientSetupEvent event)
-    {
+    public static void init(FMLClientSetupEvent event) {
         //Version checker
         MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
 

@@ -12,16 +12,14 @@ public class SolarPanelContainer extends AbstractContainerMenu {
     public final TileEntitySolarPanel tile;
     private final Player player;
 
-    public SolarPanelContainer(int windowId, Player player, TileEntitySolarPanel tile, SolarPanelLevel level)
-    {
+    public SolarPanelContainer(int windowId, Player player, TileEntitySolarPanel tile, SolarPanelLevel level) {
         super(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), windowId);
         this.tile = tile;
         this.player = player;
     }
 
     @Override
-    public boolean stillValid(Player playerIn)
-    {
+    public boolean stillValid(Player playerIn) {
         return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), player, tile.getBlockState().getBlock());
     }
 }

@@ -12,8 +12,7 @@ public class ModSetup {
     public static final CreativeModeTab solarGenerationTab = new CreativeModeTab(Main.MODID + "_tab") {
 
         @Override
-        public ItemStack makeIcon()
-        {
+        public ItemStack makeIcon() {
             return new ItemStack(Registration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.ADVANCED).get());
         }
     };
