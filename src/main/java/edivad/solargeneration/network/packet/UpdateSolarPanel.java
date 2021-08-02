@@ -44,9 +44,8 @@ public class UpdateSolarPanel {
             if(world.isLoaded(pos))
             {
                 BlockEntity te = world.getBlockEntity(pos);
-                if(te instanceof TileEntitySolarPanel)
+                if(te instanceof TileEntitySolarPanel solar)
                 {
-                    TileEntitySolarPanel solar = (TileEntitySolarPanel) te;
                     solar.energyClient = currentEnergy;
                     solar.energyProductionClient = currentProduction;
                 }
