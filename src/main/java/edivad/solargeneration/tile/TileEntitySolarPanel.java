@@ -59,6 +59,7 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
         if(tile.energyClient != tile.getEnergy() || tile.energyProductionClient != tile.currentAmountEnergyProduced())
         {
             int energyProduced = (tile.getEnergy() != tile.getMaxEnergy()) ? tile.currentAmountEnergyProduced() : 0;
+            tile.setChanged();
             PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(tile.getBlockPos(), tile.getEnergy(), energyProduced));
         }
     }
@@ -97,6 +98,7 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
                                 int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutput), false);
                                 capacity.addAndGet(-received);
                                 ((MyEnergyStorage) energy).consumePower(received);
+                                setChanged();
                             }
                         });
                     }
@@ -119,8 +121,9 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
     public void load(CompoundTag compound)
     {
         super.load(compound);
-        CompoundTag energyTag = compound.getCompound("energy");
-        energy.ifPresent(h -> ((EnergyStorage)h).deserializeNBT(energyTag));
+        Tag energyTag = compound.get("energy");
+        if(energyTag != null)
+            energy.ifPresent(h -> ((EnergyStorage)h).deserializeNBT(energyTag));
     }
 
     @Override

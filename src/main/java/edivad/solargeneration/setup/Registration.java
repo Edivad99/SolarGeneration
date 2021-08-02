@@ -56,12 +56,11 @@ public class Registration {
             SOLAR_PANEL_CONTAINER.put(level, CONTAINERS.register(level.getSolarPanelName(), () -> IForgeContainerType.create((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 BlockEntity te = inv.player.getCommandSenderWorld().getBlockEntity(pos);
-                if(!(te instanceof TileEntitySolarPanel))
+                if(!(te instanceof TileEntitySolarPanel tile))
                 {
                     Main.logger.error("Wrong type of tile entity (expected TileEntitySolarPanel)!");
                     return null;
                 }
-                TileEntitySolarPanel tile = (TileEntitySolarPanel) te;
                 return new SolarPanelContainer(windowId, inv.player, tile, level);
             })));
 
