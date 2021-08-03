@@ -26,5 +26,5 @@ src/test
 forge*changelog.txt
 
 #temporary
-src/main/java/edivad/solargeneration/datagen
+src/generated/
 logs/

@@ -53,7 +53,7 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
     private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
 
     public SolarPanel(SolarPanelLevel levelSolarPanel) {
-        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(1.5F, 6.0F));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
         this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
         this.levelSolarPanel = levelSolarPanel;
     }
