@@ -4,8 +4,8 @@ import edivad.solargeneration.container.SolarPanelContainer;
 import edivad.solargeneration.network.PacketHandler;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.setup.Registration;
-import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
+import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
@@ -34,38 +33,38 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
 
     // Energy
-    private int energyGeneration, maxEnergyOutput;
-    public int maxEnergy;
-    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> new MyEnergyStorage(maxEnergyOutput, maxEnergy));
+    private final int energyGeneration;
+    private final int maxTransfer;
+    private final SolarPanelBattery solarPanelBattery;
+    private LazyOptional<IEnergyStorage> energy;
 
-    private SolarPanelLevel levelSolarPanel;
+    private final SolarPanelLevel levelSolarPanel;
     public int energyClient, energyProductionClient;
 
     public TileEntitySolarPanel(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state) {
         super(Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get(), pos, state);
         this.levelSolarPanel = levelSolarPanel;
-        energyGeneration = (int) Math.pow(8, levelSolarPanel.ordinal());
-        maxEnergyOutput = energyGeneration * 2;
-        maxEnergy = energyGeneration * 1000;
+
+        energyGeneration = levelSolarPanel.getEnergyGeneration();
+        maxTransfer = levelSolarPanel.getMaxTransfer();
+        int capacity = levelSolarPanel.getCapacity();
+
+        solarPanelBattery = new SolarPanelBattery(maxTransfer, capacity);
+        energy = LazyOptional.of(() -> solarPanelBattery);
+
         energyClient = energyProductionClient = -1;
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEntitySolarPanel tile) {
-        tile.energy.ifPresent(e -> ((MyEnergyStorage) e).generatePower(tile.currentAmountEnergyProduced()));
+        int energyProducedBySun = tile.currentAmountEnergyProduced();
+        tile.solarPanelBattery.generatePower(energyProducedBySun);
         tile.sendEnergy();
-        if(tile.energyClient != tile.getEnergy() || tile.energyProductionClient != tile.currentAmountEnergyProduced()) {
-            int energyProduced = (tile.getEnergy() != tile.getMaxEnergy()) ? tile.currentAmountEnergyProduced() : 0;
+        int energyStored = tile.solarPanelBattery.getEnergyStored();
+        if(tile.energyClient != energyStored || tile.energyProductionClient != energyProducedBySun) {
+            int energyProduced = tile.solarPanelBattery.isFullEnergy() ? 0 : energyProducedBySun;
             tile.setChanged();
-            PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(tile.getBlockPos(), tile.getEnergy(), energyProduced));
+            PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(blockPos, energyStored, energyProduced));
         }
-    }
-
-    private int getMaxEnergy() {
-        return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
-    }
-
-    public int getEnergy() {
-        return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
     private int currentAmountEnergyProduced() {
@@ -73,26 +72,24 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
     }
 
     private void sendEnergy() {
-        energy.ifPresent(energy -> {
-            AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
+        AtomicInteger capacity = new AtomicInteger(solarPanelBattery.getEnergyStored());
 
-            for(int i = 0; (i < Direction.values().length) && (capacity.get() > 0); i++) {
-                Direction facing = Direction.values()[i];
-                if(facing != Direction.UP) {
-                    BlockEntity tileEntity = level.getBlockEntity(worldPosition.relative(facing));
-                    if(tileEntity != null) {
-                        tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler -> {
-                            if(handler.canReceive()) {
-                                int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutput), false);
-                                capacity.addAndGet(-received);
-                                ((MyEnergyStorage) energy).consumePower(received);
-                                setChanged();
-                            }
-                        });
-                    }
+        for(int i = 0; (i < Direction.values().length) && (capacity.get() > 0); i++) {
+            Direction facing = Direction.values()[i];
+            if(facing != Direction.UP) {
+                BlockEntity tileEntity = level.getBlockEntity(worldPosition.relative(facing));
+                if(tileEntity != null) {
+                    tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler -> {
+                        if(handler.canReceive()) {
+                            int received = handler.receiveEnergy(Math.min(capacity.get(), maxTransfer), false);
+                            capacity.addAndGet(-received);
+                            solarPanelBattery.consumePower(received);
+                            setChanged();
+                        }
+                    });
                 }
             }
-        });
+        }
     }
 
     @Override
@@ -103,20 +100,27 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
         return super.getCapability(capability, facing);
     }
 
+    public SolarPanelLevel getLevelSolarPanel() {
+        return levelSolarPanel;
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        energy.invalidate();
+    }
+
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
         Tag energyTag = compound.get("energy");
         if(energyTag != null)
-            energy.ifPresent(h -> ((EnergyStorage) h).deserializeNBT(energyTag));
+            solarPanelBattery.deserializeNBT(energyTag);
     }
 
     @Override
     public CompoundTag save(CompoundTag compound) {
-        energy.ifPresent(h -> {
-            Tag tag = ((EnergyStorage) h).serializeNBT();
-            compound.put("energy", tag);
-        });
+        compound.put("energy", solarPanelBattery.serializeNBT());
         return super.save(compound);
     }
 

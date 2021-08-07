@@ -2,8 +2,8 @@ package edivad.solargeneration.items;
 
 import edivad.solargeneration.Main;
 import edivad.solargeneration.setup.ModSetup;
-import edivad.solargeneration.tools.MyEnergyStorage;
 import edivad.solargeneration.tools.ProductionSolarPanel;
+import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
 import net.minecraft.nbt.CompoundTag;
@@ -24,18 +24,19 @@ import java.util.List;
 
 public class SolarHelmet extends ArmorItem {
 
-    private SolarPanelLevel levelSolarHelmet;
-    private MyEnergyStorage energyStorage;
-    private int energyGeneration;
-    private int maxEnergyOutput;
+    private final SolarPanelLevel levelSolarHelmet;
+    private final SolarPanelBattery energyStorage;
+    private final int energyGeneration;
+    private final int maxTransfer;
 
     public SolarHelmet(SolarPanelLevel levelSolarHelmet) {
         super(levelSolarHelmet.getArmorMaterial(), EquipmentSlot.HEAD, (new Item.Properties()).tab(ModSetup.solarGenerationTab).stacksTo(1));
         this.levelSolarHelmet = levelSolarHelmet;
 
-        energyGeneration = (int) Math.pow(8, levelSolarHelmet.ordinal());
-        maxEnergyOutput = energyGeneration * 2;
-        energyStorage = new MyEnergyStorage(energyGeneration * 2, energyGeneration * 1000);
+        energyGeneration = levelSolarHelmet.getEnergyGeneration();
+        maxTransfer = levelSolarHelmet.getMaxTransfer();
+        int capacity = levelSolarHelmet.getCapacity();
+        energyStorage = new SolarPanelBattery(maxTransfer, capacity);
     }
 
     @Override
@@ -115,22 +116,22 @@ public class SolarHelmet extends ArmorItem {
         for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++) {
             //ItemStack slot = player.inventory.getItem(i);
             ItemStack slot = player.inventoryMenu.getItems().get(i);
-            chargegItem(slot);
+            chargeItem(slot);
         }
         //Inventory
         for(int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++) {
             //ItemStack slot = player.inventory.getItem(i);
             ItemStack slot = player.inventoryMenu.getItems().get(i);
-            chargegItem(slot);
+            chargeItem(slot);
         }
     }
 
-    private void chargegItem(ItemStack slot) {
+    private void chargeItem(ItemStack slot) {
         if(slot.getCount() == 1) {
             slot.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler -> {
                 if(handler.canReceive()) {
                     while(handler.getEnergyStored() < handler.getMaxEnergyStored() && energyStorage.getEnergyStored() > 0) {
-                        int accepted = Math.min(maxEnergyOutput, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
+                        int accepted = Math.min(maxTransfer, handler.receiveEnergy(energyStorage.getEnergyStored(), true));
                         energyStorage.consumePower(accepted);
                         handler.receiveEnergy(accepted, false);
                     }

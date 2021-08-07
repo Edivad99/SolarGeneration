@@ -2,7 +2,7 @@ package edivad.solargeneration.blocks;
 
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tile.TileEntitySolarPanel;
-import edivad.solargeneration.tools.MyEnergyStorage;
+import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
 import net.minecraft.core.BlockPos;
@@ -135,7 +135,7 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
             TileEntitySolarPanel tile = ((TileEntitySolarPanel) level.getBlockEntity(blockPos));
             if(itemStack.hasTag()) {
                 tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(t -> {
-                    MyEnergyStorage energyStorage = (MyEnergyStorage) t;
+                    SolarPanelBattery energyStorage = (SolarPanelBattery) t;
                     energyStorage.setEnergy(itemStack.getTag().getInt("energy"));
                 });
             }

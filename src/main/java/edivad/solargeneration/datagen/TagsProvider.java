@@ -24,4 +24,9 @@ public class TagsProvider extends BlockTagsProvider {
             tag(BlockTags.NEEDS_IRON_TOOL).add(Registration.SOLAR_PANEL_BLOCK.get(level).get());
         }
     }
+
+    @Override
+    public String getName() {
+        return Main.MODNAME + " Block Tag";
+    }
 }

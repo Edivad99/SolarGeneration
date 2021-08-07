@@ -32,6 +32,18 @@ public enum SolarPanelLevel {
         };
     }
 
+    public int getEnergyGeneration() {
+        return (int) Math.pow(8, this.ordinal());
+    }
+
+    public int getMaxTransfer() {
+        return getEnergyGeneration() * 2;
+    }
+
+    public int getCapacity() {
+        return getEnergyGeneration() * 1000;
+    }
+
     private String getCorrectName() {
         return switch(this.ordinal()) {
             case 0 -> "leadstone";

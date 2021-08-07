@@ -2,6 +2,7 @@ package edivad.solargeneration.datagen;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
+import edivad.solargeneration.Main;
 import edivad.solargeneration.lootable.SolarPanelLootFunction;
 import edivad.solargeneration.setup.Registration;
 import net.minecraft.data.DataGenerator;
@@ -45,7 +46,7 @@ public class LootTableGenerator extends LootTableProvider {
 
     @Override
     public String getName() {
-        return "Solar Generation Loot Tables";
+        return Main.MODNAME + " Loot Tables";
     }
 
     private static class SGBlockLootTables extends BlockLoot {
@@ -61,13 +62,12 @@ public class LootTableGenerator extends LootTableProvider {
         }
 
         private void genBlockItemLootTableWithFunction(Block block, LootItemFunction.Builder function) {
-            /*registerLootTable(block, LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(block).apply())
-                            //        .acceptFunction(builder))
-                            .acceptCondition(SurvivesExplosion.builder())));*/
-
-            LootPool.Builder builder = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)).apply(function)).when(ExplosionCondition.survivesExplosion());
+            LootPool.Builder builder = LootPool.lootPool()//
+                    .setRolls(ConstantValue.exactly(1))//
+                    .add(LootItem.lootTableItem(block)//
+                            .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))//
+                            .apply(function))//
+                    .when(ExplosionCondition.survivesExplosion());
 
             add(block, LootTable.lootTable().withPool(builder));
         }

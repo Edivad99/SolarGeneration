@@ -37,7 +37,7 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelContaine
         String energy = new TranslatableComponent("gui." + Main.MODID + ".stored_energy").append(" " + getEnergyFormatted(tile.energyClient)).getString();
         this.font.draw(mStack, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20, 4210752);
 
-        String maxEnergy = new TranslatableComponent("gui." + Main.MODID + ".max_capacity").append(" " + getEnergyFormatted(tile.maxEnergy)).getString();
+        String maxEnergy = new TranslatableComponent("gui." + Main.MODID + ".max_capacity").append(" " + getEnergyFormatted(tile.getLevelSolarPanel().getCapacity())).getString();
         this.font.draw(mStack, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30, 4210752);
 
         String generation = new TranslatableComponent("gui." + Main.MODID + ".generation").append(" " + tile.energyProductionClient + " FE/t").getString();
@@ -69,7 +69,7 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelContaine
 
     private int getPercent() {
         long currentEnergy = (long) tile.energyClient;
-        int maxEnergy = tile.maxEnergy;
+        int maxEnergy = tile.getLevelSolarPanel().getCapacity();
 
         long result = currentEnergy * 100 / maxEnergy;
 

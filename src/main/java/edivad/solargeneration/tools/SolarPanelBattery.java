@@ -2,10 +2,10 @@ package edivad.solargeneration.tools;
 
 import net.minecraftforge.energy.EnergyStorage;
 
-public class MyEnergyStorage extends EnergyStorage {
+public class SolarPanelBattery extends EnergyStorage {
 
-    public MyEnergyStorage(int energyTransfer, int energyCapacity) {
-        super(energyCapacity, energyTransfer);
+    public SolarPanelBattery(int maxTransfer, int capacity) {
+        super(capacity, maxTransfer);
         this.maxReceive = 0;
     }
 
