@@ -63,7 +63,7 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
         if(tile.energyClient != energyStored || tile.energyProductionClient != energyProducedBySun) {
             int energyProduced = tile.solarPanelBattery.isFullEnergy() ? 0 : energyProducedBySun;
             tile.setChanged();
-            PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new UpdateSolarPanel(blockPos, energyStored, energyProduced));
+            PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPos)), new UpdateSolarPanel(blockPos, energyStored, energyProduced));
         }
     }
 
