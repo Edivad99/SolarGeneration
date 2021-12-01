@@ -55,7 +55,7 @@ public class Registration {
                 BlockPos pos = data.readBlockPos();
                 BlockEntity te = inv.player.getCommandSenderWorld().getBlockEntity(pos);
                 if(!(te instanceof BlockEntitySolarPanel tile)) {
-                    Main.logger.error("Wrong type of tile entity (expected TileEntitySolarPanel)!");
+                    Main.logger.error("Wrong type of block entity (expected BlockEntitySolarPanel)!");
                     return null;
                 }
                 return new SolarPanelMenu(windowId, inv.player, tile, level);
