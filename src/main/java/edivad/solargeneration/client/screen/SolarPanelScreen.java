@@ -3,8 +3,8 @@ package edivad.solargeneration.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import edivad.solargeneration.Main;
-import edivad.solargeneration.container.SolarPanelContainer;
-import edivad.solargeneration.tile.TileEntitySolarPanel;
+import edivad.solargeneration.menu.SolarPanelMenu;
+import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -13,12 +13,12 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelContainer> {
+public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
     private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MODID, "textures/gui/solar_panel.png");
-    private final TileEntitySolarPanel tile;
+    private final BlockEntitySolarPanel tile;
 
-    public SolarPanelScreen(SolarPanelContainer container, Inventory inv, Component name) {
+    public SolarPanelScreen(SolarPanelMenu container, Inventory inv, Component name) {
         super(container, inv, name);
         this.tile = container.tile;
     }

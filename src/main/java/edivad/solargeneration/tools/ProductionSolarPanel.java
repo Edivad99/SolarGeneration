@@ -6,14 +6,14 @@ import net.minecraft.world.level.Level;
 
 public class ProductionSolarPanel {
 
-    public static float computeSunIntensity(Level world, BlockPos pos, SolarPanelLevel solarPanelLevel) {
+    public static float computeSunIntensity(Level level, BlockPos pos, SolarPanelLevel solarPanelLevel) {
         float sunIntensity = 0;
 
-        if(world.canSeeSkyFromBelowWater(pos)) {
+        if(level.canSeeSkyFromBelowWater(pos)) {
             float multiplicator = 1.5f;
             float displacement = 1.2f;
             // Celestial angle == 0 at zenith.
-            float celestialAngleRadians = world.getSunAngle(1.0f);
+            float celestialAngleRadians = level.getSunAngle(1.0f);
             if(celestialAngleRadians > Math.PI) {
                 celestialAngleRadians = (2 * 3.141592f - celestialAngleRadians);
             }
@@ -26,10 +26,10 @@ public class ProductionSolarPanel {
                 if(solarPanelLevel == SolarPanelLevel.LEADSTONE)
                     sunIntensity = 1;
 
-                if(world.isRaining())
+                if(level.isRaining())
                     sunIntensity *= 0.4;
 
-                if(world.isThundering())
+                if(level.isThundering())
                     sunIntensity *= 0.2;
             }
         }

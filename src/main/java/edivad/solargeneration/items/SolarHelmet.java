@@ -46,7 +46,7 @@ public class SolarHelmet extends ArmorItem {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
         int energy = getEnergyStored(stack);
         if(energy != 0)
             Tooltip.showInfoCtrl(energy, tooltip);
@@ -63,13 +63,14 @@ public class SolarHelmet extends ArmorItem {
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
-        return !(getEnergyStored(stack) == getMaxEnergyStored());
+    public boolean isBarVisible(ItemStack stack) {
+        return true;
     }
 
     @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
-        return 1D - ((double) getEnergyStored(stack) / (double) getMaxEnergyStored());
+    public int getBarWidth(ItemStack stack) {
+        if (getEnergyStored(stack) == 0) return 0;
+        return Math.min(1 + 12 * getEnergyStored(stack) / getMaxEnergyStored(), 13);
     }
 
     public void saveEnergyItem(ItemStack container) {
@@ -89,12 +90,12 @@ public class SolarHelmet extends ArmorItem {
     }
 
     @Override
-    public void onArmorTick(ItemStack itemStack, Level world, Player player) {
-        if(world.isClientSide)
+    public void onArmorTick(ItemStack itemStack, Level level, Player player) {
+        if(level.isClientSide)
             return;
 
         if(!(getEnergyStored(itemStack) == getMaxEnergyStored())) {
-            energyStorage.generatePower(currentAmountEnergyProduced(world, player));
+            energyStorage.generatePower(currentAmountEnergyProduced(level, player));
         }
         sendEnergy(player);
         saveEnergyItem(itemStack);
@@ -140,9 +141,9 @@ public class SolarHelmet extends ArmorItem {
         }
     }
 
-    private int currentAmountEnergyProduced(Level world, Player player) {
+    private int currentAmountEnergyProduced(Level level, Player player) {
         if(!energyStorage.isFullEnergy()) {
-            return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(world, player.blockPosition().offset(0, 1, 0), getLevelSolarPanel()));
+            return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(level, player.blockPosition().offset(0, 1, 0), getLevelSolarPanel()));
         }
         return 0;
     }

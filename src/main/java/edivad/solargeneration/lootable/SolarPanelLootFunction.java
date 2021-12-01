@@ -3,7 +3,7 @@ package edivad.solargeneration.lootable;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import edivad.solargeneration.setup.SGLootFunctions;
-import edivad.solargeneration.tile.TileEntitySolarPanel;
+import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,7 +25,7 @@ public class SolarPanelLootFunction extends LootItemConditionalFunction {
     @Override
     protected ItemStack run(ItemStack stack, LootContext lootContext) {
         BlockEntity blockEntity = lootContext.getParam(LootContextParams.BLOCK_ENTITY);
-        if(blockEntity instanceof TileEntitySolarPanel tile) {
+        if(blockEntity instanceof BlockEntitySolarPanel tile) {
             AtomicInteger energy = new AtomicInteger();
             tile.getCapability(CapabilityEnergy.ENERGY, Direction.DOWN).ifPresent(handler -> energy.set(handler.getEnergyStored()));
             stack.getOrCreateTag().putInt("energy", energy.get());

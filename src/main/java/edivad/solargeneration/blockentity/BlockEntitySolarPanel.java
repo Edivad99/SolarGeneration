@@ -1,6 +1,6 @@
-package edivad.solargeneration.tile;
+package edivad.solargeneration.blockentity;
 
-import edivad.solargeneration.container.SolarPanelContainer;
+import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.network.PacketHandler;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.setup.Registration;
@@ -24,13 +24,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
+public class BlockEntitySolarPanel extends BlockEntity implements MenuProvider {
 
     // Energy
     private final int energyGeneration;
@@ -41,7 +41,7 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
     private final SolarPanelLevel levelSolarPanel;
     public int energyClient, energyProductionClient;
 
-    public TileEntitySolarPanel(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state) {
+    public BlockEntitySolarPanel(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state) {
         super(Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get(), pos, state);
         this.levelSolarPanel = levelSolarPanel;
 
@@ -55,7 +55,7 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
         energyClient = energyProductionClient = -1;
     }
 
-    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEntitySolarPanel tile) {
+    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntitySolarPanel tile) {
         int energyProducedBySun = tile.currentAmountEnergyProduced();
         tile.solarPanelBattery.generatePower(energyProducedBySun);
         tile.sendEnergy();
@@ -119,15 +119,15 @@ public class TileEntitySolarPanel extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.put("energy", solarPanelBattery.serializeNBT());
-        return super.save(compound);
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player playerEntity) {
-        return new SolarPanelContainer(id, playerEntity, this, levelSolarPanel);
+        return new SolarPanelMenu(id, playerEntity, this, levelSolarPanel);
     }
 
     @Override
