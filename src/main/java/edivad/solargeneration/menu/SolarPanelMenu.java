@@ -19,7 +19,7 @@ public class SolarPanelMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player playerIn) {
+    public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), player, tile.getBlockState().getBlock());
     }
 }

@@ -6,12 +6,17 @@ import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -115,15 +120,13 @@ public class SolarHelmet extends ArmorItem {
     private void sendEnergy(Player player) {
         //Armor priority
         for(int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++) {
-            //ItemStack slot = player.inventory.getItem(i);
-            ItemStack slot = player.inventoryMenu.getItems().get(i);
-            chargeItem(slot);
+            ItemStack item = player.getInventory().getItem(i);
+            chargeItem(item);
         }
         //Inventory
         for(int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++) {
-            //ItemStack slot = player.inventory.getItem(i);
-            ItemStack slot = player.inventoryMenu.getItems().get(i);
-            chargeItem(slot);
+            ItemStack item = player.getInventory().getItem(i);
+            chargeItem(item);
         }
     }
 

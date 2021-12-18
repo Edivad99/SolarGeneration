@@ -43,7 +43,6 @@ public class UpdateSolarPanel {
 
 
     public static class UpdateSolarPanelClient {
-
         public static void handle(UpdateSolarPanel packet, Supplier<NetworkEvent.Context> ctx) {
             Level level = Minecraft.getInstance().level;
             if(level.isLoaded(packet.pos)) {
@@ -54,8 +53,5 @@ public class UpdateSolarPanel {
                 }
             }
         }
-
-
     }
-
 }
