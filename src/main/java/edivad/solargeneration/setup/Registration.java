@@ -1,10 +1,10 @@
 package edivad.solargeneration.setup;
 
 import edivad.solargeneration.Main;
-import edivad.solargeneration.blocks.SolarPanel;
-import edivad.solargeneration.menu.SolarPanelMenu;
-import edivad.solargeneration.items.SolarHelmet;
 import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
+import edivad.solargeneration.blocks.SolarPanel;
+import edivad.solargeneration.items.SolarHelmet;
+import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
@@ -14,10 +14,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,10 +43,11 @@ public class Registration {
     public static final RegistryObject<Item> PHOTOVOLTAIC_CELL = ITEMS.register("photovoltaic_cell", () -> new Item(property));
 
     public static void init() {
-        BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        TILES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        BLOCKS.register(eventBus);
+        ITEMS.register(eventBus);
+        TILES.register(eventBus);
+        CONTAINERS.register(eventBus);
 
         for(SolarPanelLevel level : SolarPanelLevel.values()) {
             SOLAR_PANEL_BLOCK.put(level, BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanel(level)));
@@ -65,5 +67,4 @@ public class Registration {
             CORE.put(level, ITEMS.register(level.getSolarCoreName(), () -> new Item(property)));
         }
     }
-
 }
