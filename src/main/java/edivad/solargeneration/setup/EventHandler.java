@@ -21,7 +21,8 @@ public class EventHandler {
         try
         {
             IModInfo modInfo = ModList.get().getModFileById(Main.MODID).getMods().get(0);
-            if(modInfo.getVersion().getQualifier().contains("NONE"))
+            String qualifier = modInfo.getVersion().getQualifier();
+            if(qualifier != null && qualifier.contains("NONE"))
                 return;
             CheckResult versionRAW = VersionChecker.getResult(modInfo);
             if(versionRAW.target() == null)
