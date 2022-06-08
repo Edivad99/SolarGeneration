@@ -3,6 +3,7 @@ package edivad.solargeneration.setup;
 import edivad.solargeneration.Main;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,6 +12,11 @@ import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.VersionChecker.CheckResult;
 import net.minecraftforge.fml.VersionChecker.Status;
 import net.minecraftforge.forgespi.language.IModInfo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EventHandler {
 
@@ -31,22 +37,22 @@ public class EventHandler {
             Status result = versionRAW.status();
             LocalPlayer player = event.getPlayer();
 
-            if(result.equals(Status.OUTDATED)) {
-                player.displayClientMessage(new TextComponent(ChatFormatting.GREEN + "[" + Main.MODNAME + "] " + ChatFormatting.WHITE + "A new version is available (" + versionRAW.target() + "), please update!"), false);
-                player.displayClientMessage(new TextComponent(ChatFormatting.YELLOW + "Changelog:"), false);
-
+            List<Component> messages = new ArrayList<>();
+            if(result.equals(Status.OUTDATED) && versionRAW.changes().containsKey(versionRAW.target())) {
                 String changes = versionRAW.changes().get(versionRAW.target());
-                if(changes != null) {
-                    String[] changesFormat = changes.split("\n");
 
-                    for(var change : changesFormat) {
-                        player.displayClientMessage(new TextComponent(ChatFormatting.WHITE + "- " + change), false);
-                    }
-                    if(versionRAW.changes().size() > 1) {
-                        player.displayClientMessage(new TextComponent(ChatFormatting.WHITE + "- And more..."), false);
-                    }
+                messages.add(new TextComponent(ChatFormatting.GREEN + "[" + Main.MODNAME + "] " + ChatFormatting.WHITE + "A new version is available (" + versionRAW.target() + "), please update!"));
+                messages.add(new TextComponent(ChatFormatting.YELLOW + "Changelog:"));
+
+                Arrays.stream(changes.split("\n"))
+                        .map(change -> new TextComponent(ChatFormatting.WHITE + "- " + change))
+                        .collect(Collectors.toCollection(() -> messages));
+                if(versionRAW.changes().size() > 1) {
+                    messages.add(new TextComponent(ChatFormatting.WHITE + "- And more..."));
                 }
             }
+            messages.forEach(message -> player.displayClientMessage(message, false));
+
         } catch(Exception e) {
             Main.logger.warn("Unable to check the version", e);
         }
