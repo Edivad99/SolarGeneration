@@ -32,7 +32,7 @@ public class Registration {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     private static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Main.MODID);
     private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Main.MODID);
-    private static final DeferredRegister<LootItemFunctionType> LOOT_ITEM = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, Main.MODID);
+    private static final DeferredRegister<LootItemFunctionType> LOOT_ITEM_FUNCTIONS = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, Main.MODID);
 
     public static final Map<SolarPanelLevel, RegistryObject<SolarPanel>> SOLAR_PANEL_BLOCK = new HashMap<>();
     public static final Map<SolarPanelLevel, RegistryObject<Item>> SOLAR_PANEL_ITEM = new HashMap<>();
@@ -41,7 +41,7 @@ public class Registration {
 
     public static final Map<SolarPanelLevel, RegistryObject<Item>> HELMET = new HashMap<>();
     public static final Map<SolarPanelLevel, RegistryObject<Item>> CORE = new HashMap<>();
-    public static final Map<String, RegistryObject<LootItemFunctionType>> LOOT_FUNCTIONS = new HashMap<>();
+    public static final Map<String, RegistryObject<LootItemFunctionType>> REGISTERED_LOOT_ITEM_FUNCTIONS = new HashMap<>();
 
     private static final Item.Properties property = new Item.Properties().tab(ModSetup.solarGenerationTab);
 
@@ -51,7 +51,7 @@ public class Registration {
         ITEMS.register(eventBus);
         TILES.register(eventBus);
         CONTAINERS.register(eventBus);
-        LOOT_ITEM.register(eventBus);
+        LOOT_ITEM_FUNCTIONS.register(eventBus);
 
         for(SolarPanelLevel level : SolarPanelLevel.values()) {
             SOLAR_PANEL_BLOCK.put(level, BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanel(level)));
@@ -73,6 +73,6 @@ public class Registration {
         ITEMS.register("lapis_shard", () -> new Item(property));
         ITEMS.register("photovoltaic_cell", () -> new Item(property));
 
-        LOOT_FUNCTIONS.put("solar_panel", LOOT_ITEM.register("solar_panel", () -> new LootItemFunctionType(new SolarPanelLootFunction.Serializer())));
+        REGISTERED_LOOT_ITEM_FUNCTIONS.put("solar_panel", LOOT_ITEM_FUNCTIONS.register("solar_panel", () -> new LootItemFunctionType(new SolarPanelLootFunction.Serializer())));
     }
 }

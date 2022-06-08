@@ -35,7 +35,7 @@ public class SolarPanelLootFunction extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType getType() {
-        return Registration.LOOT_FUNCTIONS.get("solar_panel").get();
+        return Registration.REGISTERED_LOOT_ITEM_FUNCTIONS.get("solar_panel").get();
     }
 
     public static LootItemConditionalFunction.Builder<?> builder() {
