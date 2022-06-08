@@ -1,7 +1,7 @@
 package edivad.solargeneration.blocks;
 
-import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
+import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;

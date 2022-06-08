@@ -2,8 +2,8 @@ package edivad.solargeneration.lootable;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-import edivad.solargeneration.setup.SGLootFunctions;
 import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
+import edivad.solargeneration.setup.Registration;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -35,7 +35,7 @@ public class SolarPanelLootFunction extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType getType() {
-        return SGLootFunctions.getSolarPanel();
+        return Registration.LOOT_FUNCTIONS.get("solar_panel").get();
     }
 
     public static LootItemConditionalFunction.Builder<?> builder() {

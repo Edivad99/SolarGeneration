@@ -3,9 +3,6 @@ package edivad.solargeneration;
 import edivad.solargeneration.network.PacketHandler;
 import edivad.solargeneration.setup.ClientSetup;
 import edivad.solargeneration.setup.Registration;
-import edivad.solargeneration.setup.SGLootFunctions;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -24,7 +21,6 @@ public class Main {
         Registration.init();
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener(ClientSetup::init);
-        eventBus.addGenericListener(GlobalLootModifierSerializer.class, (RegistryEvent.Register event) -> SGLootFunctions.register());
         PacketHandler.init();
     }
 }

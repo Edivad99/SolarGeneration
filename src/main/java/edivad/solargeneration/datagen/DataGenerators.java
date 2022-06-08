@@ -14,12 +14,7 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        if(event.includeServer()) {
-            generator.addProvider(new LootTableGenerator(generator));
-            generator.addProvider(new TagsProvider(generator, existingFileHelper));
-        }
-        if(event.includeClient()) {
-
-        }
+        generator.addProvider(event.includeServer(), new LootTableGenerator(generator));
+        generator.addProvider(event.includeServer(), new TagsProvider(generator, existingFileHelper));
     }
 }

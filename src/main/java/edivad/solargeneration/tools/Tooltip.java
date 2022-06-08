@@ -3,10 +3,11 @@ package edivad.solargeneration.tools;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Tooltip {
 
@@ -34,8 +35,8 @@ public class Tooltip {
     private static void addInformationLocalized(List<Component> tooltip, String key, Object... parameters) {
         String translated = I18n.get(key, parameters);
         translated = COMPILE.matcher(translated).replaceAll("\u00a7");
-        String[] formatted = translated.split("\n");
-        for(String line : formatted)
-            tooltip.add(new TranslatableComponent(line));
+        Arrays.stream(translated.split("\n"))
+                .map(Component::literal)
+                .collect(Collectors.toCollection(() -> tooltip));
     }
 }

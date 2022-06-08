@@ -4,7 +4,6 @@ import edivad.solargeneration.Main;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -24,8 +23,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void handlePlayerLoggedInEvent(LoggedInEvent event) {
-        try
-        {
+        try {
             IModInfo modInfo = ModList.get().getModFileById(Main.MODID).getMods().get(0);
             String qualifier = modInfo.getVersion().getQualifier();
             if(qualifier != null && qualifier.contains("NONE"))
@@ -37,23 +35,26 @@ public class EventHandler {
             Status result = versionRAW.status();
             LocalPlayer player = event.getPlayer();
 
-            List<Component> messages = new ArrayList<>();
+            List<String> messages = new ArrayList<>();
             if(result.equals(Status.OUTDATED) && versionRAW.changes().containsKey(versionRAW.target())) {
                 String changes = versionRAW.changes().get(versionRAW.target());
 
-                messages.add(new TextComponent(ChatFormatting.GREEN + "[" + Main.MODNAME + "] " + ChatFormatting.WHITE + "A new version is available (" + versionRAW.target() + "), please update!"));
-                messages.add(new TextComponent(ChatFormatting.YELLOW + "Changelog:"));
+                messages.add(ChatFormatting.GREEN + "[" + Main.MODNAME + "] " + ChatFormatting.WHITE + "A new version is available (" + versionRAW.target() + "), please update!");
+                messages.add(ChatFormatting.YELLOW + "Changelog:");
 
                 Arrays.stream(changes.split("\n"))
-                        .map(change -> new TextComponent(ChatFormatting.WHITE + "- " + change))
+                        .map(change -> ChatFormatting.WHITE + "- " + change)
                         .collect(Collectors.toCollection(() -> messages));
                 if(versionRAW.changes().size() > 1) {
-                    messages.add(new TextComponent(ChatFormatting.WHITE + "- And more..."));
+                    messages.add(ChatFormatting.WHITE + "- And more...");
                 }
             }
-            messages.forEach(message -> player.displayClientMessage(message, false));
+            messages.stream()
+                    .map(Component::literal)
+                    .forEach(message -> player.displayClientMessage(message, false));
 
-        } catch(Exception e) {
+        }
+        catch(Exception e) {
             Main.logger.warn("Unable to check the version", e);
         }
     }
