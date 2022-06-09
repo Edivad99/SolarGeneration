@@ -10,7 +10,7 @@ public class ClientSetup {
 
     public static void init(FMLClientSetupEvent event) {
         //Version checker
-        MinecraftForge.EVENT_BUS.register(EventHandler.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
 
         //GUI
         for(SolarPanelLevel level : SolarPanelLevel.values())
