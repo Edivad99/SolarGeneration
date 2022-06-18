@@ -3,6 +3,8 @@ package edivad.solargeneration.tools;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 
+import java.util.Locale;
+
 public enum SolarPanelLevel {
 
     LEADSTONE, HARDENED, REDSTONE, SIGNALUM, RESONANT, ADVANCED, ULTIMATE;
@@ -45,15 +47,6 @@ public enum SolarPanelLevel {
     }
 
     private String getCorrectName() {
-        return switch(this.ordinal()) {
-            case 0 -> "leadstone";
-            case 1 -> "hardened";
-            case 2 -> "redstone";
-            case 3 -> "signalum";
-            case 4 -> "resonant";
-            case 5 -> "advanced";
-            case 6 -> "ultimate";
-            default -> throw new RuntimeException("Solar panel tier not yet implemented!");
-        };
+        return this.name().toLowerCase(Locale.ROOT);
     }
 }

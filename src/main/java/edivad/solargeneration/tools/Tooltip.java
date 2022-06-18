@@ -19,17 +19,17 @@ public class Tooltip {
             int transfer = generation * 2;
             int capacity = generation * 1000;
 
-            addInformationLocalized(tooltip, "message.solargeneration.shift_info", generation, transfer, capacity);
+            addInformationLocalized(tooltip, Translations.MESSSAGE_SHIFT_INFO, generation, transfer, capacity);
         }
         else
-            addInformationLocalized(tooltip, "message.solargeneration.hold_shift");
+            addInformationLocalized(tooltip, Translations.MESSSAGE_HOLD_SHIFT);
     }
 
     public static void showInfoCtrl(int energy, List<Component> tooltip) {
         if(Screen.hasControlDown())
-            addInformationLocalized(tooltip, "message.solargeneration.ctrl_info", energy);
+            addInformationLocalized(tooltip, Translations.MESSSAGE_CTRL_INFO, energy);
         else
-            addInformationLocalized(tooltip, "message.solargeneration.hold_ctrl");
+            addInformationLocalized(tooltip, Translations.MESSSAGE_HOLD_CTRL);
     }
 
     private static void addInformationLocalized(List<Component> tooltip, String key, Object... parameters) {

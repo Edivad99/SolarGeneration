@@ -5,15 +5,21 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import edivad.solargeneration.Main;
 import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
 import edivad.solargeneration.menu.SolarPanelMenu;
+import edivad.solargeneration.tools.Translations;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
     private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MODID, "textures/gui/solar_panel.png");
+    private static final MutableComponent STORED_ENERGY = Component.translatable(Translations.STORED_ENERGY);
+    private static final MutableComponent MAX_CAPACITY = Component.translatable(Translations.MAX_CAPACITY);
+    private static final MutableComponent GENERATION = Component.translatable(Translations.GENERATION);
+    private static final MutableComponent ENERGY = Component.translatable(Translations.ENERGY);
     private final BlockEntitySolarPanel tile;
 
     public SolarPanelScreen(SolarPanelMenu container, Inventory inv, Component name) {
@@ -27,18 +33,18 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
         super.render(poseStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(poseStack, mouseX, mouseY);
         if(mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10 && mouseY < topPos + 77)
-            this.renderTooltip(poseStack, Component.literal("Energy: " + getPercent() + "%"), mouseX, mouseY);
+            this.renderTooltip(poseStack, ENERGY.append(" " + getPercent() + "%"), mouseX, mouseY);
     }
 
     @Override
     protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        Component energy = Component.translatable("gui." + Main.MODID + ".stored_energy").append(" " + getEnergyFormatted(tile.energyClient));
+        Component energy = STORED_ENERGY.append(" " + getEnergyFormatted(tile.energyClient));
         this.font.draw(poseStack, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20, 4210752);
 
-        Component maxEnergy = Component.translatable("gui." + Main.MODID + ".max_capacity").append(" " + getEnergyFormatted(tile.getLevelSolarPanel().getCapacity()));
+        Component maxEnergy = MAX_CAPACITY.append(" " + getEnergyFormatted(tile.getLevelSolarPanel().getCapacity()));
         this.font.draw(poseStack, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30, 4210752);
 
-        Component generation = Component.translatable("gui." + Main.MODID + ".generation").append(" " + tile.energyProductionClient + " FE/t");
+        Component generation = GENERATION.append(" " + tile.energyProductionClient + " FE/t");
         this.font.draw(poseStack, generation, (imageWidth / 2 - font.width(generation) / 2) + 14, 40, 4210752);
     }
 
