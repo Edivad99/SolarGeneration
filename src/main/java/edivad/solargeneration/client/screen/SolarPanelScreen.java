@@ -33,18 +33,18 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
         super.render(poseStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(poseStack, mouseX, mouseY);
         if(mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10 && mouseY < topPos + 77)
-            this.renderTooltip(poseStack, ENERGY.append(" " + getPercent() + "%"), mouseX, mouseY);
+            this.renderTooltip(poseStack, ENERGY.copy().append(" " + getPercent() + "%"), mouseX, mouseY);
     }
 
     @Override
     protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        Component energy = STORED_ENERGY.append(" " + getEnergyFormatted(tile.energyClient));
+        Component energy = STORED_ENERGY.copy().append(" " + getEnergyFormatted(tile.energyClient));
         this.font.draw(poseStack, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20, 4210752);
 
-        Component maxEnergy = MAX_CAPACITY.append(" " + getEnergyFormatted(tile.getLevelSolarPanel().getCapacity()));
+        Component maxEnergy = MAX_CAPACITY.copy().append(" " + getEnergyFormatted(tile.getLevelSolarPanel().getCapacity()));
         this.font.draw(poseStack, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30, 4210752);
 
-        Component generation = GENERATION.append(" " + tile.energyProductionClient + " FE/t");
+        Component generation = GENERATION.copy().append(" " + tile.energyProductionClient + " FE/t");
         this.font.draw(poseStack, generation, (imageWidth / 2 - font.width(generation) / 2) + 14, 40, 4210752);
     }
 
