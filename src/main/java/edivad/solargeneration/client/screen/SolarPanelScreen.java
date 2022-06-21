@@ -17,7 +17,7 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
     private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MODID, "textures/gui/solar_panel.png");
     private static final MutableComponent STORED_ENERGY = Component.translatable(Translations.STORED_ENERGY);
-    private static final MutableComponent MAX_CAPACITY = Component.translatable(Translations.MAX_CAPACITY);
+    private static final MutableComponent MAX_CAPACITY = Component.translatable(Translations.CAPACITY);
     private static final MutableComponent GENERATION = Component.translatable(Translations.GENERATION);
     private static final MutableComponent ENERGY = Component.translatable(Translations.ENERGY);
     private final BlockEntitySolarPanel tile;

@@ -1,42 +1,51 @@
 package edivad.solargeneration.tools;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class Tooltip {
 
-    private static final Pattern COMPILE = Pattern.compile("@", Pattern.LITERAL);
-
-    public static void showInfoShift(SolarPanelLevel solarPanelLevel, List<Component> tooltip) {
+    public static List<MutableComponent> showInfoShift(SolarPanelLevel solarPanelLevel) {
+        List<MutableComponent> components = new ArrayList<>();
         if(Screen.hasShiftDown()) {
-            int generation = (int) Math.pow(8, solarPanelLevel.ordinal());
-            int transfer = generation * 2;
-            int capacity = generation * 1000;
+            var generation = String.valueOf(solarPanelLevel.getEnergyGeneration());
+            var transfer = String.valueOf(solarPanelLevel.getMaxTransfer());
+            var capacity = String.valueOf(solarPanelLevel.getCapacity());
 
-            addInformationLocalized(tooltip, Translations.MESSSAGE_SHIFT_INFO, generation, transfer, capacity);
+            components.add(buildLineEnergy(Translations.GENERATION, generation, "FE/t"));
+            components.add(buildLineEnergy(Translations.TRANSFER, transfer, "FE/t"));
+            components.add(buildLineEnergy(Translations.CAPACITY, capacity, "FE"));
+        } else {
+            components.add(buildLineHoldKey("Shift", Translations.FOR_DATAILS));
         }
-        else
-            addInformationLocalized(tooltip, Translations.MESSSAGE_HOLD_SHIFT);
+        return components;
     }
 
-    public static void showInfoCtrl(int energy, List<Component> tooltip) {
-        if(Screen.hasControlDown())
-            addInformationLocalized(tooltip, Translations.MESSSAGE_CTRL_INFO, energy);
-        else
-            addInformationLocalized(tooltip, Translations.MESSSAGE_HOLD_CTRL);
+    public static MutableComponent showInfoCtrl(int energy) {
+        if(Screen.hasControlDown()) {
+            return buildLineEnergy(Translations.STORED_ENERGY, String.valueOf(energy), "FE");
+        }
+        return buildLineHoldKey("Ctrl", Translations.FOR_STORED_ENERGY);
     }
 
-    private static void addInformationLocalized(List<Component> tooltip, String key, Object... parameters) {
-        String translated = I18n.get(key, parameters);
-        translated = COMPILE.matcher(translated).replaceAll("\u00a7");
-        Arrays.stream(translated.split("\n"))
-                .map(Component::literal)
-                .collect(Collectors.toCollection(() -> tooltip));
+    private static MutableComponent buildLineEnergy(String translationKey, String value, String unit) {
+        return Component.translatable(translationKey)
+                .append(" ")
+                .append(Component.literal(value).withStyle(ChatFormatting.GREEN))
+                .append(" ")
+                .append(Component.literal(unit).withStyle(ChatFormatting.DARK_RED));
+    }
+
+    private static MutableComponent buildLineHoldKey(String key, String reasonKey) {
+        return Component.translatable(Translations.HOLD).withStyle(ChatFormatting.GRAY)
+                .append(" ")
+                .append(Component.literal(key).withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC))
+                .append(" ")
+                .append(Component.translatable(reasonKey).withStyle(ChatFormatting.GRAY));
     }
 }

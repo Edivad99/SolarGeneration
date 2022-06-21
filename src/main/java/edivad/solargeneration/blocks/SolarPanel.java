@@ -146,10 +146,11 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter blockGetter, List<Component> tooltip, TooltipFlag flagIn) {
-        int energy = stack.hasTag() ? stack.getTag().getInt("energy") : 0;
-        if(energy != 0)
-            Tooltip.showInfoCtrl(energy, tooltip);
-        Tooltip.showInfoShift(this.levelSolarPanel, tooltip);
+        if (stack.hasTag()) {
+            int energy = stack.getTag().getInt("energy");
+            tooltip.add(Tooltip.showInfoCtrl(energy));
+        }
+        tooltip.addAll(Tooltip.showInfoShift(this.levelSolarPanel));
     }
 
     @Override

@@ -61,13 +61,13 @@
   "advancements.solargeneration.solar_helmet_ultimate": "The ultimate helmet",
   "advancements.solargeneration.solar_helmet_ultimate.desc": "Craft a Ultimate Solar Helmet.",
 
-  "message.solargeneration.hold_shift": "Hold @b@oShift @7for details",
-  "message.solargeneration.hold_ctrl": "Hold @b@oCtrl @7for energy stored",
-  "message.solargeneration.shift_info": "@fGeneration: @a%d @4FE/t\n@fTransfer: @a%d @4FE/t\n@fCapacity: @a%d @4FE",
-  "message.solargeneration.ctrl_info": "@fEnergy stored: @a%d @4FE",
+  "message.solargeneration.for_details": "for details",
+  "message.solargeneration.for_stored_energy": "for stored energy",
+  "message.solargeneration.hold": "Hold",
+  "message.solargeneration.transfer": "Transfer:",
 
   "gui.solargeneration.stored_energy": "Stored energy:",
-  "gui.solargeneration.max_capacity": "Max capacity:",
+  "gui.solargeneration.capacity": "Capacity:",
   "gui.solargeneration.generation": "Generation:",
   "gui.solargeneration.energy": "Energy:"
 }

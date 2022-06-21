@@ -61,11 +61,13 @@
   "advancements.solargeneration.solar_helmet_ultimate": "L'elmo finale",
   "advancements.solargeneration.solar_helmet_ultimate.desc": "Crea un Elmo Solare Finale.",
 
-  "message.solargeneration.hold_shift": "Premi @b@oShift @7per i dettagli",
+  "message.solargeneration.for_details": "per i dettagli",
+  "message.solargeneration.for_stored_energy": "per l'energia immagazzinata",
+  "message.solargeneration.hold": "Premi",
+  "message.solargeneration.transfer": "Trasferimento:",
 
-  "message.solargeneration.hold_ctrl": "Premi @b@oCtrl @7per l'energia immagazzinata",
-
-  "message.solargeneration.shift_info": "@fGenerazione: @a%d @4FE/t\n@fTrasferimento: @a%d @4FE/t\n@fCapacita': @a%d @4FE",
-
-  "message.solargeneration.ctrl_info": "@fEnergia immagazzinata: @a%d @4FE"
+  "gui.solargeneration.stored_energy": "Energia immagazzinata:",
+  "gui.solargeneration.capacity": "Capacita':",
+  "gui.solargeneration.generation": "Generazione:",
+  "gui.solargeneration.energy": "Energia:",
 }

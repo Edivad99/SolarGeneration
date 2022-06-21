@@ -47,10 +47,11 @@ public class SolarHelmet extends ArmorItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
-        int energy = getEnergyStored(stack);
-        if(energy != 0)
-            Tooltip.showInfoCtrl(energy, tooltip);
-        Tooltip.showInfoShift(levelSolarHelmet, tooltip);
+        if (stack.hasTag()) {
+            int energy = getEnergyStored(stack);
+            tooltip.add(Tooltip.showInfoCtrl(energy));
+        }
+        tooltip.addAll(Tooltip.showInfoShift(this.levelSolarHelmet));
     }
 
     @Override
@@ -80,7 +81,7 @@ public class SolarHelmet extends ArmorItem {
     }
 
     public int getEnergyStored(ItemStack container) {
-        if(container.getTag() == null)
+        if(!container.hasTag())
             return 0;
         return container.getTag().getInt("energy");
     }
