@@ -34,6 +34,8 @@ public class Registration {
     private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Main.MODID);
     private static final DeferredRegister<LootItemFunctionType> LOOT_ITEM_FUNCTIONS = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, Main.MODID);
 
+    private static final Item.Properties PROPERTY = new Item.Properties().tab(ModSetup.solarGenerationTab);
+
     public static final Map<SolarPanelLevel, RegistryObject<SolarPanel>> SOLAR_PANEL_BLOCK = new HashMap<>();
     public static final Map<SolarPanelLevel, RegistryObject<Item>> SOLAR_PANEL_ITEM = new HashMap<>();
     public static final Map<SolarPanelLevel, RegistryObject<BlockEntityType<BlockEntitySolarPanel>>> SOLAR_PANEL_TILE = new HashMap<>();
@@ -43,7 +45,8 @@ public class Registration {
     public static final Map<SolarPanelLevel, RegistryObject<Item>> CORE = new HashMap<>();
     public static final Map<String, RegistryObject<LootItemFunctionType>> REGISTERED_LOOT_ITEM_FUNCTIONS = new HashMap<>();
 
-    private static final Item.Properties property = new Item.Properties().tab(ModSetup.solarGenerationTab);
+    public static final RegistryObject<Item> LAPIS_SHARD = ITEMS.register("lapis_shard", () -> new Item(PROPERTY));
+    public static final RegistryObject<Item> PHOTOVOLTAIC_CELL = ITEMS.register("photovoltaic_cell", () -> new Item(PROPERTY));
 
     public static void init() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -55,7 +58,7 @@ public class Registration {
 
         for(SolarPanelLevel level : SolarPanelLevel.values()) {
             SOLAR_PANEL_BLOCK.put(level, BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanel(level)));
-            SOLAR_PANEL_ITEM.put(level, ITEMS.register(level.getSolarPanelName(), () -> new BlockItem(SOLAR_PANEL_BLOCK.get(level).get(), property)));
+            SOLAR_PANEL_ITEM.put(level, ITEMS.register(level.getSolarPanelName(), () -> new BlockItem(SOLAR_PANEL_BLOCK.get(level).get(), PROPERTY)));
             SOLAR_PANEL_TILE.put(level, TILES.register(level.getSolarPanelName(), () -> BlockEntityType.Builder.of((pos, state) -> new BlockEntitySolarPanel(level, pos, state), SOLAR_PANEL_BLOCK.get(level).get()).build(null)));
             SOLAR_PANEL_CONTAINER.put(level, CONTAINERS.register(level.getSolarPanelName(), () -> IForgeMenuType.create((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
@@ -68,10 +71,8 @@ public class Registration {
             })));
 
             HELMET.put(level, ITEMS.register(level.getSolarHelmetName(), () -> new SolarHelmet(level)));
-            CORE.put(level, ITEMS.register(level.getSolarCoreName(), () -> new Item(property)));
+            CORE.put(level, ITEMS.register(level.getSolarCoreName(), () -> new Item(PROPERTY)));
         }
-        ITEMS.register("lapis_shard", () -> new Item(property));
-        ITEMS.register("photovoltaic_cell", () -> new Item(property));
 
         REGISTERED_LOOT_ITEM_FUNCTIONS.put("solar_panel", LOOT_ITEM_FUNCTIONS.register("solar_panel", () -> new LootItemFunctionType(new SolarPanelLootFunction.Serializer())));
     }
