@@ -50,8 +50,8 @@ public class Lang extends LanguageProvider {
     }
 
     private void generateAdvancements() {
-        add(Translations.ADVANCEMENTS_ROOT, Main.MODNAME);
-        add(Translations.ADVANCEMENTS_ROOT_DESC, "Start your solar-power journey by creating a Photovoltaic Cell.");
+        add(Translations.ADVANCEMENTS_ROOT.title(), Main.MODNAME);
+        add(Translations.ADVANCEMENTS_ROOT.desc(), "Start your solar-power journey by creating a Photovoltaic Cell.");
 
         var advancementsSolarPanel = new HashMap<SolarPanelLevel, String[]>();
         advancementsSolarPanel.put(SolarPanelLevel.LEADSTONE, new String[] { "Start with the basics", "Craft a Leadstone Solar Panel." });
