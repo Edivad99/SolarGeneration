@@ -45,5 +45,40 @@ public class Lang extends LanguageProvider {
         add(Translations.FOR_DATAILS, "for details");
         add(Translations.FOR_STORED_ENERGY, "for stored energy");
         add(Translations.HOLD, "Hold");
+
+        generateAdvancements();
+    }
+
+    private void generateAdvancements() {
+        add(Translations.ADVANCEMENTS_ROOT, Main.MODNAME);
+        add(Translations.ADVANCEMENTS_ROOT_DESC, "Start your solar-power journey by creating a Photovoltaic Cell.");
+
+        var advancementsSolarPanel = new HashMap<SolarPanelLevel, String[]>();
+        advancementsSolarPanel.put(SolarPanelLevel.LEADSTONE, new String[] { "Start with the basics", "Craft a Leadstone Solar Panel." });
+        advancementsSolarPanel.put(SolarPanelLevel.HARDENED, new String[] { "1 is better than 8", "Craft a Hardened Solar Panel." });
+        advancementsSolarPanel.put(SolarPanelLevel.REDSTONE, new String[] { "Not enough energy", "Craft a Redstone Solar Panel." });
+        advancementsSolarPanel.put(SolarPanelLevel.SIGNALUM, new String[] { "Looking for the signal", "Craft a Signalum Solar Panel." });
+        advancementsSolarPanel.put(SolarPanelLevel.RESONANT, new String[] { "Escalation of power", "Craft a Resonant Solar Panel." });
+        advancementsSolarPanel.put(SolarPanelLevel.ADVANCED, new String[] { "President of energy", "Craft a Advanced Solar Panel." });
+        advancementsSolarPanel.put(SolarPanelLevel.ULTIMATE, new String[] { "Oh sun, I control you!", "Craft a Ultimate Solar Panel." });
+
+        advancementsSolarPanel.forEach((l, t) -> {
+            add(Translations.SOLAR_PANEL_ADVANCEMENTS.get(l).title(), t[0]);
+            add(Translations.SOLAR_PANEL_ADVANCEMENTS.get(l).desc(), t[1]);
+        });
+
+        var advancementsSolarHelmet = new HashMap<SolarPanelLevel, String[]>();
+        advancementsSolarHelmet.put(SolarPanelLevel.LEADSTONE, new String[] { "Using your head!", "Craft a Leadstone Solar Helmet." });
+        advancementsSolarHelmet.put(SolarPanelLevel.HARDENED, new String[] { "8 helmets in 1", "Craft a Hardened Solar Helmet." });
+        advancementsSolarHelmet.put(SolarPanelLevel.REDSTONE, new String[] { "Electric mind", "Craft a Redstone Solar Helmet." });
+        advancementsSolarHelmet.put(SolarPanelLevel.SIGNALUM, new String[] { "Brain signals", "Craft a Signalum Solar Helmet." });
+        advancementsSolarHelmet.put(SolarPanelLevel.RESONANT, new String[] { "Resonating tune", "Craft a Resonant Solar Helmet." });
+        advancementsSolarHelmet.put(SolarPanelLevel.ADVANCED, new String[] { "Fancy crown", "Craft a Advanced Solar Helmet." });
+        advancementsSolarHelmet.put(SolarPanelLevel.ULTIMATE, new String[] { "The Ultimate Helmet", "Craft a Ultimate Solar Helmet." });
+
+        advancementsSolarHelmet.forEach((l, t) -> {
+            add(Translations.SOLAR_HELMET_ADVANCEMENTS.get(l).title(), t[0]);
+            add(Translations.SOLAR_HELMET_ADVANCEMENTS.get(l).desc(), t[1]);
+        });
     }
 }
