@@ -1,19 +1,6 @@
 {
-  "display": {
-    "icon": {
-      "item": "solargeneration:photovoltaic_cell"
-    },
-    "title": {
-      "translate": "advancements.solargeneration.root"
-    },
-    "description": {
-      "translate": "advancements.solargeneration.root.desc"
-    },
-    "background": "solargeneration:textures/gui/advancements.png"
-  },
   "criteria": {
     "inv_changed": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -22,7 +9,24 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "solargeneration:textures/gui/advancements.png",
+    "description": {
+      "translate": "advancements.solargeneration.root.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "solargeneration:photovoltaic_cell"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.solargeneration.root"
     }
   },
   "requirements": [

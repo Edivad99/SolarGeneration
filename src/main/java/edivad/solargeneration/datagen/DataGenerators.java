@@ -16,6 +16,7 @@ public class DataGenerators {
 
         generator.addProvider(event.includeServer(), new LootTableGenerator(generator));
         generator.addProvider(event.includeServer(), new TagsProvider(generator, existingFileHelper));
+        generator.addProvider(event.includeServer(), new AdvancementProvider(generator, existingFileHelper));
         generator.addProvider(event.includeClient(), new Lang(generator));
     }
 }

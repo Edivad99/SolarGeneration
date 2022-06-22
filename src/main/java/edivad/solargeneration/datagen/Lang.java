@@ -77,8 +77,8 @@ public class Lang extends LanguageProvider {
         advancementsSolarHelmet.put(SolarPanelLevel.ULTIMATE, new String[] { "The Ultimate Helmet", "Craft a Ultimate Solar Helmet." });
 
         advancementsSolarHelmet.forEach((l, t) -> {
-            add(Translations.SOLAR_HELMET_ADVANCEMENTS.get(l).title(), t[0]);
-            add(Translations.SOLAR_HELMET_ADVANCEMENTS.get(l).desc(), t[1]);
+            add(Translations.HELMET_ADVANCEMENTS.get(l).title(), t[0]);
+            add(Translations.HELMET_ADVANCEMENTS.get(l).desc(), t[1]);
         });
     }
 }

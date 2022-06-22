@@ -1,29 +1,32 @@
 {
   "parent": "solargeneration:solar_panel_redstone",
-  "display": {
-    "frame": "goal",
-    "icon": {
-      "item": "solargeneration:solar_panel_signalum"
-    },
-    "title": {
-      "translate": "advancements.solargeneration.solar_panel_signalum"
-    },
-    "description": {
-      "translate": "advancements.solargeneration.solar_panel_signalum.desc"
-    }
-  },
   "criteria": {
     "inv_changed": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
               "solargeneration:solar_panel_signalum"
-              ]
+            ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.solargeneration.solar_panel_signalum.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "solargeneration:solar_panel_signalum"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.solargeneration.solar_panel_signalum"
     }
   },
   "requirements": [
