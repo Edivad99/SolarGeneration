@@ -67,12 +67,20 @@ public class AdvancementProvider extends BaseAdvancementProvider {
                         itemTranslations.translateTitle(),
                         itemTranslations.translateDescription(),
                         null,
-                        level.getFrameType(),
+                        getFrameType(level),
                         true, //showToast
                         true, //announceToChat
                         false) //hidden
                 .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(item.get()))
                 .parent(parent)
                 .save(consumer, new ResourceLocation(Main.MODID, name), existingFileHelper);
+    }
+
+    private static FrameType getFrameType(SolarPanelLevel level) {
+        return switch(level) {
+            case LEADSTONE, HARDENED, REDSTONE -> FrameType.TASK;
+            case SIGNALUM, RESONANT -> FrameType.GOAL;
+            case ADVANCED, ULTIMATE -> FrameType.CHALLENGE;
+        };
     }
 }

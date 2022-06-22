@@ -1,6 +1,5 @@
 package edivad.solargeneration.tools;
 
-import net.minecraft.advancements.FrameType;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 
@@ -31,15 +30,6 @@ public enum SolarPanelLevel {
             case 0, 1 -> ArmorMaterials.IRON;
             case 2, 3, 4, 5 -> ArmorMaterials.DIAMOND;
             case 6 -> ArmorMaterials.NETHERITE;
-            default -> throw new RuntimeException("Solar panel tier not yet implemented!");
-        };
-    }
-
-    public FrameType getFrameType() {
-        return switch(this.ordinal()) {
-            case 0, 1, 2 -> FrameType.TASK;
-            case 3, 4 -> FrameType.GOAL;
-            case 5, 6 -> FrameType.CHALLENGE;
             default -> throw new RuntimeException("Solar panel tier not yet implemented!");
         };
     }
