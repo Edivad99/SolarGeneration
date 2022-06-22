@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_solar_helmet_leadstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_helmet_leadstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "solargeneration:solar_panel_leadstone_reverse"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_solar_helmet_leadstone",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "solargeneration:solar_panel_leadstone_reverse"
+    ]
+  }
+}

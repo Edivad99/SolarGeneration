@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_photovoltaic_cell": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:photovoltaic_cell"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_solar_core_leadstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_core_leadstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "solargeneration:solar_panel_leadstone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_solar_core_leadstone",
+      "has_photovoltaic_cell",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "solargeneration:solar_panel_leadstone"
+    ]
+  }
+}

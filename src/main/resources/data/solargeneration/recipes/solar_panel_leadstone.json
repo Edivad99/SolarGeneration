@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "solargeneration:photovoltaic_cell"
+    },
+    "b": {
+      "item": "minecraft:redstone"
+    },
+    "c": {
+      "item": "solargeneration:solar_core_leadstone"
+    },
+    "d": {
+      "tag": "forge:nuggets/steel"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "bcb",
+    "ddd"
+  ],
+  "result": {
+    "item": "solargeneration:solar_panel_leadstone"
+  }
+}

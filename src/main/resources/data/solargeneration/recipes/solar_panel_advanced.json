@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "solargeneration:solar_panel_resonant"
+    },
+    "b": {
+      "item": "solargeneration:solar_core_advanced"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "result": {
+    "item": "solargeneration:solar_panel_advanced"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_solar_panel_resonant": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "solargeneration:solar_panel_resonant"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "solargeneration:solar_helmet_resonant"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_solar_panel_resonant",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "solargeneration:solar_helmet_resonant"
+    ]
+  }
+}

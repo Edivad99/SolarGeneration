@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "solargeneration:solar_helmet_ultimate"
+    }
+  ],
+  "result": {
+    "item": "solargeneration:solar_panel_ultimate"
+  }
+}

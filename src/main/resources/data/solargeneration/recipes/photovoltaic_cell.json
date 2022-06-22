@@ -1,12 +1,4 @@
 {
-  "result": {
-    "item": "solargeneration:photovoltaic_cell"
-  },
-  "pattern": [
-    "aaa",
-    "bbb",
-    "ccc"
-  ],
   "type": "minecraft:crafting_shaped",
   "key": {
     "a": {
@@ -18,5 +10,13 @@
     "c": {
       "tag": "forge:nuggets/iron"
     }
+  },
+  "pattern": [
+    "aaa",
+    "bbb",
+    "ccc"
+  ],
+  "result": {
+    "item": "solargeneration:photovoltaic_cell"
   }
 }
