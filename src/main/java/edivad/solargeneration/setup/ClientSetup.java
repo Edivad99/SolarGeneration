@@ -1,5 +1,7 @@
 package edivad.solargeneration.setup;
 
+import edivad.edivadlib.setup.UpdateChecker;
+import edivad.solargeneration.Main;
 import edivad.solargeneration.client.screen.SolarPanelScreen;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -10,7 +12,7 @@ public class ClientSetup {
 
     public static void init(FMLClientSetupEvent event) {
         //Version checker
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new UpdateChecker(Main.MODID));
 
         //GUI
         for(SolarPanelLevel level : SolarPanelLevel.values())

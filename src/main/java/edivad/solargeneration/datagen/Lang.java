@@ -42,7 +42,7 @@ public class Lang extends LanguageProvider {
         add(Translations.GENERATION, "Generation:");
         add(Translations.ENERGY, "Energy:");
         add(Translations.TRANSFER, "Transfer:");
-        add(Translations.FOR_DATAILS, "for details");
+        add(Translations.FOR_DETAILS, "for details");
         add(Translations.FOR_STORED_ENERGY, "for stored energy");
         add(Translations.HOLD, "Hold");
 

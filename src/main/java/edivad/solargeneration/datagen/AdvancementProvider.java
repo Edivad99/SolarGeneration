@@ -1,10 +1,11 @@
 package edivad.solargeneration.datagen;
 
+import edivad.edivadlib.datagen.BaseAdvancementProvider;
+import edivad.edivadlib.tools.TranslationsAdvancement;
 import edivad.solargeneration.Main;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Translations;
-import edivad.solargeneration.tools.TranslationsAdvancement;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;

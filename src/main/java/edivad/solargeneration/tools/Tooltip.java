@@ -21,7 +21,7 @@ public class Tooltip {
             components.add(buildLineEnergy(Translations.TRANSFER, transfer, "FE/t"));
             components.add(buildLineEnergy(Translations.CAPACITY, capacity, "FE"));
         } else {
-            components.add(buildLineHoldKey("Shift", Translations.FOR_DATAILS));
+            components.add(buildLineHoldKey("Shift", Translations.FOR_DETAILS));
         }
         return components;
     }
