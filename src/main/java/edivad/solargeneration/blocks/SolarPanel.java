@@ -92,7 +92,7 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
 
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if(tileEntity instanceof MenuProvider menu) {
-            NetworkHooks.openGui((ServerPlayer) player, menu, tileEntity.getBlockPos());
+            NetworkHooks.openScreen((ServerPlayer) player, menu, tileEntity.getBlockPos());
         }
         else {
             throw new IllegalStateException("Our named container provider is missing!");
