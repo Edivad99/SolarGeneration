@@ -54,6 +54,6 @@ description="A way to generate FE from the sun"
 [[dependencies.solargeneration]]
     modId="edivadlib"
     mandatory=true
-    versionRange="[1.0.1,)"
+    versionRange="[1.0.2,)"
     ordering="NONE"
     side="BOTH"
