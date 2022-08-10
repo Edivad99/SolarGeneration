@@ -1,7 +1,7 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[42,)" #mandatory (42 is current forge version)
+loaderVersion="[43,)" #mandatory (43 is current forge version)
 
 license="GNU AGPLv3" #mandatory
 
@@ -39,7 +39,7 @@ description="A way to generate FE from the sun"
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[42,)" #mandatory
+    versionRange="[43,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -48,12 +48,12 @@ description="A way to generate FE from the sun"
 [[dependencies.solargeneration]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.1,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.solargeneration]]
     modId="edivadlib"
     mandatory=true
-    versionRange="[1.1.0,)"
+    versionRange="[1.2.0,)"
     ordering="NONE"
     side="BOTH"

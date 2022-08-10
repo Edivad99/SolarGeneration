@@ -108,7 +108,7 @@ dependencies {
     implementation fg.deobf("curse.maven:edivadlib-638508:${edivadlib_id}")
 
     //runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.19-forge:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.19.1-forge:${jei_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
