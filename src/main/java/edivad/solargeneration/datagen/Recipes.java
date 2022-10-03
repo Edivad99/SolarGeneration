@@ -16,6 +16,7 @@ import net.minecraft.world.item.Items;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import net.minecraftforge.common.Tags;
 
 public class Recipes extends RecipeProvider {
 
@@ -39,7 +40,7 @@ public class Recipes extends RecipeProvider {
                 .pattern("aaa")
                 .define('a', Registration.LAPIS_SHARD.get())
                 .unlockedBy(getHasName(Registration.LAPIS_SHARD.get()), has(Registration.LAPIS_SHARD.get()))
-                .save(consumer);
+                .save(consumer, new ResourceLocation(Main.MODID, "lapis_lazuli_from_shard"));
 
         ShapedRecipeBuilder.shaped(Registration.LAPIS_SHARD.get(), 36)
                 .pattern("aa")
@@ -54,7 +55,7 @@ public class Recipes extends RecipeProvider {
                 .pattern("ccc")
                 .define('a', Items.GLASS_PANE)
                 .define('b', Registration.LAPIS_SHARD.get())
-                .define('c', ItemTags.create(new ResourceLocation("forge", "nuggets/iron")))
+                .define('c', Tags.Items.NUGGETS_IRON)
                 .unlockedBy(getHasName(Registration.LAPIS_SHARD.get()), has(Registration.LAPIS_SHARD.get()))
                 .save(consumer);
     }
