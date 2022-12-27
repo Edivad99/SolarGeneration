@@ -1,6 +1,6 @@
 package edivad.solargeneration.menu;
 
-import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
+import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.world.entity.player.Player;
@@ -10,11 +10,11 @@ import net.minecraft.world.item.ItemStack;
 
 public class SolarPanelMenu extends AbstractContainerMenu {
 
-    public final BlockEntitySolarPanel tile;
+    public final SolarPanelBlockEntity solarPanelBlockEntity;
 
-    public SolarPanelMenu(int windowId, BlockEntitySolarPanel tile, SolarPanelLevel level) {
-        super(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), windowId);
-        this.tile = tile;
+    public SolarPanelMenu(int containerId, SolarPanelBlockEntity solarPanelBlockEntity, SolarPanelLevel level) {
+        super(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), containerId);
+        this.solarPanelBlockEntity = solarPanelBlockEntity;
     }
 
     @Override
@@ -24,6 +24,6 @@ public class SolarPanelMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), player, tile.getBlockState().getBlock());
+        return stillValid(ContainerLevelAccess.create(solarPanelBlockEntity.getLevel(), solarPanelBlockEntity.getBlockPos()), player, solarPanelBlockEntity.getBlockState().getBlock());
     }
 }

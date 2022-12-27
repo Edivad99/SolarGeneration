@@ -20,27 +20,26 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BlockEntitySolarPanel extends BlockEntity implements MenuProvider {
+public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
 
-    // Energy
     private final int energyGeneration;
     private final int maxTransfer;
     private final SolarPanelBattery solarPanelBattery;
-    private LazyOptional<IEnergyStorage> energy;
+    private final LazyOptional<IEnergyStorage> energy;
 
     private final SolarPanelLevel levelSolarPanel;
     public int energyClient, energyProductionClient;
 
-    public BlockEntitySolarPanel(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state) {
+    public SolarPanelBlockEntity(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state) {
         super(Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get(), pos, state);
         this.levelSolarPanel = levelSolarPanel;
 
@@ -54,15 +53,16 @@ public class BlockEntitySolarPanel extends BlockEntity implements MenuProvider {
         energyClient = energyProductionClient = -1;
     }
 
-    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntitySolarPanel tile) {
-        int energyProducedBySun = tile.currentAmountEnergyProduced();
-        tile.solarPanelBattery.generatePower(energyProducedBySun);
-        tile.sendEnergy();
-        int energyStored = tile.solarPanelBattery.getEnergyStored();
-        if(tile.energyClient != energyStored || tile.energyProductionClient != energyProducedBySun) {
-            int energyProduced = tile.solarPanelBattery.isFullEnergy() ? 0 : energyProducedBySun;
-            tile.setChanged();
-            PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPos)), new UpdateSolarPanel(blockPos, energyStored, energyProduced));
+    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, SolarPanelBlockEntity solarPanel) {
+        int energyProducedBySun = solarPanel.currentAmountEnergyProduced();
+        solarPanel.solarPanelBattery.generatePower(energyProducedBySun);
+        solarPanel.sendEnergy();
+        int energyStored = solarPanel.solarPanelBattery.getEnergyStored();
+        if(solarPanel.energyClient != energyStored || solarPanel.energyProductionClient != energyProducedBySun) {
+            int energyProduced = solarPanel.solarPanelBattery.isFullEnergy() ? 0 : energyProducedBySun;
+            solarPanel.setChanged();
+            var message = new UpdateSolarPanel(blockPos, energyStored, energyProduced);
+            PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPos)), message);
         }
     }
 
@@ -75,10 +75,14 @@ public class BlockEntitySolarPanel extends BlockEntity implements MenuProvider {
 
         for(int i = 0; (i < Direction.values().length) && (capacity.get() > 0); i++) {
             Direction facing = Direction.values()[i];
-            if(facing != Direction.UP) {
-                BlockEntity tileEntity = level.getBlockEntity(worldPosition.relative(facing));
-                if(tileEntity != null) {
-                    tileEntity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).ifPresent(handler -> {
+            if (facing.equals(Direction.UP))
+                continue;
+
+            BlockEntity blockEntity = level.getBlockEntity(worldPosition.relative(facing));
+            if (blockEntity == null)
+                continue;
+            blockEntity.getCapability(ForgeCapabilities.ENERGY, facing.getOpposite())
+                    .ifPresent(handler -> {
                         if(handler.canReceive()) {
                             int received = handler.receiveEnergy(Math.min(capacity.get(), maxTransfer), false);
                             capacity.addAndGet(-received);
@@ -86,17 +90,15 @@ public class BlockEntitySolarPanel extends BlockEntity implements MenuProvider {
                             setChanged();
                         }
                     });
-                }
-            }
         }
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
-        if(capability == CapabilityEnergy.ENERGY && facing != Direction.UP) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
+        if(cap == ForgeCapabilities.ENERGY && side != Direction.UP) {
             return energy.cast();
         }
-        return super.getCapability(capability, facing);
+        return super.getCapability(cap, side);
     }
 
     public SolarPanelLevel getLevelSolarPanel() {
@@ -110,22 +112,22 @@ public class BlockEntitySolarPanel extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        Tag energyTag = compound.get("energy");
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        Tag energyTag = tag.get("energy");
         if(energyTag != null)
             solarPanelBattery.deserializeNBT(energyTag);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-        compound.put("energy", solarPanelBattery.serializeNBT());
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("energy", solarPanelBattery.serializeNBT());
     }
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player playerEntity) {
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
         return new SolarPanelMenu(id, this, levelSolarPanel);
     }
 

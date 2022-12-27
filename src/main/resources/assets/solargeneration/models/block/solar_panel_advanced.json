@@ -1,7 +1,7 @@
 {
   "parent": "solargeneration:block/solar_panel",
   "textures": {
-    "main": "solargeneration:blocks/solar_panel/advanced",
-    "particle": "solargeneration:blocks/solar_panel/particle_advanced"
+    "main": "solargeneration:block/advanced",
+    "particle": "solargeneration:block/particle_advanced"
   }
 }

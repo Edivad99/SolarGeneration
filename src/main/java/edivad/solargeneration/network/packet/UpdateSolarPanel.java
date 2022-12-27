@@ -1,6 +1,6 @@
 package edivad.solargeneration.network.packet;
 
-import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
+import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -42,7 +42,7 @@ public class UpdateSolarPanel {
         public static void handle(UpdateSolarPanel packet, Supplier<NetworkEvent.Context> ctx) {
             var level = Minecraft.getInstance().level;
             if(level != null && level.isLoaded(packet.pos)) {
-                if(level.getBlockEntity(packet.pos) instanceof BlockEntitySolarPanel solar) {
+                if(level.getBlockEntity(packet.pos) instanceof SolarPanelBlockEntity solar) {
                     solar.energyClient = packet.currentEnergy;
                     solar.energyProductionClient = packet.currentProduction;
                 }

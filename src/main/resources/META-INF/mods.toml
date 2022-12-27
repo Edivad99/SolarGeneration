@@ -1,9 +1,8 @@
-modLoader="javafml" #mandatory
-loaderVersion="[43,)" #mandatory (43 is current forge version)
+modLoader="javafml"
+loaderVersion="[44,)"
+license="GNU AGPLv3"
 
-license="GNU AGPLv3" #mandatory
-
-[[mods]] #mandatory
+[[mods]]
 modId="solargeneration"
 version="${file.jarVersion}"
 displayName="Solar Generation"
@@ -16,18 +15,18 @@ description="A way to generate FE from the sun"
 [[dependencies.solargeneration]]
     modId="forge"
     mandatory=true
-    versionRange="[43,)"
+    versionRange="[44.0.40,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.solargeneration]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="[1.19.3,1.20)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.solargeneration]]
     modId="edivadlib"
     mandatory=true
-    versionRange="[1.2.0,)"
+    versionRange="[1.3.0,)"
     ordering="NONE"
     side="BOTH"

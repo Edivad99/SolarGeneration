@@ -3,7 +3,7 @@ package edivad.solargeneration.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import edivad.solargeneration.Main;
-import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
+import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.tools.Translations;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -20,17 +20,17 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
     private static final MutableComponent CAPACITY = Component.translatable(Translations.CAPACITY);
     private static final MutableComponent GENERATION = Component.translatable(Translations.GENERATION);
     private static final MutableComponent ENERGY = Component.translatable(Translations.ENERGY);
-    private final BlockEntitySolarPanel tile;
+    private final SolarPanelBlockEntity solarPanelBlockEntity;
 
-    public SolarPanelScreen(SolarPanelMenu container, Inventory inv, Component name) {
-        super(container, inv, name);
-        this.tile = container.tile;
+    public SolarPanelScreen(SolarPanelMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title);
+        this.solarPanelBlockEntity = menu.solarPanelBlockEntity;
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, partialTicks);
+        super.render(poseStack, mouseX, mouseY, partialTick);
         this.renderTooltip(poseStack, mouseX, mouseY);
         if(mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10 && mouseY < topPos + 77)
             this.renderTooltip(poseStack, ENERGY.copy().append(" " + getPercent() + "%"), mouseX, mouseY);
@@ -38,13 +38,13 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
     @Override
     protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        Component energy = STORED_ENERGY.copy().append(" " + getEnergyFormatted(tile.energyClient));
+        Component energy = STORED_ENERGY.copy().append(" " + getEnergyFormatted(solarPanelBlockEntity.energyClient));
         this.font.draw(poseStack, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20, 4210752);
 
-        Component maxEnergy = CAPACITY.copy().append(" " + getEnergyFormatted(tile.getLevelSolarPanel().getCapacity()));
+        Component maxEnergy = CAPACITY.copy().append(" " + getEnergyFormatted(solarPanelBlockEntity.getLevelSolarPanel().getCapacity()));
         this.font.draw(poseStack, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30, 4210752);
 
-        Component generation = GENERATION.copy().append(" " + tile.energyProductionClient + " FE/t");
+        Component generation = GENERATION.copy().append(" " + solarPanelBlockEntity.energyProductionClient + " FE/t");
         this.font.draw(poseStack, generation, (imageWidth / 2 - font.width(generation) / 2) + 14, 40, 4210752);
     }
 
@@ -72,8 +72,8 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
     }
 
     private int getPercent() {
-        long currentEnergy = tile.energyClient;
-        int maxEnergy = tile.getLevelSolarPanel().getCapacity();
+        long currentEnergy = solarPanelBlockEntity.energyClient;
+        int maxEnergy = solarPanelBlockEntity.getLevelSolarPanel().getCapacity();
 
         long result = currentEnergy * 100 / maxEnergy;
 

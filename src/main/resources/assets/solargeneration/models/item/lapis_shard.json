@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "solargeneration:items/lapis_shard"
+    "layer0": "solargeneration:item/lapis_shard"
   }
 }

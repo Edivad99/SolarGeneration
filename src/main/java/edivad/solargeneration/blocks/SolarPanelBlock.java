@@ -1,6 +1,6 @@
 package edivad.solargeneration.blocks;
 
-import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
+import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
@@ -39,23 +39,23 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedBlock {
+public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
-    private final SolarPanelLevel levelSolarPanel;
+    private final SolarPanelLevel solarPanelLevel;
     private static final VoxelShape BOX = createShape();
     private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
 
-    public SolarPanel(SolarPanelLevel levelSolarPanel) {
+    public SolarPanelBlock(SolarPanelLevel solarPanelLevel) {
         super(Properties.of(Material.METAL).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
         this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
-        this.levelSolarPanel = levelSolarPanel;
+        this.solarPanelLevel = solarPanelLevel;
     }
 
     private static VoxelShape createShape() {
@@ -90,9 +90,9 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
         if(level.isClientSide)
             return InteractionResult.SUCCESS;
 
-        BlockEntity tileEntity = level.getBlockEntity(pos);
-        if(tileEntity instanceof MenuProvider menu) {
-            NetworkHooks.openScreen((ServerPlayer) player, menu, tileEntity.getBlockPos());
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if(blockEntity instanceof MenuProvider menu) {
+            NetworkHooks.openScreen((ServerPlayer) player, menu, blockEntity.getBlockPos());
         }
         else {
             throw new IllegalStateException("Our named container provider is missing!");
@@ -106,41 +106,41 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
     }
 
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
-        super.playerDestroy(level, player, pos, state, te, stack);
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool) {
+        super.playerDestroy(level, player, pos, state, blockEntity, tool);
         level.removeBlock(pos, false);
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BlockEntitySolarPanel(levelSolarPanel, blockPos, blockState);
+        return new SolarPanelBlockEntity(solarPanelLevel, blockPos, blockState);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-        return createSolarPanelTicker(level, blockEntityType, Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get());
+        return createSolarPanelTicker(level, blockEntityType, Registration.SOLAR_PANEL_TILE.get(solarPanelLevel).get());
     }
 
     @Nullable
-    protected static <T extends BlockEntity> BlockEntityTicker<T> createSolarPanelTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends BlockEntitySolarPanel> tile) {
-        BlockEntityTicker<BlockEntitySolarPanel> ticker = BlockEntitySolarPanel::serverTick;
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createSolarPanelTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends SolarPanelBlockEntity> tile) {
+        BlockEntityTicker<SolarPanelBlockEntity> ticker = SolarPanelBlockEntity::serverTick;
         return level.isClientSide ? null : tile == blockEntityType ? (BlockEntityTicker<T>) ticker : null;
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if(!level.isClientSide) {
-            BlockEntitySolarPanel tile = ((BlockEntitySolarPanel) level.getBlockEntity(blockPos));
+            SolarPanelBlockEntity blockEntity = ((SolarPanelBlockEntity) level.getBlockEntity(pos));
             if(itemStack.hasTag()) {
-                tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(t -> {
+                blockEntity.getCapability(ForgeCapabilities.ENERGY).ifPresent(t -> {
                     SolarPanelBattery energyStorage = (SolarPanelBattery) t;
                     energyStorage.setEnergy(itemStack.getTag().getInt("energy"));
                 });
             }
         }
-        super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
+        super.setPlacedBy(level, pos, state, placer, itemStack);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -150,7 +150,7 @@ public class SolarPanel extends Block implements EntityBlock, SimpleWaterloggedB
             int energy = stack.getTag().getInt("energy");
             tooltip.add(Tooltip.showInfoCtrl(energy));
         }
-        tooltip.addAll(Tooltip.showInfoShift(this.levelSolarPanel));
+        tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));
     }
 
     @Override

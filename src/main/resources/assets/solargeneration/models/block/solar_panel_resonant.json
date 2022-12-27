@@ -1,7 +1,7 @@
 {
   "parent": "solargeneration:block/solar_panel",
   "textures": {
-    "main": "solargeneration:blocks/solar_panel/resonant",
-    "particle": "solargeneration:blocks/solar_panel/particle_resonant"
+    "main": "solargeneration:block/resonant",
+    "particle": "solargeneration:block/particle_resonant"
   }
 }

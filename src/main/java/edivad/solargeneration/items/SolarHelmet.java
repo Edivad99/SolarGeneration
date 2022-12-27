@@ -1,12 +1,9 @@
 package edivad.solargeneration.items;
 
-import edivad.solargeneration.Main;
-import edivad.solargeneration.setup.ModSetup;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,24 +15,24 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.List;
 
 public class SolarHelmet extends ArmorItem {
 
-    private final SolarPanelLevel levelSolarHelmet;
+    private final SolarPanelLevel solarPanelLevel;
     private final SolarPanelBattery energyStorage;
     private final int energyGeneration;
     private final int maxTransfer;
 
-    public SolarHelmet(SolarPanelLevel levelSolarHelmet) {
-        super(levelSolarHelmet.getArmorMaterial(), EquipmentSlot.HEAD, (new Item.Properties()).tab(ModSetup.solarGenerationTab).stacksTo(1));
-        this.levelSolarHelmet = levelSolarHelmet;
+    public SolarHelmet(SolarPanelLevel solarPanelLevel) {
+        super(solarPanelLevel.getArmorMaterial(), EquipmentSlot.HEAD, new Item.Properties().stacksTo(1));
+        this.solarPanelLevel = solarPanelLevel;
 
-        energyGeneration = levelSolarHelmet.getEnergyGeneration();
-        maxTransfer = levelSolarHelmet.getMaxTransfer();
-        int capacity = levelSolarHelmet.getCapacity();
+        energyGeneration = solarPanelLevel.getEnergyGeneration();
+        maxTransfer = solarPanelLevel.getMaxTransfer();
+        int capacity = solarPanelLevel.getCapacity();
         energyStorage = new SolarPanelBattery(maxTransfer, capacity);
     }
 
@@ -51,39 +48,37 @@ public class SolarHelmet extends ArmorItem {
             int energy = getEnergyStored(stack);
             tooltip.add(Tooltip.showInfoCtrl(energy));
         }
-        tooltip.addAll(Tooltip.showInfoShift(this.levelSolarHelmet));
+        tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));
     }
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return Main.MODID + levelSolarHelmet.getArmorTexture();
+        return this.solarPanelLevel.getArmorTexture();
     }
 
     public SolarPanelLevel getLevelSolarPanel() {
-        return this.levelSolarHelmet;
+        return this.solarPanelLevel;
     }
 
     @Override
-    public boolean isBarVisible(ItemStack stack) {
+    public boolean isBarVisible(ItemStack itemStack) {
         return true;
     }
 
     @Override
-    public int getBarWidth(ItemStack stack) {
-        if (getEnergyStored(stack) == 0) return 0;
-        return Math.min(1 + 12 * getEnergyStored(stack) / getMaxEnergyStored(), 13);
+    public int getBarWidth(ItemStack itemStack) {
+        if (getEnergyStored(itemStack) == 0) return 0;
+        return Math.min(1 + 12 * getEnergyStored(itemStack) / getMaxEnergyStored(), 13);
     }
 
-    public void saveEnergyItem(ItemStack container) {
-        if(container.getTag() == null)
-            container.setTag(new CompoundTag());
-        container.getTag().putInt("energy", energyStorage.getEnergyStored());
+    public void saveEnergyItem(ItemStack itemStack) {
+        itemStack.getOrCreateTag().putInt("energy", energyStorage.getEnergyStored());
     }
 
-    public int getEnergyStored(ItemStack container) {
-        if(!container.hasTag())
+    public int getEnergyStored(ItemStack itemStack) {
+        if(!itemStack.hasTag())
             return 0;
-        return container.getTag().getInt("energy");
+        return itemStack.getTag().getInt("energy");
     }
 
     public int getMaxEnergyStored() {
@@ -128,7 +123,7 @@ public class SolarHelmet extends ArmorItem {
 
     private void chargeItem(ItemStack slot) {
         if(slot.getCount() == 1) {
-            slot.getCapability(CapabilityEnergy.ENERGY).ifPresent(handler -> {
+            slot.getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
                 if(handler.canReceive()) {
                     while(handler.getEnergyStored() < handler.getMaxEnergyStored() && energyStorage.getEnergyStored() > 0) {
                         int accepted = Math.min(maxTransfer, handler.receiveEnergy(energyStorage.getEnergyStored(), true));

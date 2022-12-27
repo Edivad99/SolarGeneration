@@ -1,5 +1,6 @@
 package edivad.solargeneration.tools;
 
+import edivad.solargeneration.Main;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 
@@ -22,7 +23,7 @@ public enum SolarPanelLevel {
     }
 
     public String getArmorTexture() {
-        return ":textures/models/armor/solar_helmet_" + getCorrectName() + ".png";
+        return Main.MODID + ":textures/model/armor/solar_helmet_" + getCorrectName() + ".png";
     }
 
     public ArmorMaterial getArmorMaterial() {

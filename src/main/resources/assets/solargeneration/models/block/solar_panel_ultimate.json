@@ -1,7 +1,7 @@
 {
   "parent": "solargeneration:block/solar_panel",
   "textures": {
-    "main": "solargeneration:blocks/solar_panel/ultimate",
-    "particle": "solargeneration:blocks/solar_panel/particle_ultimate"
+    "main": "solargeneration:block/ultimate",
+    "particle": "solargeneration:block/particle_ultimate"
   }
 }

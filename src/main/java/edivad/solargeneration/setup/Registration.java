@@ -1,14 +1,14 @@
 package edivad.solargeneration.setup;
 
 import edivad.solargeneration.Main;
-import edivad.solargeneration.blockentity.BlockEntitySolarPanel;
-import edivad.solargeneration.blocks.SolarPanel;
+import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
+import edivad.solargeneration.blocks.SolarPanelBlock;
 import edivad.solargeneration.items.SolarHelmet;
 import edivad.solargeneration.lootable.SolarPanelLootFunction;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -32,13 +32,13 @@ public class Registration {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     private static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Main.MODID);
     private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Main.MODID);
-    private static final DeferredRegister<LootItemFunctionType> LOOT_ITEM_FUNCTIONS = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, Main.MODID);
+    private static final DeferredRegister<LootItemFunctionType> LOOT_ITEM_FUNCTIONS = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, Main.MODID);
 
-    private static final Item.Properties PROPERTY = new Item.Properties().tab(ModSetup.solarGenerationTab);
+    private static final Item.Properties PROPERTY = new Item.Properties();
 
-    public static final Map<SolarPanelLevel, RegistryObject<SolarPanel>> SOLAR_PANEL_BLOCK = new HashMap<>();
+    public static final Map<SolarPanelLevel, RegistryObject<SolarPanelBlock>> SOLAR_PANEL_BLOCK = new HashMap<>();
     public static final Map<SolarPanelLevel, RegistryObject<Item>> SOLAR_PANEL_ITEM = new HashMap<>();
-    public static final Map<SolarPanelLevel, RegistryObject<BlockEntityType<BlockEntitySolarPanel>>> SOLAR_PANEL_TILE = new HashMap<>();
+    public static final Map<SolarPanelLevel, RegistryObject<BlockEntityType<SolarPanelBlockEntity>>> SOLAR_PANEL_TILE = new HashMap<>();
     public static final Map<SolarPanelLevel, RegistryObject<MenuType<SolarPanelMenu>>> SOLAR_PANEL_CONTAINER = new HashMap<>();
 
     public static final Map<SolarPanelLevel, RegistryObject<Item>> HELMET = new HashMap<>();
@@ -57,17 +57,17 @@ public class Registration {
         LOOT_ITEM_FUNCTIONS.register(eventBus);
 
         for(SolarPanelLevel level : SolarPanelLevel.values()) {
-            SOLAR_PANEL_BLOCK.put(level, BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanel(level)));
+            SOLAR_PANEL_BLOCK.put(level, BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanelBlock(level)));
             SOLAR_PANEL_ITEM.put(level, ITEMS.register(level.getSolarPanelName(), () -> new BlockItem(SOLAR_PANEL_BLOCK.get(level).get(), PROPERTY)));
-            SOLAR_PANEL_TILE.put(level, TILES.register(level.getSolarPanelName(), () -> BlockEntityType.Builder.of((pos, state) -> new BlockEntitySolarPanel(level, pos, state), SOLAR_PANEL_BLOCK.get(level).get()).build(null)));
+            SOLAR_PANEL_TILE.put(level, TILES.register(level.getSolarPanelName(), () -> BlockEntityType.Builder.of((pos, state) -> new SolarPanelBlockEntity(level, pos, state), SOLAR_PANEL_BLOCK.get(level).get()).build(null)));
             SOLAR_PANEL_CONTAINER.put(level, CONTAINERS.register(level.getSolarPanelName(), () -> IForgeMenuType.create((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
-                BlockEntity te = inv.player.getCommandSenderWorld().getBlockEntity(pos);
-                if(!(te instanceof BlockEntitySolarPanel tile)) {
+                BlockEntity blockEntity = inv.player.getCommandSenderWorld().getBlockEntity(pos);
+                if(!(blockEntity instanceof SolarPanelBlockEntity solarPanelBlockEntity)) {
                     Main.LOGGER.error("Wrong type of block entity (expected BlockEntitySolarPanel)!");
                     return null;
                 }
-                return new SolarPanelMenu(windowId, tile, level);
+                return new SolarPanelMenu(windowId, solarPanelBlockEntity, level);
             })));
 
             HELMET.put(level, ITEMS.register(level.getSolarHelmetName(), () -> new SolarHelmet(level)));

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "solargeneration:items/solar_core_ultimate"
+    "layer0": "solargeneration:item/solar_core_ultimate"
   }
 }
