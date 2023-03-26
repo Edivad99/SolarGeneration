@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "solargeneration:photovoltaic_cell"
-  }
+  },
+  "show_notification": true
 }

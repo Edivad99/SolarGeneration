@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "solargeneration:solar_panel_redstone"
-  }
+  },
+  "show_notification": true
 }

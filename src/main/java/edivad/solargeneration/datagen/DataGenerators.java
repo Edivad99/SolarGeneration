@@ -23,7 +23,10 @@ public class DataGenerators {
         PackOutput packOutput = generator.getPackOutput();
 
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>) LootTables::create);
-        generator.addProvider(event.includeServer(), new TagsProvider(packOutput, lookupProvider, existingFileHelper));
+        var blockTags = new SolarPanelBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
+        var blockTagsLookup = blockTags.contentsGetter();
+        generator.addProvider(event.includeServer(), blockTags);
+        generator.addProvider(event.includeServer(), new SolarPanelItemTagsProvider(packOutput, lookupProvider, blockTagsLookup, existingFileHelper));
         generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new Recipes(packOutput));
         generator.addProvider(event.includeClient(), new Lang(packOutput));

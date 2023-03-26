@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -90,13 +89,8 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
         if(level.isClientSide)
             return InteractionResult.SUCCESS;
 
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if(blockEntity instanceof MenuProvider menu) {
-            NetworkHooks.openScreen((ServerPlayer) player, menu, blockEntity.getBlockPos());
-        }
-        else {
-            throw new IllegalStateException("Our named container provider is missing!");
-        }
+        level.getBlockEntity(pos, Registration.SOLAR_PANEL_TILE.get(this.solarPanelLevel).get())
+            .ifPresent(blockEntity -> NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos));
         return InteractionResult.SUCCESS;
     }
 

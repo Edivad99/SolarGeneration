@@ -35,7 +35,7 @@ public class Main {
                 builder -> builder
                         .icon(() -> new ItemStack(Registration.SOLAR_PANEL_ITEM.get(SolarPanelLevel.ADVANCED).get()))
                         .title(Component.literal(MODNAME))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((params, output) -> {
                             for (var value : SolarPanelLevel.values()) {
                                 output.accept(new ItemStack(Registration.SOLAR_PANEL_ITEM.get(value).get()));
                             }

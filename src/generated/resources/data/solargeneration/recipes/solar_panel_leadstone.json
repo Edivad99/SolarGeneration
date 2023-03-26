@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "solargeneration:solar_panel_leadstone"
-  }
+  },
+  "show_notification": true
 }

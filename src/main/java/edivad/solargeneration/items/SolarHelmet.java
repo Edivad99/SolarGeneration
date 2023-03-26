@@ -27,7 +27,7 @@ public class SolarHelmet extends ArmorItem {
     private final int maxTransfer;
 
     public SolarHelmet(SolarPanelLevel solarPanelLevel) {
-        super(solarPanelLevel.getArmorMaterial(), EquipmentSlot.HEAD, new Item.Properties().stacksTo(1));
+        super(solarPanelLevel.getArmorMaterial(), Type.HELMET, new Item.Properties().stacksTo(1));
         this.solarPanelLevel = solarPanelLevel;
 
         energyGeneration = solarPanelLevel.getEnergyGeneration();

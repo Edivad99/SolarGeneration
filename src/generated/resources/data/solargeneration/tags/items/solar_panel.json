@@ -1,0 +1,11 @@
+{
+  "values": [
+    "solargeneration:solar_panel_resonant",
+    "solargeneration:solar_panel_ultimate",
+    "solargeneration:solar_panel_hardened",
+    "solargeneration:solar_panel_signalum",
+    "solargeneration:solar_panel_leadstone",
+    "solargeneration:solar_panel_redstone",
+    "solargeneration:solar_panel_advanced"
+  ]
+}

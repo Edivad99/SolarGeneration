@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "solargeneration:solar_core_redstone"
-  }
+  },
+  "show_notification": true
 }

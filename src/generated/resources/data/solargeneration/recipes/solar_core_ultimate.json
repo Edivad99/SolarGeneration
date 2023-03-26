@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "solargeneration:solar_core_ultimate"
-  }
+  },
+  "show_notification": true
 }

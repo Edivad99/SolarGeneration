@@ -11,9 +11,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TagsProvider extends BlockTagsProvider {
+public class SolarPanelBlockTagsProvider extends BlockTagsProvider {
 
-    public TagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+    public SolarPanelBlockTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
         super(packOutput, lookupProvider, Main.MODID, existingFileHelper);
     }
 

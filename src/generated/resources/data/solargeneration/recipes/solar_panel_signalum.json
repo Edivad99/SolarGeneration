@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "solargeneration:solar_panel_signalum"
-  }
+  },
+  "show_notification": true
 }

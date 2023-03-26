@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "solargeneration:solar_panel_hardened"
-  }
+  },
+  "show_notification": true
 }
