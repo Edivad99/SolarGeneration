@@ -30,5 +30,6 @@
     "recipes": [
       "solargeneration:solar_helmet_hardened"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

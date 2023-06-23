@@ -43,5 +43,6 @@
     "recipes": [
       "solargeneration:solar_panel_redstone"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

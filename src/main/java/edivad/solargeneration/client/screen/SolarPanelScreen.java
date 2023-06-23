@@ -1,11 +1,11 @@
 package edivad.solargeneration.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import edivad.solargeneration.Main;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.tools.Translations;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
-    private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MODID, "textures/gui/solar_panel.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/gui/solar_panel.png");
     private static final MutableComponent STORED_ENERGY = Component.translatable(Translations.STORED_ENERGY);
     private static final MutableComponent CAPACITY = Component.translatable(Translations.CAPACITY);
     private static final MutableComponent GENERATION = Component.translatable(Translations.GENERATION);
@@ -28,36 +28,37 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, partialTick);
-        this.renderTooltip(poseStack, mouseX, mouseY);
-        if(mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10 && mouseY < topPos + 77)
-            this.renderTooltip(poseStack, ENERGY.copy().append(" " + getPercent() + "%"), mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        if(mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10 && mouseY < topPos + 77) {
+            guiGraphics.renderTooltip(this.font, ENERGY.copy().append(" " + getPercent() + "%"), mouseX, mouseY);
+        }
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         Component energy = STORED_ENERGY.copy().append(" " + getEnergyFormatted(solarPanelBlockEntity.energyClient));
-        this.font.draw(poseStack, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20, 4210752);
+        guiGraphics.drawString(font, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20, 4210752, false);
 
         Component maxEnergy = CAPACITY.copy().append(" " + getEnergyFormatted(solarPanelBlockEntity.getLevelSolarPanel().getCapacity()));
-        this.font.draw(poseStack, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30, 4210752);
+        guiGraphics.drawString(font, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30, 4210752, false);
 
         Component generation = GENERATION.copy().append(" " + solarPanelBlockEntity.energyProductionClient + " FE/t");
-        this.font.draw(poseStack, generation, (imageWidth / 2 - font.width(generation) / 2) + 14, 40, 4210752);
+        guiGraphics.drawString(font, generation, (imageWidth / 2 - font.width(generation) / 2) + 14, 40, 4210752, false);
     }
 
     @Override
-    protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURES);
-        this.blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        RenderSystem.setShaderTexture(0, TEXTURE);
+        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
         // Energy
         int y = this.getEnergyScaled(60);
-        this.blit(poseStack, this.leftPos + 10, this.topPos + 12 + y, this.imageWidth, 0, 16, 60 - y);
+        guiGraphics.blit(TEXTURE, this.leftPos + 10, this.topPos + 12 + y, this.imageWidth, 0, 16, 60 - y);
     }
 
     private String getEnergyFormatted(int energy) {

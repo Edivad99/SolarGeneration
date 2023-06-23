@@ -30,5 +30,6 @@
     "recipes": [
       "solargeneration:solar_helmet_signalum"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

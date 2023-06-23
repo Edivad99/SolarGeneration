@@ -30,5 +30,6 @@
     "recipes": [
       "solargeneration:photovoltaic_cell"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

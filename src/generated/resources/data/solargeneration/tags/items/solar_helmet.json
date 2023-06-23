@@ -1,11 +1,11 @@
 {
   "values": [
-    "solargeneration:solar_helmet_resonant",
-    "solargeneration:solar_helmet_ultimate",
-    "solargeneration:solar_helmet_hardened",
-    "solargeneration:solar_helmet_signalum",
+    "solargeneration:solar_helmet_advanced",
     "solargeneration:solar_helmet_leadstone",
     "solargeneration:solar_helmet_redstone",
-    "solargeneration:solar_helmet_advanced"
+    "solargeneration:solar_helmet_ultimate",
+    "solargeneration:solar_helmet_resonant",
+    "solargeneration:solar_helmet_hardened",
+    "solargeneration:solar_helmet_signalum"
   ]
 }

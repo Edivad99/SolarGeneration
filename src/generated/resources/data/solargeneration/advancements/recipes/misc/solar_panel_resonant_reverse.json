@@ -30,5 +30,6 @@
     "recipes": [
       "solargeneration:solar_panel_resonant_reverse"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

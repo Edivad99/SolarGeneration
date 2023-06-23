@@ -1,14 +1,15 @@
 plugins {
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
 version = "${mod_version}"
 group = "edivad.solargeneration"
-archivesBaseName = "SolarGeneration-${minecraft_version}"
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+base.archivesName = "SolarGeneration-${minecraft_version}"
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
@@ -20,6 +21,8 @@ minecraft {
     } else {
         mappings channel: 'official', version: "${minecraft_version}"
     }
+
+    copyIdeResources = true
 
     runs {
         client {
@@ -92,10 +95,10 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    //implementation fg.deobf("edivad:EdivadLib-${minecraft_version}:1.0.1")
+    //implementation fg.deobf("edivad:EdivadLib-${minecraft_version}:2.0.0")
     implementation fg.deobf("curse.maven:edivadlib-638508:${edivadlib_id}")
 
-    //runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

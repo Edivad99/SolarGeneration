@@ -30,5 +30,6 @@
     "recipes": [
       "solargeneration:lapis_lazuli_from_shard"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

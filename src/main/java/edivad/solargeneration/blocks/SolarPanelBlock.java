@@ -30,7 +30,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -41,9 +40,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
@@ -52,7 +51,7 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
     private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
 
     public SolarPanelBlock(SolarPanelLevel solarPanelLevel) {
-        super(Properties.of(Material.METAL).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
+        super(Properties.of().sound(SoundType.METAL).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
         this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
         this.solarPanelLevel = solarPanelLevel;
     }

@@ -43,5 +43,6 @@
     "recipes": [
       "solargeneration:solar_panel_resonant"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
