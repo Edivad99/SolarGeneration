@@ -10,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -23,8 +22,8 @@ public class SolarHelmet extends ArmorItem {
   private final int energyGeneration;
   private final int maxTransfer;
 
-  public SolarHelmet(SolarPanelLevel solarPanelLevel) {
-    super(solarPanelLevel.getArmorMaterial(), Type.HELMET, new Item.Properties().stacksTo(1));
+  public SolarHelmet(SolarPanelLevel solarPanelLevel, Properties properties) {
+    super(solarPanelLevel.getArmorMaterial(), Type.HELMET, properties);
     this.solarPanelLevel = solarPanelLevel;
 
     energyGeneration = solarPanelLevel.getEnergyGeneration();
@@ -67,7 +66,8 @@ public class SolarHelmet extends ArmorItem {
     if (getEnergyStored(itemStack) == 0) {
       return 0;
     }
-    return Math.min(1 + 12 * getEnergyStored(itemStack) / getMaxEnergyStored(), 13);
+    var charge = (double) getEnergyStored(itemStack) / (double) getMaxEnergyStored();
+    return (int) Math.min(1 + 12 * charge, 13);
   }
 
   public void saveEnergyItem(ItemStack itemStack) {
