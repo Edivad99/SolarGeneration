@@ -1,6 +1,7 @@
 package edivad.solargeneration.datagen;
 
-import edivad.solargeneration.Main;
+import java.util.concurrent.CompletableFuture;
+import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.HolderLookup;
@@ -9,26 +10,26 @@ import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import java.util.concurrent.CompletableFuture;
-
 public class SolarPanelBlockTagsProvider extends BlockTagsProvider {
 
-    public SolarPanelBlockTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, Main.MODID, existingFileHelper);
-    }
+  public SolarPanelBlockTagsProvider(PackOutput packOutput,
+      CompletableFuture<HolderLookup.Provider> lookupProvider,
+      ExistingFileHelper existingFileHelper) {
+    super(packOutput, lookupProvider, SolarGeneration.ID, existingFileHelper);
+  }
 
-    @Override
-    protected void addTags(HolderLookup.Provider provider) {
-        for(SolarPanelLevel level : SolarPanelLevel.values()) {
-            this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                    .add(Registration.SOLAR_PANEL_BLOCK.get(level).get());
-            this.tag(BlockTags.NEEDS_IRON_TOOL)
-                    .add(Registration.SOLAR_PANEL_BLOCK.get(level).get());
-        }
+  @Override
+  protected void addTags(HolderLookup.Provider provider) {
+    for (SolarPanelLevel level : SolarPanelLevel.values()) {
+      this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+          .add(Registration.SOLAR_PANEL_BLOCK.get(level).get());
+      this.tag(BlockTags.NEEDS_IRON_TOOL)
+          .add(Registration.SOLAR_PANEL_BLOCK.get(level).get());
     }
+  }
 
-    @Override
-    public String getName() {
-        return Main.MODNAME + " Block Tag";
-    }
+  @Override
+  public String getName() {
+    return SolarGeneration.MODNAME + " Block Tag";
+  }
 }

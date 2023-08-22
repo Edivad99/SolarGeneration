@@ -1,6 +1,4 @@
 {
-  "itemGroup.solargeneration_tab": "Solar Generation",
-
   "item.solargeneration.solar_core_advanced": "Núcleo Solar Avançado",
   "item.solargeneration.solar_core_hardened": "Núcleo Solar Endurecido",
   "item.solargeneration.solar_core_leadstone": "Núcleo Solar de Leadstone",
@@ -59,13 +57,5 @@
   "advancements.solargeneration.solar_helmet_advanced": "Coroa avançada",
   "advancements.solargeneration.solar_helmet_advanced.desc": "Criando um Capacete Solar Avançado.",
   "advancements.solargeneration.solar_helmet_ultimate": "O capacete ultimate",
-  "advancements.solargeneration.solar_helmet_ultimate.desc": "Criando um Capacete Solar Ultimate.",
-
-  "message.solargeneration.hold_shift": "Segure @b@oShift @7para mais detalhes",
-
-  "message.solargeneration.hold_ctrl": "Segure @b@oCtrl @7para ver a energia armazenada",
-
-  "message.solargeneration.shift_info": "@fGeração: @a%d @4FE/t\n@fTransferir: @a%d @4FE/t\n@fCapacidade: @a%d @4FE",
-
-  "message.solargeneration.ctrl_info": "@fEnergia Armazenada: @a%d @4FE"
+  "advancements.solargeneration.solar_helmet_ultimate.desc": "Criando um Capacete Solar Ultimate."
 }

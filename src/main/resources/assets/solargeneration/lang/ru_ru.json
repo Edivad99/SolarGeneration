@@ -1,6 +1,4 @@
 {
-  "itemGroup.solargeneration_tab": "Solar Generation",
-
   "item.solargeneration.solar_core_advanced": "Продвинутое солнечное ядро",
   "item.solargeneration.solar_core_hardened": "Укреплённое солнечное ядро",
   "item.solargeneration.solar_core_leadstone": "Свинцовое солнечное ядро",
@@ -59,17 +57,5 @@
   "advancements.solargeneration.solar_helmet_advanced": "Забавная корона",
   "advancements.solargeneration.solar_helmet_advanced.desc": "Создайте продвинутый солнечный шлем.",
   "advancements.solargeneration.solar_helmet_ultimate": "Бесконечный Шлем",
-  "advancements.solargeneration.solar_helmet_ultimate.desc": "Создайте ультимативный солнечный шлем.",
-
-  "message.solargeneration.hold_shift": "Удерживай @b@oShift @7для подробностей",
-
-  "message.solargeneration.hold_ctrl": "Удерживай @b@oCtrl @7чтобы узнать сколько энергии хранится",
-
-  "message.solargeneration.shift_info": "@fГенерируется: @a%d @4FE/t\n@fПередаётся: @a%d @4FE/t\n@fМаксимальная вместимость: @a%d @4FE",
-
-  "message.solargeneration.ctrl_info": "@fЭнергии хранится: @a%d @4FE",
-
-  "gui.solargeneration.stored_energy": "Хранится:",
-  "gui.solargeneration.max_capacity": "Максимальная вместимость:",
-  "gui.solargeneration.generation": "Генерируется: "
+  "advancements.solargeneration.solar_helmet_ultimate.desc": "Создайте ультимативный солнечный шлем."
 }

@@ -1,5 +1,8 @@
 package edivad.solargeneration.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.jetbrains.annotations.Nullable;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelBattery;
@@ -17,10 +20,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -40,130 +43,138 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.jetbrains.annotations.Nullable;
-
 public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
-    private final SolarPanelLevel solarPanelLevel;
-    private static final VoxelShape BOX = createShape();
-    private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
+  private static final VoxelShape BOX = createShape();
+  private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
+  private final SolarPanelLevel solarPanelLevel;
 
-    public SolarPanelBlock(SolarPanelLevel solarPanelLevel) {
-        super(Properties.of().sound(SoundType.METAL).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
-        this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
-        this.solarPanelLevel = solarPanelLevel;
+  public SolarPanelBlock(SolarPanelLevel solarPanelLevel, Properties properties) {
+    super(properties);
+    this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+    this.solarPanelLevel = solarPanelLevel;
+  }
+
+  private static VoxelShape createShape() {
+    ArrayList<VoxelShape> shapes = new ArrayList<>();
+    shapes.add(box(0, 0, 0, 16, 1, 16));//bottom
+    shapes.add(box(7, 1, 7, 9, 9, 9));//mainpillar
+    shapes.add(box(6, 1, 9, 7, 9, 10));//pillar1
+    shapes.add(box(9, 1, 9, 10, 9, 10));//pillar2
+    shapes.add(box(9, 1, 6, 10, 9, 7));//pillar3
+    shapes.add(box(6, 1, 6, 7, 9, 7));//pillar4
+    shapes.add(box(0, 9, 0, 16, 12, 16));//top
+
+    VoxelShape combinedShape = Shapes.empty();
+    for (VoxelShape shape : shapes) {
+      combinedShape = Shapes.joinUnoptimized(combinedShape, shape, BooleanOp.OR);
+    }
+    return combinedShape;
+  }
+
+  @Override
+  public VoxelShape getCollisionShape(BlockState state, BlockGetter blockGetter, BlockPos pos,
+      CollisionContext context) {
+    return BOX;
+  }
+
+  @Override
+  public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos,
+      CollisionContext context) {
+    return BOX;
+  }
+
+  @Override
+  public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+      InteractionHand handIn, BlockHitResult hit) {
+    if (level.isClientSide) {
+      return InteractionResult.SUCCESS;
     }
 
-    private static VoxelShape createShape() {
-        ArrayList<VoxelShape> shapes = new ArrayList<>();
-        shapes.add(box(0, 0, 0, 16, 1, 16));//bottom
-        shapes.add(box(7, 1, 7, 9, 9, 9));//mainpillar
-        shapes.add(box(6, 1, 9, 7, 9, 10));//pillar1
-        shapes.add(box(9, 1, 9, 10, 9, 10));//pillar2
-        shapes.add(box(9, 1, 6, 10, 9, 7));//pillar3
-        shapes.add(box(6, 1, 6, 7, 9, 7));//pillar4
-        shapes.add(box(0, 9, 0, 16, 12, 16));//top
+    level.getBlockEntity(pos, Registration.SOLAR_PANEL_TILE.get(this.solarPanelLevel).get())
+        .ifPresent(blockEntity -> NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos));
+    return InteractionResult.SUCCESS;
+  }
 
-        VoxelShape combinedShape = Shapes.empty();
-        for(VoxelShape shape : shapes) {
-            combinedShape = Shapes.joinUnoptimized(combinedShape, shape, BooleanOp.OR);
-        }
-        return combinedShape;
+  @Override
+  public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player,
+      boolean willHarvest, FluidState fluid) {
+    return willHarvest || super.onDestroyedByPlayer(state, level, pos, player, false, fluid);
+  }
+
+  @Override
+  public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
+      BlockEntity blockEntity, ItemStack tool) {
+    super.playerDestroy(level, player, pos, state, blockEntity, tool);
+    level.removeBlock(pos, false);
+  }
+
+  @Nullable
+  @Override
+  public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    return new SolarPanelBlockEntity(solarPanelLevel, blockPos, blockState);
+  }
+
+  @Nullable
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
+      BlockEntityType<T> blockEntityType) {
+    return level.isClientSide()
+        ? null
+        : BaseEntityBlock.createTickerHelper(blockEntityType,
+            Registration.SOLAR_PANEL_TILE.get(solarPanelLevel).get(),
+            SolarPanelBlockEntity::serverTick);
+  }
+
+  @Override
+  public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+      @Nullable LivingEntity placer, ItemStack itemStack) {
+    if (!level.isClientSide) {
+      var blockEntity = level.getBlockEntity(pos);
+      var tag = itemStack.getTag();
+      if (blockEntity != null && tag != null) {
+        blockEntity
+            .getCapability(ForgeCapabilities.ENERGY)
+            .ifPresent(cap -> {
+              ((SolarPanelBattery) cap).setEnergy(tag.getInt("energy"));
+            });
+      }
     }
+    super.setPlacedBy(level, pos, state, placer, itemStack);
+  }
 
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter blockGetter , BlockPos pos, CollisionContext context) {
-        return BOX;
+  @OnlyIn(Dist.CLIENT)
+  @Override
+  public void appendHoverText(ItemStack itemStack, BlockGetter blockGetter, List<Component> tooltip,
+      TooltipFlag flagIn) {
+    var tag = itemStack.getTag();
+    if (tag != null) {
+      int energy = tag.getInt("energy");
+      tooltip.add(Tooltip.showInfoCtrl(energy));
     }
+    tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));
+  }
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
-        return BOX;
-    }
+  @Override
+  public FluidState getFluidState(BlockState state) {
+    return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+  }
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if(level.isClientSide)
-            return InteractionResult.SUCCESS;
+  @Override
+  public boolean placeLiquid(LevelAccessor levelAccessor, BlockPos pos, BlockState state,
+      FluidState fluidStateIn) {
+    return SimpleWaterloggedBlock.super.placeLiquid(levelAccessor, pos, state, fluidStateIn);
+  }
 
-        level.getBlockEntity(pos, Registration.SOLAR_PANEL_TILE.get(this.solarPanelLevel).get())
-            .ifPresent(blockEntity -> NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos));
-        return InteractionResult.SUCCESS;
-    }
+  @Override
+  public boolean canPlaceLiquid(BlockGetter blockGetter, BlockPos pos, BlockState state,
+      Fluid fluidIn) {
+    return SimpleWaterloggedBlock.super.canPlaceLiquid(blockGetter, pos, state, fluidIn);
+  }
 
-    @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        return willHarvest || super.onDestroyedByPlayer(state, level, pos, player, false, fluid);
-    }
-
-    @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool) {
-        super.playerDestroy(level, player, pos, state, blockEntity, tool);
-        level.removeBlock(pos, false);
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SolarPanelBlockEntity(solarPanelLevel, blockPos, blockState);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-        return createSolarPanelTicker(level, blockEntityType, Registration.SOLAR_PANEL_TILE.get(solarPanelLevel).get());
-    }
-
-    @Nullable
-    protected static <T extends BlockEntity> BlockEntityTicker<T> createSolarPanelTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends SolarPanelBlockEntity> tile) {
-        BlockEntityTicker<SolarPanelBlockEntity> ticker = SolarPanelBlockEntity::serverTick;
-        return level.isClientSide ? null : tile == blockEntityType ? (BlockEntityTicker<T>) ticker : null;
-    }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if(!level.isClientSide) {
-            SolarPanelBlockEntity blockEntity = ((SolarPanelBlockEntity) level.getBlockEntity(pos));
-            if(itemStack.hasTag()) {
-                blockEntity.getCapability(ForgeCapabilities.ENERGY).ifPresent(t -> {
-                    SolarPanelBattery energyStorage = (SolarPanelBattery) t;
-                    energyStorage.setEnergy(itemStack.getTag().getInt("energy"));
-                });
-            }
-        }
-        super.setPlacedBy(level, pos, state, placer, itemStack);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, BlockGetter blockGetter, List<Component> tooltip, TooltipFlag flagIn) {
-        if (stack.hasTag()) {
-            int energy = stack.getTag().getInt("energy");
-            tooltip.add(Tooltip.showInfoCtrl(energy));
-        }
-        tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-    }
-
-    @Override
-    public boolean placeLiquid(LevelAccessor levelAccessor, BlockPos pos, BlockState state, FluidState fluidStateIn) {
-        return SimpleWaterloggedBlock.super.placeLiquid(levelAccessor, pos, state, fluidStateIn);
-    }
-
-    @Override
-    public boolean canPlaceLiquid(BlockGetter blockGetter, BlockPos pos, BlockState state, Fluid fluidIn) {
-        return SimpleWaterloggedBlock.super.canPlaceLiquid(blockGetter, pos, state, fluidIn);
-    }
-
-    @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(WATERLOGGED);
-    }
+  @Override
+  protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+    super.createBlockStateDefinition(builder);
+    builder.add(WATERLOGGED);
+  }
 }

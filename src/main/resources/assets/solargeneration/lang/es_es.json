@@ -1,6 +1,4 @@
 {
-  "itemGroup.solargeneration_tab": "Solar Generation",
-
   "item.solargeneration.solar_core_advanced": "Nucleo Solar Avanzado",
   "item.solargeneration.solar_core_hardened": "Nucleo Solar Reforzado",
   "item.solargeneration.solar_core_leadstone": "Nucleo Solar de Plomo",
@@ -59,13 +57,5 @@
   "advancements.solargeneration.solar_helmet_advanced": "Casco de lujo",
   "advancements.solargeneration.solar_helmet_advanced.desc": "Crear un Casco Solar Avanzado.",
   "advancements.solargeneration.solar_helmet_ultimate": "El casco final",
-  "advancements.solargeneration.solar_helmet_ultimate.desc": "Crear un Casco Solar Final.",
-
-  "message.solargeneration.hold_shift": "Presione @b@oShift @7para detalles",
-
-  "message.solargeneration.hold_ctrl": "Presione @b@oCtrl @7para energia almacenada",
-
-  "message.solargeneration.shift_info": "@fGeneracion: @a%d @4FE/t\n@fTransferencia: @a%d @4FE/t\n@fCapacidad: @a%d @4FE",
-
-  "message.solargeneration.ctrl_info": "@fEnergia almacenada: @a%d @4FE"
+  "advancements.solargeneration.solar_helmet_ultimate.desc": "Crear un Casco Solar Final."
 }

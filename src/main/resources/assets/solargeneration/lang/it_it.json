@@ -1,6 +1,4 @@
 {
-  "itemGroup.solargeneration_tab": "Solar Generation",
-
   "item.solargeneration.solar_core_advanced": "Nucleo Solare Avanzato",
   "item.solargeneration.solar_core_hardened": "Nucleo Solare Rinforzato",
   "item.solargeneration.solar_core_leadstone": "Nucleo Solare di Piombo",
@@ -59,15 +57,5 @@
   "advancements.solargeneration.solar_helmet_advanced": "Cervello avanzato",
   "advancements.solargeneration.solar_helmet_advanced.desc": "Crea un Elmo Solare Avanzato.",
   "advancements.solargeneration.solar_helmet_ultimate": "L'elmo finale",
-  "advancements.solargeneration.solar_helmet_ultimate.desc": "Crea un Elmo Solare Finale.",
-
-  "message.solargeneration.for_details": "per i dettagli",
-  "message.solargeneration.for_stored_energy": "per l'energia immagazzinata",
-  "message.solargeneration.hold": "Premi",
-  "message.solargeneration.transfer": "Trasferimento:",
-
-  "gui.solargeneration.stored_energy": "Energia immagazzinata:",
-  "gui.solargeneration.capacity": "Capacita':",
-  "gui.solargeneration.generation": "Generazione:",
-  "gui.solargeneration.energy": "Energia:",
+  "advancements.solargeneration.solar_helmet_ultimate.desc": "Crea un Elmo Solare Finale."
 }

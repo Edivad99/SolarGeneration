@@ -1,5 +1,8 @@
 package edivad.solargeneration.datagen;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import edivad.solargeneration.lootable.SolarPanelLootFunction;
 import edivad.solargeneration.setup.Registration;
 import net.minecraft.data.PackOutput;
@@ -16,43 +19,39 @@ import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public class LootTables extends BlockLootSubProvider {
 
-    public LootTables() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
-    }
+  public LootTables() {
+    super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+  }
 
-    @Override
-    protected void generate() {
-        Registration.SOLAR_PANEL_BLOCK.values()
-                .forEach(block -> this.add(block.get(), createSolarPanelDrops(block.get())));
-    }
+  private static LootTable.Builder createSolarPanelDrops(Block block) {
+    var builder = LootPool.lootPool()
+        .setRolls(ConstantValue.exactly(1))
+        .add(LootItem.lootTableItem(block)
+            .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+            .apply(SolarPanelLootFunction.builder()))
+        .when(ExplosionCondition.survivesExplosion());
 
-    @Override
-    protected Iterable<Block> getKnownBlocks() {
-        return Registration.SOLAR_PANEL_BLOCK.values().stream()
-                .map(RegistryObject::get)
-                .collect(Collectors.toList());
-    }
+    return LootTable.lootTable().withPool(builder);
+  }
 
-    private static LootTable.Builder createSolarPanelDrops(Block block) {
-        var builder = LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1))
-                .add(LootItem.lootTableItem(block)
-                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                        .apply(SolarPanelLootFunction.builder()))
-                .when(ExplosionCondition.survivesExplosion());
+  public static LootTableProvider create(PackOutput packOutput) {
+    return new LootTableProvider(packOutput, Set.of(), List.of(
+        new LootTableProvider.SubProviderEntry(LootTables::new, LootContextParamSets.BLOCK)
+    ));
+  }
 
-        return LootTable.lootTable().withPool(builder);
-    }
+  @Override
+  protected void generate() {
+    Registration.SOLAR_PANEL_BLOCK.values()
+        .forEach(block -> this.add(block.get(), createSolarPanelDrops(block.get())));
+  }
 
-    public static LootTableProvider create(PackOutput packOutput) {
-        return new LootTableProvider(packOutput, Set.of(), List.of(
-                new LootTableProvider.SubProviderEntry(LootTables::new, LootContextParamSets.BLOCK)
-        ));
-    }
+  @Override
+  protected Iterable<Block> getKnownBlocks() {
+    return Registration.SOLAR_PANEL_BLOCK.values().stream()
+        .map(RegistryObject::get)
+        .collect(Collectors.toList());
+  }
 }
