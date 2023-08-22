@@ -1,30 +1,6 @@
-# Solar Generation 
-![](https://github.com/Edivad99/SolarGeneration/workflows/SolarGeneration%20CI/badge.svg?branch=1.19.x)
-## Table of Contents
-
-* [About](#about)
-* [Contacts](#contacts)
-* [Downloads](#downloads)
-* [Installation](#installation)
-* [Issues](#issues)
-
-## About
+# SolarGeneration 
+![SolarGeneration CI](https://github.com/Edivad99/SolarGeneration/workflows/SolarGeneration%20CI/badge.svg?branch=1.20.x)
+[![CurseForge Downloads](http://cf.way2muchnoise.eu/full_336538_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/solargeneration)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/jfd8j2j2?label=Modrinth%20Downloads)](https://modrinth.com/mod/solargeneration)
 
 Produce energy from the sun, use your head for recharging your inventory
-
-## Contacts
-* [GitHub](https://github.com/Edivad99/SolarGeneration)
-
-## Downloads
-
-Downloads can be found on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/solargeneration).
-
-## Installation
-
-You install this mod by putting it into the `minecraft/mods/` folder.
-
-## Issues
-
-Solar Generation crashing, have a suggestion, found a bug?  Create an issue now!
-
-Providing as many details as possible does help us to find and resolve the issue faster and also you getting a fixed version as fast as possible.

@@ -4,12 +4,12 @@ license="GNU AGPLv3"
 
 [[mods]]
 modId="solargeneration"
-version="${file.jarVersion}"
-displayName="Solar Generation"
-updateJSONURL="https://raw.githubusercontent.com/Edivad99/mod-version-controll/master/solargeneration_update.json"
+version="${mod_version}"
+displayName="SolarGeneration"
+updateJSONURL = "https://api.modrinth.com/updates/solargeneration/forge_updates.json"
 issueTrackerURL="https://github.com/Edivad99/SolarGeneration/issues"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/solargeneration"
-authors="edivad"
+modUrl="https://www.curseforge.com/minecraft/mc-mods/solargeneration"
+authors="Edivad99"
 description="A way to generate FE from the sun"
 
 [[dependencies.solargeneration]]
@@ -27,6 +27,6 @@ description="A way to generate FE from the sun"
 [[dependencies.solargeneration]]
     modId="edivadlib"
     mandatory=true
-    versionRange="[2.0.0,)"
+    versionRange="[2.0.1,)"
     ordering="NONE"
     side="BOTH"
