@@ -115,7 +115,7 @@ tasks.named('jar', Jar).configure {
 
 tasks.register('makeChangelog', GitChangelogTask) {
     fromRepo = projectDir.absolutePath.toString()
-    fromCommit = '55abadd321e6bba6b4b1152673fe46e0be84aebf'
+    fromCommit = '69e1d1fe0b7538af87a722b6c2157da4dde14983'
     toRef = 'HEAD'
     file = file('CHANGELOG.md')
     untaggedName = 'Next release'
@@ -137,7 +137,7 @@ publishMods {
     file = jar.archiveFile
 
     curseforge {
-        projectId = '638508'
+        projectId = '336538'
         accessToken = providers.environmentVariable('CURSEFORGE_TOKEN')
         minecraftVersions.add(minecraft_version)
         requires {
@@ -145,7 +145,7 @@ publishMods {
         }
     }
     modrinth {
-        projectId = 'a8Jk9kpK'
+        projectId = 'jfd8j2j2'
         accessToken = providers.environmentVariable('MODRINTH_TOKEN')
         minecraftVersions.add(minecraft_version)
         requires {
