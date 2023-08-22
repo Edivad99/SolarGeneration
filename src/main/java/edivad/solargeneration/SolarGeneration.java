@@ -43,7 +43,7 @@ public class SolarGeneration {
   private void handleClientSetup(FMLClientSetupEvent event) {
     MinecraftForge.EVENT_BUS.register(new UpdateChecker(SolarGeneration.ID));
 
-    for (SolarPanelLevel level : SolarPanelLevel.values()) {
+    for (var level : SolarPanelLevel.values()) {
       var menu = Registration.SOLAR_PANEL_CONTAINER.get(level).get();
       MenuScreens.register(menu, SolarPanelScreen::new);
     }

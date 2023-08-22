@@ -40,7 +40,7 @@ public class Lang extends LanguageProvider {
     add(Translations.CAPACITY, "Capacity: %s");
     add(Translations.GENERATION, "Generation: %s FE/t");
     add(Translations.ENERGY, "Energy: %s%%");
-    add(Translations.TRANSFER, "Transfer: %s FE");
+    add(Translations.TRANSFER, "Transfer: %s FE/t");
     add(Translations.FOR_DETAILS, "for details");
     add(Translations.FOR_STORED_ENERGY, "for stored energy");
     add(Translations.HOLD, "Hold");
