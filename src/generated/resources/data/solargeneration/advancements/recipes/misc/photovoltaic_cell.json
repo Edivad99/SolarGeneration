@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lapis_shard",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lapis_shard"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:photovoltaic_cell"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

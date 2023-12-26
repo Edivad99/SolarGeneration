@@ -17,7 +17,15 @@
               "source": "block_entity"
             },
             {
-              "function": "solargeneration:solar_panel"
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "energy",
+                  "target": "energy"
+                }
+              ],
+              "source": "block_entity"
             }
           ],
           "name": "solargeneration:solar_panel_redstone"

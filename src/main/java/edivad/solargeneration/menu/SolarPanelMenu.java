@@ -14,7 +14,7 @@ public class SolarPanelMenu extends AbstractContainerMenu {
 
   public SolarPanelMenu(int containerId, SolarPanelBlockEntity solarPanelBlockEntity,
       SolarPanelLevel level) {
-    super(Registration.SOLAR_PANEL_CONTAINER.get(level).get(), containerId);
+    super(Registration.SOLAR_PANEL_MENU.get(level).get(), containerId);
     this.solarPanelBlockEntity = solarPanelBlockEntity;
   }
 

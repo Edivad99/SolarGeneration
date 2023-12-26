@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.solargeneration.solar_panel_ultimate.desc"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "solargeneration:solar_panel_ultimate"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.solargeneration.solar_panel_ultimate"
     }

@@ -1,7 +1,5 @@
 package edivad.solargeneration.blockentity;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.network.PacketHandler;
@@ -21,24 +19,19 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
 
   private final int energyGeneration;
   private final int maxTransfer;
   private final SolarPanelBattery solarPanelBattery;
-  private final LazyOptional<IEnergyStorage> energy;
-
   private final SolarPanelLevel levelSolarPanel;
   public int energyClient, energyProductionClient;
 
   public SolarPanelBlockEntity(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state) {
-    super(Registration.SOLAR_PANEL_TILE.get(levelSolarPanel).get(), pos, state);
+    super(Registration.SOLAR_PANEL_BLOCK_ENTITY.get(levelSolarPanel).get(), pos, state);
     this.levelSolarPanel = levelSolarPanel;
 
     energyGeneration = levelSolarPanel.getEnergyGeneration();
@@ -46,7 +39,6 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
     int capacity = levelSolarPanel.getCapacity();
 
     solarPanelBattery = new SolarPanelBattery(maxTransfer, capacity);
-    energy = LazyOptional.of(() -> solarPanelBattery);
 
     energyClient = energyProductionClient = -1;
   }
@@ -73,46 +65,32 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
   }
 
   private void sendEnergy() {
-    AtomicInteger capacity = new AtomicInteger(solarPanelBattery.getEnergyStored());
+    var capacity = solarPanelBattery.getEnergyStored();
 
-    for (int i = 0; (i < Direction.values().length) && (capacity.get() > 0); i++) {
+    for (int i = 0; (i < Direction.values().length) && capacity > 0; i++) {
       var facing = Direction.values()[i];
       if (facing.equals(Direction.UP)) {
         continue;
       }
 
-      var blockEntity = level.getBlockEntity(worldPosition.relative(facing));
-      if (blockEntity == null) {
-        continue;
+      var energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK,
+          worldPosition.relative(facing), facing.getOpposite());
+
+      if (energyStorage != null && energyStorage.canReceive()) {
+        int received = energyStorage.receiveEnergy(Math.min(capacity, maxTransfer), false);
+        capacity -= received;
+        solarPanelBattery.consumePower(received);
+        setChanged();
       }
-      blockEntity.getCapability(ForgeCapabilities.ENERGY, facing.getOpposite())
-          .ifPresent(handler -> {
-            if (handler.canReceive()) {
-              int received = handler.receiveEnergy(Math.min(capacity.get(), maxTransfer), false);
-              capacity.addAndGet(-received);
-              solarPanelBattery.consumePower(received);
-              setChanged();
-            }
-          });
     }
   }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && side != Direction.UP) {
-      return energy.cast();
-    }
-    return super.getCapability(cap, side);
+  @Nullable
+  public SolarPanelBattery getSolarPanelBattery(Direction direction) {
+    return direction != Direction.UP ? solarPanelBattery : null;
   }
 
   public SolarPanelLevel getLevelSolarPanel() {
     return levelSolarPanel;
-  }
-
-  @Override
-  public void setRemoved() {
-    super.setRemoved();
-    energy.invalidate();
   }
 
   @Override

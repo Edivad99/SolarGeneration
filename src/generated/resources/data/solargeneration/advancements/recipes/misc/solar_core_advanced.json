@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_solar_core_resonant",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_solar_core_resonant"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:solar_core_advanced"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

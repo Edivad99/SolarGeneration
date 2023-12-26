@@ -3,11 +3,12 @@ package edivad.solargeneration;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import edivad.edivadlib.setup.UpdateChecker;
+import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.client.screen.SolarPanelScreen;
-import edivad.solargeneration.datagen.AdvancementProvider;
 import edivad.solargeneration.datagen.Lang;
 import edivad.solargeneration.datagen.LootTables;
 import edivad.solargeneration.datagen.Recipes;
+import edivad.solargeneration.datagen.SolarGenerationAdvancementProvider;
 import edivad.solargeneration.datagen.SolarPanelBlockTagsProvider;
 import edivad.solargeneration.datagen.SolarPanelItemTagsProvider;
 import edivad.solargeneration.network.PacketHandler;
@@ -17,11 +18,13 @@ import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(SolarGeneration.ID)
 public class SolarGeneration {
@@ -31,20 +34,20 @@ public class SolarGeneration {
 
   public static final Logger LOGGER = LogUtils.getLogger();
 
-  public SolarGeneration() {
-    var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+  public SolarGeneration(IEventBus modEventBus) {
     modEventBus.addListener(this::handleClientSetup);
     modEventBus.addListener(this::handleGatherData);
+    modEventBus.addListener(this::registerCapabilities);
     Registration.init(modEventBus);
     SolarGenerationCreativeModeTabs.register(modEventBus);
     PacketHandler.init();
   }
 
   private void handleClientSetup(FMLClientSetupEvent event) {
-    MinecraftForge.EVENT_BUS.register(new UpdateChecker(SolarGeneration.ID));
+    NeoForge.EVENT_BUS.register(new UpdateChecker(SolarGeneration.ID));
 
     for (var level : SolarPanelLevel.values()) {
-      var menu = Registration.SOLAR_PANEL_CONTAINER.get(level).get();
+      var menu = Registration.SOLAR_PANEL_MENU.get(level).get();
       MenuScreens.register(menu, SolarPanelScreen::new);
     }
   }
@@ -63,8 +66,15 @@ public class SolarGeneration {
     generator.addProvider(event.includeServer(),
         new SolarPanelItemTagsProvider(packOutput, lookupProvider, blockTagsLookup, fileHelper));
     generator.addProvider(event.includeServer(),
-        new AdvancementProvider(packOutput, lookupProvider, fileHelper));
-    generator.addProvider(event.includeServer(), new Recipes(packOutput));
+        new SolarGenerationAdvancementProvider(packOutput, lookupProvider, fileHelper));
+    generator.addProvider(event.includeServer(), new Recipes(packOutput, lookupProvider));
     generator.addProvider(event.includeClient(), new Lang(packOutput));
+  }
+
+  private void registerCapabilities(RegisterCapabilitiesEvent event) {
+    Registration.SOLAR_PANEL_BLOCK_ENTITY.forEach((__, blockEntityType) ->
+        event.registerBlockEntity(
+            Capabilities.EnergyStorage.BLOCK, blockEntityType.get(),
+            SolarPanelBlockEntity::getSolarPanelBattery));
   }
 }

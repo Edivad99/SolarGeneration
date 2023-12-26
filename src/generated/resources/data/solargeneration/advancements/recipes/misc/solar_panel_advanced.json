@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_solar_panel_resonant",
-      "has_solar_core_advanced",
-      "has_the_recipe"
+      "has_solar_core_advanced"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:solar_panel_advanced"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

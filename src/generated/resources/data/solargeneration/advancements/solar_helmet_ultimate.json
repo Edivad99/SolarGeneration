@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.solargeneration.solar_helmet_ultimate.desc"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "solargeneration:solar_helmet_ultimate"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.solargeneration.solar_helmet_ultimate"
     }

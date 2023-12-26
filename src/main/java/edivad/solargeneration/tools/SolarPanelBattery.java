@@ -1,6 +1,6 @@
 package edivad.solargeneration.tools;
 
-import net.minecraftforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.EnergyStorage;
 
 public class SolarPanelBattery extends EnergyStorage {
 

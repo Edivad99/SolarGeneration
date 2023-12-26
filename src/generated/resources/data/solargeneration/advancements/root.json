@@ -14,17 +14,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "background": "solargeneration:textures/gui/advancements.png",
     "description": {
       "translate": "advancements.solargeneration.root.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "solargeneration:photovoltaic_cell"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.solargeneration.root"
     }

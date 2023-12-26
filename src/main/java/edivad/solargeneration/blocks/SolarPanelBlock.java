@@ -38,10 +38,8 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
@@ -91,7 +89,7 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
       return InteractionResult.SUCCESS;
     }
 
-    level.getBlockEntity(pos, Registration.SOLAR_PANEL_TILE.get(this.solarPanelLevel).get())
+    level.getBlockEntity(pos, Registration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
         .ifPresent(blockEntity -> NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos));
     return InteractionResult.SUCCESS;
   }
@@ -122,7 +120,7 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
     return level.isClientSide()
         ? null
         : BaseEntityBlock.createTickerHelper(blockEntityType,
-            Registration.SOLAR_PANEL_TILE.get(solarPanelLevel).get(),
+            Registration.SOLAR_PANEL_BLOCK_ENTITY.get(solarPanelLevel).get(),
             SolarPanelBlockEntity::serverTick);
   }
 
@@ -133,17 +131,16 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
       var blockEntity = level.getBlockEntity(pos);
       var tag = itemStack.getTag();
       if (blockEntity != null && tag != null) {
-        blockEntity
-            .getCapability(ForgeCapabilities.ENERGY)
-            .ifPresent(cap -> {
-              ((SolarPanelBattery) cap).setEnergy(tag.getInt("energy"));
-            });
+        var energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK,
+            blockEntity.getBlockPos(), null);
+        if (energyStorage != null) {
+          ((SolarPanelBattery) energyStorage).setEnergy(tag.getInt("energy"));
+        }
       }
     }
     super.setPlacedBy(level, pos, state, placer, itemStack);
   }
 
-  @OnlyIn(Dist.CLIENT)
   @Override
   public void appendHoverText(ItemStack itemStack, BlockGetter blockGetter, List<Component> tooltip,
       TooltipFlag flagIn) {
@@ -167,9 +164,9 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   }
 
   @Override
-  public boolean canPlaceLiquid(BlockGetter blockGetter, BlockPos pos, BlockState state,
-      Fluid fluidIn) {
-    return SimpleWaterloggedBlock.super.canPlaceLiquid(blockGetter, pos, state, fluidIn);
+  public boolean canPlaceLiquid(@Nullable Player player, BlockGetter blockGetter, BlockPos pos,
+      BlockState state, Fluid fluidIn) {
+    return SimpleWaterloggedBlock.super.canPlaceLiquid(player, blockGetter, pos, state, fluidIn);
   }
 
   @Override

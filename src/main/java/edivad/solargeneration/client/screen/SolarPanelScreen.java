@@ -26,7 +26,7 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
   @Override
   public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-    this.renderBackground(guiGraphics);
+    this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
     super.render(guiGraphics, mouseX, mouseY, partialTick);
     this.renderTooltip(guiGraphics, mouseX, mouseY);
     if (mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10

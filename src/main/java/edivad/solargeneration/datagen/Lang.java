@@ -7,7 +7,7 @@ import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Translations;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class Lang extends LanguageProvider {
 

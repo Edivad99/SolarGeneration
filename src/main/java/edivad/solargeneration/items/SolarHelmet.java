@@ -13,7 +13,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 public class SolarHelmet extends ArmorItem {
 
@@ -124,7 +124,8 @@ public class SolarHelmet extends ArmorItem {
 
   private void chargeItem(ItemStack slot) {
     if (slot.getCount() == 1) {
-      slot.getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
+      var handler = slot.getCapability(Capabilities.EnergyStorage.ITEM, null);
+      if (handler != null) {
         if (handler.canReceive()) {
           while (handler.getEnergyStored() < handler.getMaxEnergyStored()
               && energyStorage.getEnergyStored() > 0) {
@@ -134,7 +135,7 @@ public class SolarHelmet extends ArmorItem {
             handler.receiveEnergy(accepted, false);
           }
         }
-      });
+      }
     }
   }
 

@@ -3,9 +3,9 @@ package edivad.solargeneration.network;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.network.NetworkRegistry;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
+import net.neoforged.neoforge.network.simple.SimpleChannel;
 
 public class PacketHandler {
 
@@ -19,7 +19,7 @@ public class PacketHandler {
 
   public static void init() {
     INSTANCE
-        .messageBuilder(UpdateSolarPanel.class, 0, NetworkDirection.PLAY_TO_CLIENT)
+        .messageBuilder(UpdateSolarPanel.class, 0, PlayNetworkDirection.PLAY_TO_CLIENT)
         .encoder(UpdateSolarPanel::encode)
         .decoder(UpdateSolarPanel::decode)
         .consumerMainThread(UpdateSolarPanel::handle)

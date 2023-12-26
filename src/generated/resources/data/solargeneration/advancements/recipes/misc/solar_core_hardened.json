@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_solar_core_leadstone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_solar_core_leadstone"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:solar_core_hardened"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.solargeneration.solar_panel_resonant.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "solargeneration:solar_panel_resonant"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.solargeneration.solar_panel_resonant"
     }

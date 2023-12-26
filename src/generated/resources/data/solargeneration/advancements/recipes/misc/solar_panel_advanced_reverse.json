@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_solar_helmet_advanced",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_solar_helmet_advanced"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:solar_panel_advanced_reverse"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

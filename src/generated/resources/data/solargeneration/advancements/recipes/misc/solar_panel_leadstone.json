@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_solar_core_leadstone",
-      "has_photovoltaic_cell",
-      "has_the_recipe"
+      "has_photovoltaic_cell"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:solar_panel_leadstone"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

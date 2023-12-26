@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lapis_shard",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lapis_shard"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:lapis_lazuli_from_shard"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.solargeneration.solar_helmet_leadstone.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "solargeneration:solar_helmet_leadstone"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.solargeneration.solar_helmet_leadstone"
     }

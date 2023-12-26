@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.solargeneration.solar_panel_leadstone.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "solargeneration:solar_panel_leadstone"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.solargeneration.solar_panel_leadstone"
     }

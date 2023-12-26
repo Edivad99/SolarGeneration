@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_solar_helmet_resonant",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_solar_helmet_resonant"
     ]
   ],
   "rewards": {
     "recipes": [
       "solargeneration:solar_panel_resonant_reverse"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

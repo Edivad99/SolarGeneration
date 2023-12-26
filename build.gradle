@@ -2,12 +2,12 @@ import se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
 import static org.apache.commons.lang3.StringUtils.repeat
 
 plugins {
+    id 'java-library'
     id 'eclipse'
     id 'idea'
-    id 'net.neoforged.gradle' version '[6.0.18,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.79.0'
-    id 'me.modmuss50.mod-publish-plugin' version '0.3.3'
+    id 'net.neoforged.gradle.userdev' version '7.0.57'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.81.4'
+    id 'me.modmuss50.mod-publish-plugin' version '0.4.5'
 }
 
 version = "$minecraft_version-$mod_version"
@@ -23,37 +23,24 @@ println("JVM: ${System.getProperty('java.vm.version')} (${System.getProperty('ja
 println("Arch: ${System.getProperty('os.arch')}")
 println(repeat('*', 60))
 
-minecraft {
-    mappings channel: mappings_channel, version: mappings_version
+minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    copyIdeResources = true
+runs {
+    configureEach {
+        systemProperty 'forge.logging.console.level', 'debug'
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+        modSource project.sourceSets.main
+    }
 
-    runs {
-        configureEach {
-            property 'forge.logging.console.level', 'debug'
+    client {
+    }
 
-            mods {
-                solargeneration {
-                    source sourceSets.main
-                }
-            }
-        }
+    server {
+        programArgument '--nogui'
+    }
 
-        client {
-            workingDirectory project.file('run/client')
-        }
-
-        server {
-            workingDirectory project.file('run/server')
-        }
-
-        data {
-            workingDirectory project.file('run/data')
-
-            args '--mod', 'solargeneration', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-        }
+    data {
+        programArguments.addAll '--mod', 'solargeneration', '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
@@ -74,25 +61,32 @@ repositories {
 }
 
 dependencies {
-    minecraft group: 'net.neoforged', name: 'forge', version: "$minecraft_version-$neo_version"
+    implementation "net.neoforged:neoforge:$neo_version"
 
     //implementation fg.deobf("edivad:EdivadLib-$minecraft_version:2.0.0")
-    implementation fg.deobf("curse.maven:edivadlib-638508:$edivadlib_id")
+    implementation "curse.maven:edivadlib-638508:$edivadlib_id"
 
-    runtimeOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge:$jei_version")
+    //runtimeOnly fg.deobf("mezz.jei:jei-$minecraft_version-forge:$jei_version")
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.encoding = 'UTF-8'
+    options.compilerArgs.addAll(["-Xmaxerrs", "100000"])
 }
 
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
-            mod_version: mod_version
+        minecraft_version       : minecraft_version,
+        minecraft_version_range : minecraft_version_range,
+        neo_version             : neo_version,
+        neo_version_range       : neo_version_range,
+        loader_version_range    : loader_version_range,
+        mod_version             : mod_version,
+        edivadlib_version_range : edivadlib_version_range,
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['META-INF/mods.toml']) {
         expand replaceProperties + [project: project]
     }
 }
@@ -100,23 +94,21 @@ tasks.withType(ProcessResources).configureEach {
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
-                'Specification-Title'     : 'solargeneration',
-                'Specification-Vendor'    : 'Edivad99',
-                'Specification-Version'   : '1',
-                'Implementation-Title'    : 'solargeneration',
-                'Implementation-Version'  : project.version,
-                'Implementation-Vendor'   : 'Edivad99',
-                'Implementation-Commit'   : 'git rev-parse HEAD'.execute().text.trim(),
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            'Specification-Title'     : 'solargeneration',
+            'Specification-Vendor'    : 'Edivad99',
+            'Specification-Version'   : '1',
+            'Implementation-Title'    : 'solargeneration',
+            'Implementation-Version'  : project.version,
+            'Implementation-Vendor'   : 'Edivad99',
+            'Implementation-Commit'   : 'git rev-parse HEAD'.execute().text.trim(),
         ])
     }
-    finalizedBy 'reobfJar'
 }
 
 tasks.register('makeChangelog', GitChangelogTask) {
     fromRepo = projectDir.absolutePath.toString()
-    fromCommit = '69e1d1fe0b7538af87a722b6c2157da4dde14983'
-    toRef = 'HEAD'
+    fromRevision = '69e1d1fe0b7538af87a722b6c2157da4dde14983'
+    toRevision = 'HEAD'
     file = file('CHANGELOG.md')
     untaggedName = 'Next release'
     templateContent = file('changelog.mustache').text
@@ -131,9 +123,6 @@ publishMods {
     changelog = changelogFile.exists() ? changelogFile.text : 'CHANGELOG.md not found'
 
     modLoaders.add('neoforge')
-    if (minecraft_version.equals('1.20.1')) {
-        modLoaders.add('forge')
-    }
     file = jar.archiveFile
 
     curseforge {

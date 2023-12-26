@@ -2,13 +2,14 @@ package edivad.solargeneration.datagen;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelLevel;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -16,38 +17,38 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 public class Recipes extends RecipeProvider {
 
-  public Recipes(PackOutput packOutput) {
-    super(packOutput);
+  public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    super(packOutput, lookupProvider);
   }
 
   @Override
-  protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-    supportingItems(consumer);
-    solarPanelReverse(consumer);
-    solarHelmet(consumer);
-    solarPanel(consumer);
-    solarCore(consumer);
+  protected void buildRecipes(RecipeOutput recipeOutput) {
+    supportingItems(recipeOutput);
+    solarPanelReverse(recipeOutput);
+    solarHelmet(recipeOutput);
+    solarPanel(recipeOutput);
+    solarCore(recipeOutput);
   }
 
-  private void supportingItems(Consumer<FinishedRecipe> consumer) {
+  private void supportingItems(RecipeOutput recipeOutput) {
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.LAPIS_LAZULI)
         .pattern("aaa")
         .pattern("aaa")
         .pattern("aaa")
         .define('a', Registration.LAPIS_SHARD.get())
         .unlockedBy(getHasName(Registration.LAPIS_SHARD.get()), has(Registration.LAPIS_SHARD.get()))
-        .save(consumer, new ResourceLocation(SolarGeneration.ID, "lapis_lazuli_from_shard"));
+        .save(recipeOutput, new ResourceLocation(SolarGeneration.ID, "lapis_lazuli_from_shard"));
 
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.LAPIS_SHARD.get(), 36)
         .pattern("aa")
         .pattern("aa")
         .define('a', Items.LAPIS_LAZULI)
         .unlockedBy(getHasName(Items.LAPIS_LAZULI), has(Items.LAPIS_LAZULI))
-        .save(consumer);
+        .save(recipeOutput);
 
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.PHOTOVOLTAIC_CELL.get())
         .pattern("aaa")
@@ -57,10 +58,10 @@ public class Recipes extends RecipeProvider {
         .define('b', Registration.LAPIS_SHARD.get())
         .define('c', Tags.Items.NUGGETS_IRON)
         .unlockedBy(getHasName(Registration.LAPIS_SHARD.get()), has(Registration.LAPIS_SHARD.get()))
-        .save(consumer);
+        .save(recipeOutput);
   }
 
-  private void solarPanelReverse(Consumer<FinishedRecipe> consumer) {
+  private void solarPanelReverse(RecipeOutput recipeOutput) {
     for (var level : SolarPanelLevel.values()) {
       var solarPanel = Registration.SOLAR_PANEL_BLOCK.get(level).get();
       var helmet = Registration.HELMET.get(level).get();
@@ -69,11 +70,11 @@ public class Recipes extends RecipeProvider {
       ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, solarPanel)
           .requires(helmet)
           .unlockedBy(getHasName(helmet), has(helmet))
-          .save(consumer, resourceLocation.toString());
+          .save(recipeOutput, resourceLocation.toString());
     }
   }
 
-  private void solarHelmet(Consumer<FinishedRecipe> consumer) {
+  private void solarHelmet(RecipeOutput recipeOutput) {
     for (var level : SolarPanelLevel.values()) {
       var solarPanel = Registration.SOLAR_PANEL_BLOCK.get(level).get();
       var helmet = Registration.HELMET.get(level).get();
@@ -81,11 +82,11 @@ public class Recipes extends RecipeProvider {
           .requires(solarPanel)
           .requires(getVanillaHelmet(level))
           .unlockedBy(getHasName(solarPanel), has(solarPanel))
-          .save(consumer);
+          .save(recipeOutput);
     }
   }
 
-  private void solarPanel(Consumer<FinishedRecipe> consumer) {
+  private void solarPanel(RecipeOutput recipeOutput) {
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC,
             Registration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.LEADSTONE).get())
         .pattern("aaa")
@@ -99,7 +100,7 @@ public class Recipes extends RecipeProvider {
             has(Registration.CORE.get(SolarPanelLevel.LEADSTONE).get()))
         .unlockedBy(getHasName(Registration.PHOTOVOLTAIC_CELL.get()),
             has(Registration.PHOTOVOLTAIC_CELL.get()))
-        .save(consumer);
+        .save(recipeOutput);
 
     for (int i = 1; i < SolarPanelLevel.values().length; i++) {
       var level = SolarPanelLevel.values()[i];
@@ -115,11 +116,11 @@ public class Recipes extends RecipeProvider {
           .define('b', core)
           .unlockedBy(getHasName(prevSolarPanel), has(prevSolarPanel))
           .unlockedBy(getHasName(core), has(core))
-          .save(consumer);
+          .save(recipeOutput);
     }
   }
 
-  private void solarCore(Consumer<FinishedRecipe> consumer) {
+  private void solarCore(RecipeOutput recipeOutput) {
     Map<SolarPanelLevel, ResourceLocation> materials = new HashMap<>();
     materials.put(SolarPanelLevel.HARDENED, new ResourceLocation("forge", "nuggets/invar"));
     materials.put(SolarPanelLevel.REDSTONE, new ResourceLocation("forge", "nuggets/electrum"));
@@ -136,7 +137,7 @@ public class Recipes extends RecipeProvider {
         .define('a', ItemTags.create(new ResourceLocation("forge", "nuggets/lead")))
         .define('b', ItemTags.create(new ResourceLocation("forge", "ingots/iron")))
         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-        .save(consumer);
+        .save(recipeOutput);
 
     for (int i = 1; i < SolarPanelLevel.values().length; i++) {
       var level = SolarPanelLevel.values()[i];
@@ -149,7 +150,7 @@ public class Recipes extends RecipeProvider {
           .define('a', ItemTags.create(materials.get(level)))
           .define('b', prevCore)
           .unlockedBy(getHasName(prevCore), has(prevCore))
-          .save(consumer);
+          .save(recipeOutput);
     }
 
   }
