@@ -34,20 +34,13 @@ public record UpdateSolarPanel(
   }
 
   public void handle(PlayPayloadContext ctx) {
-    UpdateSolarPanelClient.handle(this, ctx);
-  }
-
-  private static class UpdateSolarPanelClient {
-
-    static void handle(UpdateSolarPanel packet, PlayPayloadContext ctx) {
-      ctx.level().ifPresent(level -> {
-        if (level.isLoaded(packet.pos)) {
-          if (level.getBlockEntity(packet.pos) instanceof SolarPanelBlockEntity solar) {
-            solar.energyClient = packet.currentEnergy;
-            solar.energyProductionClient = packet.currentProduction;
-          }
+    ctx.level().ifPresent(level -> {
+      if (level.isLoaded(pos)) {
+        if (level.getBlockEntity(pos) instanceof SolarPanelBlockEntity solar) {
+          solar.energyClient = currentEnergy;
+          solar.energyProductionClient = currentProduction;
         }
-      });
-    }
+      }
+    });
   }
 }
