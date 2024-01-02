@@ -84,14 +84,11 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   @Override
   public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
       InteractionHand handIn, BlockHitResult hit) {
-    if (level.isClientSide) {
-      return InteractionResult.SUCCESS;
+    if (player instanceof ServerPlayer serverPlayer) {
+      level.getBlockEntity(pos, Registration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
+          .ifPresent(blockEntity -> serverPlayer.openMenu(blockEntity, pos));
     }
-
-    var serverPlayer = (ServerPlayer) player;
-    level.getBlockEntity(pos, Registration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
-        .ifPresent(blockEntity -> serverPlayer.openMenu(blockEntity, pos));
-    return InteractionResult.SUCCESS;
+    return InteractionResult.sidedSuccess(level.isClientSide());
   }
 
   @Override
