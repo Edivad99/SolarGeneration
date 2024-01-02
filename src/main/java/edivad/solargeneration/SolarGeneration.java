@@ -6,18 +6,16 @@ import edivad.edivadlib.setup.UpdateChecker;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.client.screen.SolarPanelScreen;
 import edivad.solargeneration.datagen.Lang;
-import edivad.solargeneration.datagen.LootTables;
 import edivad.solargeneration.datagen.Recipes;
 import edivad.solargeneration.datagen.SolarGenerationAdvancementProvider;
+import edivad.solargeneration.datagen.SolarGenerationLootTableProvider;
 import edivad.solargeneration.datagen.SolarPanelBlockTagsProvider;
 import edivad.solargeneration.datagen.SolarPanelItemTagsProvider;
-import edivad.solargeneration.network.PacketHandler;
+import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.setup.SolarGenerationCreativeModeTabs;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.loot.LootTableProvider;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -25,6 +23,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 
 @Mod(SolarGeneration.ID)
 public class SolarGeneration {
@@ -38,13 +37,13 @@ public class SolarGeneration {
     modEventBus.addListener(this::handleClientSetup);
     modEventBus.addListener(this::handleGatherData);
     modEventBus.addListener(this::registerCapabilities);
-    Registration.init(modEventBus);
+    modEventBus.addListener(this::registerPacketHandler);
+    Registration.register(modEventBus);
     SolarGenerationCreativeModeTabs.register(modEventBus);
-    PacketHandler.init();
   }
 
   private void handleClientSetup(FMLClientSetupEvent event) {
-    NeoForge.EVENT_BUS.register(new UpdateChecker(SolarGeneration.ID));
+    NeoForge.EVENT_BUS.register(new UpdateChecker(ID));
 
     for (var level : SolarPanelLevel.values()) {
       var menu = Registration.SOLAR_PANEL_MENU.get(level).get();
@@ -58,8 +57,7 @@ public class SolarGeneration {
     var lookupProvider = event.getLookupProvider();
     var fileHelper = event.getExistingFileHelper();
 
-    generator.addProvider(event.includeServer(),
-        (DataProvider.Factory<LootTableProvider>) LootTables::create);
+    generator.addProvider(event.includeServer(), new SolarGenerationLootTableProvider(packOutput));
     var blockTags = new SolarPanelBlockTagsProvider(packOutput, lookupProvider, fileHelper);
     var blockTagsLookup = blockTags.contentsGetter();
     generator.addProvider(event.includeServer(), blockTags);
@@ -76,5 +74,11 @@ public class SolarGeneration {
         event.registerBlockEntity(
             Capabilities.EnergyStorage.BLOCK, blockEntityType.get(),
             SolarPanelBlockEntity::getSolarPanelBattery));
+  }
+
+  private void registerPacketHandler(RegisterPayloadHandlerEvent event) {
+    var registrar = event.registrar(ID);
+    registrar.play(UpdateSolarPanel.ID, UpdateSolarPanel::read, handler ->
+        handler.client(UpdateSolarPanel::handle));
   }
 }

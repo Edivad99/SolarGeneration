@@ -39,7 +39,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
@@ -89,8 +88,9 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
       return InteractionResult.SUCCESS;
     }
 
+    var serverPlayer = (ServerPlayer) player;
     level.getBlockEntity(pos, Registration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
-        .ifPresent(blockEntity -> NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos));
+        .ifPresent(blockEntity -> serverPlayer.openMenu(blockEntity, pos));
     return InteractionResult.SUCCESS;
   }
 

@@ -18,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredItem;
 
 public class SolarGenerationAdvancementProvider extends AdvancementProvider {
 
@@ -56,14 +55,14 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
       for (var level : SolarPanelLevel.values()) {
         var item = Registration.SOLAR_PANEL_ITEM.get(level);
         var translations = Translations.SOLAR_PANEL_ADVANCEMENTS.get(level);
-        parent = generateAdvancements(consumer, existingFileHelper, level, parent, item,
+        parent = generateAdvancements(consumer, existingFileHelper, level, parent, item.get(),
             translations, level.getSolarPanelName());
       }
       parent = ROOT;
       for (var level : SolarPanelLevel.values()) {
         var item = Registration.HELMET.get(level);
         var translations = Translations.HELMET_ADVANCEMENTS.get(level);
-        parent = generateAdvancements(consumer, existingFileHelper, level, parent, item,
+        parent = generateAdvancements(consumer, existingFileHelper, level, parent, item.get(),
             translations, level.getSolarHelmetName());
       }
     }
@@ -72,21 +71,19 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
         ExistingFileHelper existingFileHelper,
         SolarPanelLevel level,
         AdvancementHolder parent,
-        DeferredItem<Item> item,
+        Item item,
         TranslationsAdvancement itemTranslations,
         String name) {
       return Advancement.Builder.advancement()
-          .display(item.get(),
+          .display(item,
               itemTranslations.translateTitle(),
               itemTranslations.translateDescription(),
               null,
               getFrameType(level),
               true, true, false)
-          .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(item.get()))
+          .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(item))
           .parent(parent)
           .save(consumer, new ResourceLocation(SolarGeneration.ID, name), existingFileHelper);
     }
-
-
   }
 }

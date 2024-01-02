@@ -26,11 +26,10 @@ public enum SolarPanelLevel {
   }
 
   public ArmorMaterial getArmorMaterial() {
-    return switch (this.ordinal()) {
-      case 0, 1 -> ArmorMaterials.IRON;
-      case 2, 3, 4, 5 -> ArmorMaterials.DIAMOND;
-      case 6 -> ArmorMaterials.NETHERITE;
-      default -> throw new RuntimeException("Solar panel tier not yet implemented!");
+    return switch (this) {
+      case LEADSTONE, HARDENED -> ArmorMaterials.IRON;
+      case REDSTONE, SIGNALUM, RESONANT, ADVANCED -> ArmorMaterials.DIAMOND;
+      case ULTIMATE -> ArmorMaterials.NETHERITE;
     };
   }
 

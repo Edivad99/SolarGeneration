@@ -2,7 +2,6 @@ package edivad.solargeneration.blockentity;
 
 import org.jetbrains.annotations.Nullable;
 import edivad.solargeneration.menu.SolarPanelMenu;
-import edivad.solargeneration.network.PacketHandler;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.ProductionSolarPanel;
@@ -45,7 +44,7 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState,
       SolarPanelBlockEntity solarPanel) {
-    int energyProducedBySun = solarPanel.currentAmountEnergyProduced();
+    int energyProducedBySun = solarPanel.currentAmountEnergyProduced(level);
     solarPanel.solarPanelBattery.generatePower(energyProducedBySun);
     solarPanel.sendEnergy();
     int energyStored = solarPanel.solarPanelBattery.getEnergyStored();
@@ -54,12 +53,11 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
       int energyProduced = solarPanel.solarPanelBattery.isFullEnergy() ? 0 : energyProducedBySun;
       solarPanel.setChanged();
       var message = new UpdateSolarPanel(blockPos, energyStored, energyProduced);
-      PacketHandler.INSTANCE.send(
-          PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPos)), message);
+      PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(blockPos)).send(message);
     }
   }
 
-  private int currentAmountEnergyProduced() {
+  private int currentAmountEnergyProduced(Level level) {
     return (int) (energyGeneration *
         ProductionSolarPanel.computeSunIntensity(level, worldPosition, levelSolarPanel));
   }

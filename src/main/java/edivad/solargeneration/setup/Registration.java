@@ -26,7 +26,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class Registration {
 
   public static final Map<SolarPanelLevel, DeferredBlock<SolarPanelBlock>> SOLAR_PANEL_BLOCK = new HashMap<>();
-  public static final Map<SolarPanelLevel, DeferredItem<Item>> SOLAR_PANEL_ITEM = new HashMap<>();
+  public static final Map<SolarPanelLevel, DeferredItem<BlockItem>> SOLAR_PANEL_ITEM = new HashMap<>();
   public static final Map<SolarPanelLevel, DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarPanelBlockEntity>>> SOLAR_PANEL_BLOCK_ENTITY = new HashMap<>();
   public static final Map<SolarPanelLevel, DeferredHolder<MenuType<?>, MenuType<SolarPanelMenu>>> SOLAR_PANEL_MENU = new HashMap<>();
   public static final Map<SolarPanelLevel, DeferredItem<Item>> HELMET = new HashMap<>();
@@ -35,22 +35,16 @@ public class Registration {
       DeferredRegister.createBlocks(SolarGeneration.ID);
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(SolarGeneration.ID);
-  public static final DeferredItem<Item> LAPIS_SHARD =
-      ITEMS.register("lapis_shard", () -> new Item(new Item.Properties()));
+  public static final DeferredItem<Item> LAPIS_SHARD = ITEMS.registerSimpleItem("lapis_shard");
   public static final DeferredItem<Item> PHOTOVOLTAIC_CELL =
-      ITEMS.register("photovoltaic_cell", () -> new Item(new Item.Properties()));
+      ITEMS.registerSimpleItem("photovoltaic_cell");
   private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
       DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, SolarGeneration.ID);
   private static final DeferredRegister<MenuType<?>> MENU =
       DeferredRegister.create(BuiltInRegistries.MENU, SolarGeneration.ID);
 
-  public static void init(IEventBus modEventBus) {
-    BLOCKS.register(modEventBus);
-    ITEMS.register(modEventBus);
-    BLOCK_ENTITIES.register(modEventBus);
-    MENU.register(modEventBus);
-
-    for (SolarPanelLevel level : SolarPanelLevel.values()) {
+  static {
+    for (var level : SolarPanelLevel.values()) {
       SOLAR_PANEL_BLOCK.put(level,
           BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanelBlock(level,
               BlockBehaviour.Properties.of()
@@ -58,11 +52,11 @@ public class Registration {
                   .requiresCorrectToolForDrops()
                   .strength(1.5F, 6.0F))));
 
-      SOLAR_PANEL_ITEM.put(level, ITEMS.register(level.getSolarPanelName(),
-          () -> new BlockItem(SOLAR_PANEL_BLOCK.get(level).get(), new Item.Properties())));
+      SOLAR_PANEL_ITEM.put(level, ITEMS.registerSimpleBlockItem(SOLAR_PANEL_BLOCK.get(level)));
 
       SOLAR_PANEL_BLOCK_ENTITY.put(level, BLOCK_ENTITIES.register(level.getSolarPanelName(),
-          () -> BlockEntityType.Builder.of((pos, state) -> new SolarPanelBlockEntity(level, pos, state),
+          () -> BlockEntityType.Builder.of(
+              (pos, state) -> new SolarPanelBlockEntity(level, pos, state),
               SOLAR_PANEL_BLOCK.get(level).get()).build(null)));
 
       SOLAR_PANEL_MENU.put(level, MENU.register(level.getSolarPanelName(),
@@ -71,7 +65,7 @@ public class Registration {
             var blockEntity = inventory.player.getCommandSenderWorld().getBlockEntity(pos);
             if (!(blockEntity instanceof SolarPanelBlockEntity solarPanelBlockEntity)) {
               SolarGeneration.LOGGER
-                  .error("Wrong type of block entity (expected BlockEntitySolarPanel)!");
+                  .error("Wrong type of block entity (expected SolarPanelBlockEntity)!");
               return null;
             }
             return new SolarPanelMenu(id, solarPanelBlockEntity, level);
@@ -79,8 +73,14 @@ public class Registration {
 
       HELMET.put(level, ITEMS.register(level.getSolarHelmetName(),
           () -> new SolarHelmet(level, new Item.Properties().stacksTo(1))));
-      CORE.put(level,
-          ITEMS.register(level.getSolarCoreName(), () -> new Item(new Item.Properties())));
+      CORE.put(level, ITEMS.registerSimpleItem(level.getSolarCoreName()));
     }
+  }
+
+  public static void register(IEventBus modEventBus) {
+    BLOCKS.register(modEventBus);
+    ITEMS.register(modEventBus);
+    BLOCK_ENTITIES.register(modEventBus);
+    MENU.register(modEventBus);
   }
 }

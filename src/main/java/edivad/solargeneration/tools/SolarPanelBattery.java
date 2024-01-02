@@ -5,8 +5,7 @@ import net.neoforged.neoforge.energy.EnergyStorage;
 public class SolarPanelBattery extends EnergyStorage {
 
   public SolarPanelBattery(int maxTransfer, int capacity) {
-    super(capacity, maxTransfer);
-    this.maxReceive = 0;
+    super(capacity, 0, maxTransfer);
   }
 
   public void setEnergy(int energy) {
@@ -14,17 +13,11 @@ public class SolarPanelBattery extends EnergyStorage {
   }
 
   public void generatePower(int energy) {
-    this.energy += energy;
-    if (this.energy > capacity) {
-      this.energy = capacity;
-    }
+    this.energy = Math.min(capacity, this.energy + energy);
   }
 
   public void consumePower(int energy) {
-    this.energy -= energy;
-    if (this.energy < 0) {
-      this.energy = 0;
-    }
+    this.energy = Math.max(0, this.energy - energy);
   }
 
   public boolean isFullEnergy() {
