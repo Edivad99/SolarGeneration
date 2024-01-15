@@ -127,6 +127,7 @@ tasks.register('makeChangelog', GitChangelogTask) {
     file = file('CHANGELOG.md')
     untaggedName = 'Next release'
     templateContent = file('changelog.mustache').text
+    ignoreCommitsIfMessageMatches = '^.*Merge branch.*$'
 }
 
 publishMods {
