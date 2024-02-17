@@ -15,8 +15,8 @@ public record UpdateSolarPanel(
 
   public static UpdateSolarPanel read(FriendlyByteBuf buf) {
     var pos = buf.readBlockPos();
-    var currentEnergy = buf.readInt();
-    var currentProduction = buf.readInt();
+    var currentEnergy = buf.readVarInt();
+    var currentProduction = buf.readVarInt();
     return new UpdateSolarPanel(pos, currentEnergy, currentProduction);
   }
 
