@@ -11,19 +11,19 @@ import edivad.solargeneration.datagen.SolarGenerationAdvancementProvider;
 import edivad.solargeneration.datagen.SolarGenerationLootTableProvider;
 import edivad.solargeneration.datagen.SolarPanelBlockTagsProvider;
 import edivad.solargeneration.datagen.SolarPanelItemTagsProvider;
-import edivad.solargeneration.network.packet.UpdateSolarPanel;
+import edivad.solargeneration.network.PacketHandler;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.setup.SolarGenerationCreativeModeTabs;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 
 @Mod(SolarGeneration.ID)
 public class SolarGeneration {
@@ -35,19 +35,22 @@ public class SolarGeneration {
 
   public SolarGeneration(IEventBus modEventBus) {
     modEventBus.addListener(this::handleClientSetup);
+    modEventBus.addListener(this::handleRegisterMenuScreens);
     modEventBus.addListener(this::handleGatherData);
     modEventBus.addListener(this::registerCapabilities);
-    modEventBus.addListener(this::registerPacketHandler);
+    var packetHandler = new PacketHandler(modEventBus);
     Registration.register(modEventBus);
     SolarGenerationCreativeModeTabs.register(modEventBus);
   }
 
   private void handleClientSetup(FMLClientSetupEvent event) {
     NeoForge.EVENT_BUS.register(new UpdateChecker(ID));
+  }
 
+  private void handleRegisterMenuScreens(RegisterMenuScreensEvent event) {
     for (var level : SolarPanelLevel.values()) {
       var menu = Registration.SOLAR_PANEL_MENU.get(level).get();
-      MenuScreens.register(menu, SolarPanelScreen::new);
+      event.register(menu, SolarPanelScreen::new);
     }
   }
 
@@ -65,7 +68,7 @@ public class SolarGeneration {
         new SolarPanelItemTagsProvider(packOutput, lookupProvider, blockTagsLookup, fileHelper));
     generator.addProvider(event.includeServer(),
         new SolarGenerationAdvancementProvider(packOutput, lookupProvider, fileHelper));
-    generator.addProvider(event.includeServer(), new Recipes(packOutput, lookupProvider));
+    generator.addProvider(event.includeServer(), new Recipes(packOutput));
     generator.addProvider(event.includeClient(), new Lang(packOutput));
   }
 
@@ -76,9 +79,7 @@ public class SolarGeneration {
             SolarPanelBlockEntity::getSolarPanelBattery));
   }
 
-  private void registerPacketHandler(RegisterPayloadHandlerEvent event) {
-    var registrar = event.registrar(ID);
-    registrar.play(UpdateSolarPanel.ID, UpdateSolarPanel::read, handler ->
-        handler.client(UpdateSolarPanel::handle));
+  public static ResourceLocation rl(String path) {
+    return new ResourceLocation(ID, path);
   }
 }

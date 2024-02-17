@@ -3,6 +3,7 @@ package edivad.solargeneration.datagen;
 import java.util.Set;
 import java.util.stream.Collectors;
 import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
@@ -37,8 +38,10 @@ public class SolarGenerationBlockLoot extends BlockLootSubProvider {
 
   @Override
   protected void generate() {
-    Registration.SOLAR_PANEL_BLOCK.values()
-        .forEach(block -> this.add(block.get(), SolarGenerationBlockLoot::createSolarPanelDrops));
+    for (var level : SolarPanelLevel.values()) {
+      this.add(Registration.SOLAR_PANEL_BLOCK.get(level).get(),
+          SolarGenerationBlockLoot::createSolarPanelDrops);
+    }
   }
 
   @Override

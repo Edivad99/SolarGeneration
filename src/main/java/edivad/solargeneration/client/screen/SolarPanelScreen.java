@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
   private static final ResourceLocation TEXTURE =
-      new ResourceLocation(SolarGeneration.ID, "textures/gui/solar_panel.png");
+      SolarGeneration.rl("textures/gui/solar_panel.png");
 
   private final SolarPanelBlockEntity solarPanelBlockEntity;
 

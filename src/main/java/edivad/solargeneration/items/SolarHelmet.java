@@ -86,8 +86,9 @@ public class SolarHelmet extends ArmorItem {
   }
 
   @Override
-  public void onArmorTick(ItemStack itemStack, Level level, Player player) {
-    if (level.isClientSide) {
+  public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slotId,
+      boolean isSelected) {
+    if (level.isClientSide() || !(entity instanceof Player player)) {
       return;
     }
 

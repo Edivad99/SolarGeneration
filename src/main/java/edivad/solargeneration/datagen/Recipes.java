@@ -2,11 +2,9 @@ package edivad.solargeneration.datagen;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -21,8 +19,8 @@ import net.neoforged.neoforge.common.Tags;
 
 public class Recipes extends RecipeProvider {
 
-  public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-    super(packOutput, lookupProvider);
+  public Recipes(PackOutput packOutput) {
+    super(packOutput);
   }
 
   @Override
@@ -41,7 +39,7 @@ public class Recipes extends RecipeProvider {
         .pattern("aaa")
         .define('a', Registration.LAPIS_SHARD.get())
         .unlockedBy(getHasName(Registration.LAPIS_SHARD.get()), has(Registration.LAPIS_SHARD.get()))
-        .save(recipeOutput, new ResourceLocation(SolarGeneration.ID, "lapis_lazuli_from_shard"));
+        .save(recipeOutput, SolarGeneration.rl("lapis_lazuli_from_shard"));
 
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.LAPIS_SHARD.get(), 36)
         .pattern("aa")
@@ -65,8 +63,7 @@ public class Recipes extends RecipeProvider {
     for (var level : SolarPanelLevel.values()) {
       var solarPanel = Registration.SOLAR_PANEL_BLOCK.get(level).get();
       var helmet = Registration.HELMET.get(level).get();
-      var resourceLocation = new ResourceLocation(
-          SolarGeneration.ID, level.getSolarPanelName() + "_reverse");
+      var resourceLocation = SolarGeneration.rl(level.getSolarPanelName() + "_reverse");
       ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, solarPanel)
           .requires(helmet)
           .unlockedBy(getHasName(helmet), has(helmet))

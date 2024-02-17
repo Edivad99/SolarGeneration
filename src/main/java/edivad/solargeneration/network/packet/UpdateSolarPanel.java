@@ -1,18 +1,17 @@
 package edivad.solargeneration.network.packet;
 
+import edivad.edivadlib.network.EdivadLibPacket;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 public record UpdateSolarPanel(
-    BlockPos pos, int currentEnergy, int currentProduction) implements CustomPacketPayload {
+    BlockPos pos, int currentEnergy, int currentProduction) implements EdivadLibPacket {
 
-  public static final ResourceLocation ID =
-      new ResourceLocation(SolarGeneration.ID, "update_solar_panel");
+  public static final ResourceLocation ID = SolarGeneration.rl("update_solar_panel");
 
   public static UpdateSolarPanel read(FriendlyByteBuf buf) {
     var pos = buf.readBlockPos();

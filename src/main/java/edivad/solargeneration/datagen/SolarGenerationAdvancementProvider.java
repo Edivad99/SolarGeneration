@@ -14,7 +14,6 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -44,12 +43,12 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
           .display(Registration.PHOTOVOLTAIC_CELL.get(),
               Translations.ADVANCEMENTS_ROOT.translateTitle(),
               Translations.ADVANCEMENTS_ROOT.translateDescription(),
-              new ResourceLocation(SolarGeneration.ID, "textures/gui/advancements.png"),
+              SolarGeneration.rl("textures/gui/advancements.png"),
               AdvancementType.TASK,
               true, true, false)
           .addCriterion("inv_changed",
               InventoryChangeTrigger.TriggerInstance.hasItems(Registration.PHOTOVOLTAIC_CELL.get()))
-          .save(consumer, new ResourceLocation(SolarGeneration.ID, "root"), existingFileHelper);
+          .save(consumer, SolarGeneration.rl("root"), existingFileHelper);
 
       AdvancementHolder parent = ROOT;
       for (var level : SolarPanelLevel.values()) {
@@ -83,7 +82,7 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
               true, true, false)
           .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(item))
           .parent(parent)
-          .save(consumer, new ResourceLocation(SolarGeneration.ID, name), existingFileHelper);
+          .save(consumer, SolarGeneration.rl(name), existingFileHelper);
     }
   }
 }

@@ -71,8 +71,8 @@ public class Registration {
             return new SolarPanelMenu(id, solarPanelBlockEntity, level);
           }, FeatureFlags.DEFAULT_FLAGS)));
 
-      HELMET.put(level, ITEMS.register(level.getSolarHelmetName(),
-          () -> new SolarHelmet(level, new Item.Properties().stacksTo(1))));
+      HELMET.put(level, ITEMS.registerItem(level.getSolarHelmetName(), properties ->
+          new SolarHelmet(level, properties.stacksTo(1))));
       CORE.put(level, ITEMS.registerSimpleItem(level.getSolarCoreName()));
     }
   }
