@@ -1,0 +1,34 @@
+{
+  "parent": "solargeneration:solar_helmet_redstone",
+  "criteria": {
+    "inv_changed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "solargeneration:solar_helmet_signalum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.solargeneration.solar_helmet_signalum.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "solargeneration:solar_helmet_signalum"
+    },
+    "title": {
+      "translate": "advancements.solargeneration.solar_helmet_signalum"
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

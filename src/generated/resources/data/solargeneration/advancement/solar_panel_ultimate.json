@@ -1,0 +1,34 @@
+{
+  "parent": "solargeneration:solar_panel_advanced",
+  "criteria": {
+    "inv_changed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "solargeneration:solar_panel_ultimate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.solargeneration.solar_panel_ultimate.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "solargeneration:solar_panel_ultimate"
+    },
+    "title": {
+      "translate": "advancements.solargeneration.solar_panel_ultimate"
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

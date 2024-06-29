@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "solargeneration:solar_helmet_signalum"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "solargeneration:solar_panel_signalum"
+  }
+}

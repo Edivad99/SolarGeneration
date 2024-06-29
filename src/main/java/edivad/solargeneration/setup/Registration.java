@@ -7,6 +7,7 @@ import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.blocks.SolarPanelBlock;
 import edivad.solargeneration.items.SolarHelmet;
 import edivad.solargeneration.menu.SolarPanelMenu;
+import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.flag.FeatureFlags;
@@ -52,7 +53,9 @@ public class Registration {
                   .requiresCorrectToolForDrops()
                   .strength(1.5F, 6.0F))));
 
-      SOLAR_PANEL_ITEM.put(level, ITEMS.registerSimpleBlockItem(SOLAR_PANEL_BLOCK.get(level)));
+      SOLAR_PANEL_ITEM.put(level, ITEMS.registerItem(level.getSolarPanelName(), properties ->
+          new BlockItem(SOLAR_PANEL_BLOCK.get(level).get(),
+              properties.component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
 
       SOLAR_PANEL_BLOCK_ENTITY.put(level, BLOCK_ENTITIES.register(level.getSolarPanelName(),
           () -> BlockEntityType.Builder.of(
@@ -72,7 +75,9 @@ public class Registration {
           }, FeatureFlags.DEFAULT_FLAGS)));
 
       HELMET.put(level, ITEMS.registerItem(level.getSolarHelmetName(), properties ->
-          new SolarHelmet(level, properties.stacksTo(1))));
+          new SolarHelmet(level, properties.stacksTo(1)
+              .durability(0)
+              .component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
       CORE.put(level, ITEMS.registerSimpleItem(level.getSolarCoreName()));
     }
   }

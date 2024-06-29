@@ -6,8 +6,8 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.neoforged.gradle.userdev' version "$neo_gradle_version"
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '2.1.0'
-    id 'me.modmuss50.mod-publish-plugin' version '0.5.0'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '2.1.2'
+    id 'me.modmuss50.mod-publish-plugin' version '0.5.1'
     id 'com.diffplug.spotless' version '6.25.0'
 }
 
@@ -22,12 +22,13 @@ base.archivesName = 'SolarGeneration'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
         if (System.getProperty('idea.active')) {
             vendor = JvmVendorSpec.JETBRAINS
         }
     }
 }
+
 println(repeat('*', 60))
 println("Project Version: $version")
 println("Java: ${System.getProperty('java.version')}")
@@ -78,13 +79,17 @@ repositories {
     }
 }
 
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 dependencies {
     implementation "net.neoforged:neoforge:$neo_version"
 
-    //implementation "edivad:EdivadLib-$minecraft_version:2.1.1-snapshot"
+    //implementation "edivad:EdivadLib-$minecraft_version:3.0.0-snapshot"
     implementation "curse.maven:edivadlib-638508:$edivadlib_id"
 
-    runtimeOnly "mezz.jei:jei-$minecraft_version-neoforge:$jei_version"
+    localRuntime "mezz.jei:jei-$minecraft_version-neoforge:$jei_version"
 }
 
 spotless {
@@ -100,8 +105,14 @@ spotless {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
     options.compilerArgs.addAll(['-Xmaxerrs', '100000'])
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -116,8 +127,8 @@ tasks.withType(ProcessResources).configureEach {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml']) {
-        expand replaceProperties + [project: project]
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
     }
 }
 

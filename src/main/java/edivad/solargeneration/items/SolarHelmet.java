@@ -2,23 +2,26 @@ package edivad.solargeneration.items;
 
 import java.util.List;
 import edivad.solargeneration.tools.ProductionSolarPanel;
-import edivad.solargeneration.tools.SolarPanelBattery;
+import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class SolarHelmet extends ArmorItem {
 
   private final SolarPanelLevel solarPanelLevel;
-  private final SolarPanelBattery energyStorage;
   private final int energyGeneration;
   private final int maxTransfer;
 
@@ -26,29 +29,23 @@ public class SolarHelmet extends ArmorItem {
     super(solarPanelLevel.getArmorMaterial(), Type.HELMET, properties);
     this.solarPanelLevel = solarPanelLevel;
 
-    energyGeneration = solarPanelLevel.getEnergyGeneration();
-    maxTransfer = solarPanelLevel.getMaxTransfer();
-    int capacity = solarPanelLevel.getCapacity();
-    energyStorage = new SolarPanelBattery(maxTransfer, capacity);
+    this.energyGeneration = solarPanelLevel.getEnergyGeneration();
+    this.maxTransfer = solarPanelLevel.getMaxTransfer();
   }
 
   @Override
-  public boolean canBeDepleted() {
-    return false;
-  }
-
-  @Override
-  public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip,
-      TooltipFlag flagIn) {
-    if (stack.hasTag()) {
-      int energy = getEnergyStored(stack);
+  public void appendHoverText(ItemStack stack, TooltipContext context,
+      List<Component> tooltip, TooltipFlag flag) {
+    int energy = stack.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT, 0);
+    if (energy > 0) {
       tooltip.add(Tooltip.showInfoCtrl(energy));
     }
     tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));
   }
 
   @Override
-  public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+  public ResourceLocation getArmorTexture(ItemStack stack, Entity entity,
+      EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
     return this.solarPanelLevel.getArmorTexture();
   }
 
@@ -63,88 +60,71 @@ public class SolarHelmet extends ArmorItem {
 
   @Override
   public int getBarWidth(ItemStack itemStack) {
-    if (getEnergyStored(itemStack) == 0) {
+    var energy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
+    if (energy == null) {
       return 0;
     }
-    var charge = (double) getEnergyStored(itemStack) / (double) getMaxEnergyStored();
+    if (energy.getEnergyStored() == 0) {
+      return 0;
+    }
+    var charge = (double) energy.getEnergyStored() / (double) energy.getMaxEnergyStored();
     return (int) Math.min(1 + 12 * charge, 13);
-  }
-
-  public void saveEnergyItem(ItemStack itemStack) {
-    itemStack.getOrCreateTag().putInt("energy", energyStorage.getEnergyStored());
-  }
-
-  public int getEnergyStored(ItemStack itemStack) {
-    if (!itemStack.hasTag()) {
-      return 0;
-    }
-    return itemStack.getTag().getInt("energy");
-  }
-
-  public int getMaxEnergyStored() {
-    return energyStorage.getMaxEnergyStored();
   }
 
   @Override
   public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slotId,
       boolean isSelected) {
-    if (level.isClientSide() || !(entity instanceof Player player)) {
+    if (!(entity instanceof ServerPlayer player)) {
       return;
     }
 
-    if (!(getEnergyStored(itemStack) == getMaxEnergyStored())) {
-      energyStorage.generatePower(currentAmountEnergyProduced(level, player));
+    var energy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
+    if (energy == null) {
+      return;
     }
-    sendEnergy(player);
-    saveEnergyItem(itemStack);
+
+    if (energy.getEnergyStored() != energy.getMaxEnergyStored()) {
+      energy.receiveEnergy(this.currentAmountEnergyProduced(level, player), false);
+    }
+    this.sendEnergy(energy, player);
   }
 
-  @Override
-  public EquipmentSlot getEquipmentSlot(ItemStack stack) {
-    if (stack.getTag() == null) {
-      energyStorage.setEnergy(0);
-      saveEnergyItem(stack);
-    } else {
-      energyStorage.setEnergy(getEnergyStored(stack));
-    }
-    return super.getEquipmentSlot(stack);
-  }
-
-  private void sendEnergy(Player player) {
+  private void sendEnergy(IEnergyStorage energy, Player player) {
+    var inventory = player.getInventory();
     //Armor priority
-    for (int i = 36; i < 40 && energyStorage.getEnergyStored() > 0; i++) {
-      ItemStack item = player.getInventory().getItem(i);
-      chargeItem(item);
+    for (int i = 36; i < 40 && energy.getEnergyStored() > 0; i++) {
+      var item = inventory.getItem(i);
+      if (item.getItem() != this) {
+        chargeItem(energy, item);
+      }
     }
     //Inventory
-    for (int i = 0; i < 36 && energyStorage.getEnergyStored() > 0; i++) {
-      ItemStack item = player.getInventory().getItem(i);
-      chargeItem(item);
+    for (int i = 0; i < 36 && energy.getEnergyStored() > 0; i++) {
+      chargeItem(energy, inventory.getItem(i));
     }
   }
 
-  private void chargeItem(ItemStack slot) {
-    if (slot.getCount() == 1) {
-      var handler = slot.getCapability(Capabilities.EnergyStorage.ITEM, null);
-      if (handler != null) {
-        if (handler.canReceive()) {
-          while (handler.getEnergyStored() < handler.getMaxEnergyStored()
-              && energyStorage.getEnergyStored() > 0) {
-            int accepted = Math.min(maxTransfer,
-                handler.receiveEnergy(energyStorage.getEnergyStored(), true));
-            energyStorage.consumePower(accepted);
-            handler.receiveEnergy(accepted, false);
-          }
-        }
+  private void chargeItem(IEnergyStorage energyStorage, ItemStack receiver) {
+    if (receiver.getCount() != 1) {
+      return;
+    }
+    var handler = receiver.getCapability(Capabilities.EnergyStorage.ITEM);
+    if (handler == null) {
+      return;
+    }
+    if (handler.canReceive()) {
+      while (handler.getEnergyStored() < handler.getMaxEnergyStored()
+          && energyStorage.getEnergyStored() > 0) {
+        int accepted = Math.min(this.maxTransfer,
+            handler.receiveEnergy(energyStorage.getEnergyStored(), true));
+        energyStorage.extractEnergy(accepted, false);
+        handler.receiveEnergy(accepted, false);
       }
     }
   }
 
   private int currentAmountEnergyProduced(Level level, Player player) {
-    if (!energyStorage.isFullEnergy()) {
-      return (int) (energyGeneration * ProductionSolarPanel.computeSunIntensity(level,
-          player.blockPosition().offset(0, 1, 0), getLevelSolarPanel()));
-    }
-    return 0;
+    return (int) (this.energyGeneration * ProductionSolarPanel.computeSunIntensity(level,
+        player.blockPosition().offset(0, 1, 0), getLevelSolarPanel()));
   }
 }

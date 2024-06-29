@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "item": "solargeneration:solar_panel_redstone"
+    },
+    "b": {
+      "item": "solargeneration:solar_core_signalum"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "solargeneration:solar_panel_signalum"
+  }
+}

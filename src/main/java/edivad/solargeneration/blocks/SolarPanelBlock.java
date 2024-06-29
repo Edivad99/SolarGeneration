@@ -5,16 +5,17 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -82,8 +83,8 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-      InteractionHand handIn, BlockHitResult hit) {
+  public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+      Player player, BlockHitResult hit) {
     if (player instanceof ServerPlayer serverPlayer) {
       level.getBlockEntity(pos, Registration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
           .ifPresent(blockEntity -> serverPlayer.openMenu(blockEntity, pos));
@@ -126,12 +127,12 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
       @Nullable LivingEntity placer, ItemStack itemStack) {
     if (!level.isClientSide) {
       var blockEntity = level.getBlockEntity(pos);
-      var tag = itemStack.getTag();
-      if (blockEntity != null && tag != null) {
-        var energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK,
+      if (blockEntity instanceof SolarPanelBlockEntity) {
+        var energyStore = level.getCapability(Capabilities.EnergyStorage.BLOCK,
             blockEntity.getBlockPos(), null);
-        if (energyStorage != null) {
-          ((SolarPanelBattery) energyStorage).setEnergy(tag.getInt("energy"));
+        var energy = itemStack.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT.get(), 0);
+        if (energyStore != null) {
+          ((SolarPanelBattery) energyStore).setEnergy(energy);
         }
       }
     }
@@ -139,11 +140,10 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   }
 
   @Override
-  public void appendHoverText(ItemStack itemStack, BlockGetter blockGetter, List<Component> tooltip,
+  public void appendHoverText(ItemStack itemStack, Item.TooltipContext context, List<Component> tooltip,
       TooltipFlag flagIn) {
-    var tag = itemStack.getTag();
-    if (tag != null) {
-      int energy = tag.getInt("energy");
+    int energy = itemStack.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT.get(), 0);
+    if (energy > 0) {
       tooltip.add(Tooltip.showInfoCtrl(energy));
     }
     tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));

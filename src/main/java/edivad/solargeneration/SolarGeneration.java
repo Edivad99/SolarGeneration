@@ -11,9 +11,10 @@ import edivad.solargeneration.datagen.SolarGenerationAdvancementProvider;
 import edivad.solargeneration.datagen.SolarGenerationLootTableProvider;
 import edivad.solargeneration.datagen.SolarPanelBlockTagsProvider;
 import edivad.solargeneration.datagen.SolarPanelItemTagsProvider;
-import edivad.solargeneration.network.PacketHandler;
+import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.setup.SolarGenerationCreativeModeTabs;
+import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -24,6 +25,8 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.energy.ComponentEnergyStorage;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 @Mod(SolarGeneration.ID)
 public class SolarGeneration {
@@ -38,9 +41,10 @@ public class SolarGeneration {
     modEventBus.addListener(this::handleRegisterMenuScreens);
     modEventBus.addListener(this::handleGatherData);
     modEventBus.addListener(this::registerCapabilities);
-    var packetHandler = new PacketHandler(modEventBus);
+    modEventBus.addListener(this::registerPayloads);
     Registration.register(modEventBus);
     SolarGenerationCreativeModeTabs.register(modEventBus);
+    SolarGenerationDataComponents.register(modEventBus);
   }
 
   private void handleClientSetup(FMLClientSetupEvent event) {
@@ -60,7 +64,8 @@ public class SolarGeneration {
     var lookupProvider = event.getLookupProvider();
     var fileHelper = event.getExistingFileHelper();
 
-    generator.addProvider(event.includeServer(), new SolarGenerationLootTableProvider(packOutput));
+    generator.addProvider(event.includeServer(),
+        new SolarGenerationLootTableProvider(packOutput, lookupProvider));
     var blockTags = new SolarPanelBlockTagsProvider(packOutput, lookupProvider, fileHelper);
     var blockTagsLookup = blockTags.contentsGetter();
     generator.addProvider(event.includeServer(), blockTags);
@@ -68,7 +73,7 @@ public class SolarGeneration {
         new SolarPanelItemTagsProvider(packOutput, lookupProvider, blockTagsLookup, fileHelper));
     generator.addProvider(event.includeServer(),
         new SolarGenerationAdvancementProvider(packOutput, lookupProvider, fileHelper));
-    generator.addProvider(event.includeServer(), new Recipes(packOutput));
+    generator.addProvider(event.includeServer(), new Recipes(packOutput, lookupProvider));
     generator.addProvider(event.includeClient(), new Lang(packOutput));
   }
 
@@ -77,9 +82,20 @@ public class SolarGeneration {
         event.registerBlockEntity(
             Capabilities.EnergyStorage.BLOCK, blockEntityType.get(),
             SolarPanelBlockEntity::getSolarPanelBattery));
+
+    Registration.HELMET.forEach((solarPanelLevel, item) ->
+        event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, context) ->
+            new ComponentEnergyStorage(stack,
+                SolarGenerationDataComponents.ENERGY_COMPONENT.get(),
+                solarPanelLevel.getCapacity(), solarPanelLevel.getMaxTransfer()), item.get()));
+  }
+
+  private void registerPayloads(RegisterPayloadHandlersEvent event) {
+    var registrar = event.registrar(ID).versioned("1");
+    registrar.playToClient(UpdateSolarPanel.TYPE, UpdateSolarPanel.STREAM_CODEC, UpdateSolarPanel::handle);
   }
 
   public static ResourceLocation rl(String path) {
-    return new ResourceLocation(ID, path);
+    return ResourceLocation.fromNamespaceAndPath(ID, path);
   }
 }

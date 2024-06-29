@@ -2,6 +2,8 @@ package edivad.solargeneration.tools;
 
 import java.util.Locale;
 import edivad.solargeneration.SolarGeneration;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 
@@ -21,11 +23,11 @@ public enum SolarPanelLevel {
     return "solar_core_" + getCorrectName();
   }
 
-  public String getArmorTexture() {
-    return SolarGeneration.ID + ":textures/model/armor/solar_helmet_" + getCorrectName() + ".png";
+  public ResourceLocation getArmorTexture() {
+    return SolarGeneration.rl("textures/model/armor/solar_helmet_" + getCorrectName() + ".png");
   }
 
-  public ArmorMaterial getArmorMaterial() {
+  public Holder<ArmorMaterial> getArmorMaterial() {
     return switch (this) {
       case LEADSTONE, HARDENED -> ArmorMaterials.IRON;
       case REDSTONE, SIGNALUM, RESONANT, ADVANCED -> ArmorMaterials.DIAMOND;

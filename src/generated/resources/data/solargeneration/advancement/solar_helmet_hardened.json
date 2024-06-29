@@ -1,0 +1,33 @@
+{
+  "parent": "solargeneration:solar_helmet_leadstone",
+  "criteria": {
+    "inv_changed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "solargeneration:solar_helmet_hardened"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.solargeneration.solar_helmet_hardened.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "solargeneration:solar_helmet_hardened"
+    },
+    "title": {
+      "translate": "advancements.solargeneration.solar_helmet_hardened"
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

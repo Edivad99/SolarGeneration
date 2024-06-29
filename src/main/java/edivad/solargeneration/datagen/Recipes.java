@@ -2,9 +2,11 @@ package edivad.solargeneration.datagen;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarPanelLevel;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -19,8 +21,8 @@ import net.neoforged.neoforge.common.Tags;
 
 public class Recipes extends RecipeProvider {
 
-  public Recipes(PackOutput packOutput) {
-    super(packOutput);
+  public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    super(packOutput, lookupProvider);
   }
 
   @Override
@@ -92,7 +94,7 @@ public class Recipes extends RecipeProvider {
         .define('a', Registration.PHOTOVOLTAIC_CELL.get())
         .define('b', Items.REDSTONE)
         .define('c', Registration.CORE.get(SolarPanelLevel.LEADSTONE).get())
-        .define('d', ItemTags.create(new ResourceLocation("forge", "nuggets/steel")))
+        .define('d', ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/steel")))
         .unlockedBy(getHasName(Registration.CORE.get(SolarPanelLevel.LEADSTONE).get()),
             has(Registration.CORE.get(SolarPanelLevel.LEADSTONE).get()))
         .unlockedBy(getHasName(Registration.PHOTOVOLTAIC_CELL.get()),
@@ -119,20 +121,20 @@ public class Recipes extends RecipeProvider {
 
   private void solarCore(RecipeOutput recipeOutput) {
     Map<SolarPanelLevel, ResourceLocation> materials = new HashMap<>();
-    materials.put(SolarPanelLevel.HARDENED, new ResourceLocation("forge", "nuggets/invar"));
-    materials.put(SolarPanelLevel.REDSTONE, new ResourceLocation("forge", "nuggets/electrum"));
-    materials.put(SolarPanelLevel.SIGNALUM, new ResourceLocation("forge", "nuggets/signalum"));
-    materials.put(SolarPanelLevel.RESONANT, new ResourceLocation("forge", "nuggets/enderium"));
-    materials.put(SolarPanelLevel.ADVANCED, new ResourceLocation("forge", "nuggets/lumium"));
-    materials.put(SolarPanelLevel.ULTIMATE, new ResourceLocation("forge", "nuggets/platinum"));
+    materials.put(SolarPanelLevel.HARDENED, ResourceLocation.fromNamespaceAndPath("c", "nuggets/invar"));
+    materials.put(SolarPanelLevel.REDSTONE, ResourceLocation.fromNamespaceAndPath("c", "nuggets/electrum"));
+    materials.put(SolarPanelLevel.SIGNALUM, ResourceLocation.fromNamespaceAndPath("c", "nuggets/signalum"));
+    materials.put(SolarPanelLevel.RESONANT, ResourceLocation.fromNamespaceAndPath("c", "nuggets/enderium"));
+    materials.put(SolarPanelLevel.ADVANCED, ResourceLocation.fromNamespaceAndPath("c", "nuggets/lumium"));
+    materials.put(SolarPanelLevel.ULTIMATE, ResourceLocation.fromNamespaceAndPath("c", "nuggets/platinum"));
 
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC,
             Registration.CORE.get(SolarPanelLevel.LEADSTONE).get())
         .pattern(" a ")
         .pattern("aba")
         .pattern(" a ")
-        .define('a', ItemTags.create(new ResourceLocation("forge", "nuggets/lead")))
-        .define('b', ItemTags.create(new ResourceLocation("forge", "ingots/iron")))
+        .define('a', ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/lead")))
+        .define('b', ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ingots/iron")))
         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
         .save(recipeOutput);
 

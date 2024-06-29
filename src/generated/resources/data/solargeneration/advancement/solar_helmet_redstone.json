@@ -1,0 +1,33 @@
+{
+  "parent": "solargeneration:solar_helmet_hardened",
+  "criteria": {
+    "inv_changed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "solargeneration:solar_helmet_redstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.solargeneration.solar_helmet_redstone.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "solargeneration:solar_helmet_redstone"
+    },
+    "title": {
+      "translate": "advancements.solargeneration.solar_helmet_redstone"
+    }
+  },
+  "requirements": [
+    [
+      "inv_changed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

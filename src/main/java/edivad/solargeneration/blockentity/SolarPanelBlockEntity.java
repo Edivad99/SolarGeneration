@@ -5,12 +5,16 @@ import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.ProductionSolarPanel;
+import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -53,7 +57,8 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
       int energyProduced = solarPanel.solarPanelBattery.isFullEnergy() ? 0 : energyProducedBySun;
       solarPanel.setChanged();
       var message = new UpdateSolarPanel(blockPos, energyStored, energyProduced);
-      PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(blockPos)).send(message);
+      PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level,
+          level.getChunk(blockPos).getPos(), message);
     }
   }
 
@@ -92,18 +97,29 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    super.load(tag);
+  protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+    super.loadAdditional(tag, provider);
     var energyTag = tag.get("energy");
     if (energyTag != null) {
-      solarPanelBattery.deserializeNBT(energyTag);
+      solarPanelBattery.deserializeNBT(provider, energyTag);
     }
   }
 
   @Override
-  protected void saveAdditional(CompoundTag tag) {
-    super.saveAdditional(tag);
-    tag.put("energy", solarPanelBattery.serializeNBT());
+  protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+    super.saveAdditional(tag, provider);
+    tag.put("energy", solarPanelBattery.serializeNBT(provider));
+  }
+
+  @Override
+  protected void applyImplicitComponents(DataComponentInput componentInput) {
+    int energy = componentInput.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT, 0);
+    solarPanelBattery.setEnergy(energy);
+  }
+
+  @Override
+  protected void collectImplicitComponents(DataComponentMap.Builder components) {
+    components.set(SolarGenerationDataComponents.ENERGY_COMPONENT, solarPanelBattery.getEnergyStored());
   }
 
   @Nullable

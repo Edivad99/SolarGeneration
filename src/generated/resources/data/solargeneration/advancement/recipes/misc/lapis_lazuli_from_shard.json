@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lapis_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "solargeneration:lapis_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "solargeneration:lapis_lazuli_from_shard"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_lapis_shard"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "solargeneration:lapis_lazuli_from_shard"
+    ]
+  }
+}

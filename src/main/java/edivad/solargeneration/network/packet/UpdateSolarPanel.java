@@ -1,45 +1,39 @@
 package edivad.solargeneration.network.packet;
 
-import edivad.edivadlib.network.EdivadLibPacket;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record UpdateSolarPanel(
-    BlockPos pos, int currentEnergy, int currentProduction) implements EdivadLibPacket {
+    BlockPos pos, int currentEnergy, int currentProduction) implements CustomPacketPayload {
 
-  public static final ResourceLocation ID = SolarGeneration.rl("update_solar_panel");
+  public static final Type<UpdateSolarPanel> TYPE =
+      new Type<>(SolarGeneration.rl("update_solar_panel"));
 
-  public static UpdateSolarPanel read(FriendlyByteBuf buf) {
-    var pos = buf.readBlockPos();
-    var currentEnergy = buf.readVarInt();
-    var currentProduction = buf.readVarInt();
-    return new UpdateSolarPanel(pos, currentEnergy, currentProduction);
-  }
-
-  @Override
-  public void write(FriendlyByteBuf buf) {
-    buf.writeBlockPos(pos);
-    buf.writeVarInt(currentEnergy);
-    buf.writeVarInt(currentProduction);
-  }
+  public static final StreamCodec<FriendlyByteBuf, UpdateSolarPanel> STREAM_CODEC =
+      StreamCodec.composite(
+          BlockPos.STREAM_CODEC, UpdateSolarPanel::pos,
+          ByteBufCodecs.VAR_INT, UpdateSolarPanel::currentEnergy,
+          ByteBufCodecs.VAR_INT, UpdateSolarPanel::currentProduction,
+          UpdateSolarPanel::new);
 
   @Override
-  public ResourceLocation id() {
-    return ID;
+  public Type<? extends CustomPacketPayload> type() {
+    return TYPE;
   }
 
-  public void handle(PlayPayloadContext ctx) {
-    ctx.level().ifPresent(level -> {
-      if (level.isLoaded(pos)) {
-        if (level.getBlockEntity(pos) instanceof SolarPanelBlockEntity solar) {
-          solar.energyClient = currentEnergy;
-          solar.energyProductionClient = currentProduction;
-        }
+  public static void handle(UpdateSolarPanel message, IPayloadContext ctx) {
+    var level = ctx.player().level();
+    if (level.isLoaded(message.pos)) {
+      if (level.getBlockEntity(message.pos) instanceof SolarPanelBlockEntity solar) {
+        solar.energyClient = message.currentEnergy;
+        solar.energyProductionClient = message.currentProduction;
       }
-    });
+    }
   }
 }
