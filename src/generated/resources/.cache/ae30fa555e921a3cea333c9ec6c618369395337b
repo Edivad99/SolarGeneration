@@ -1,3 +1,5 @@
-// 1.21	2024-06-28T19:26:44.500567	Tags for minecraft:item mod id solargeneration
+// 1.21	2024-12-22T12:21:41.287285	Tags for minecraft:item mod id solargeneration
+8fc3ef75b7aaa4f546b74c794774e7350e6738aa data/c/tags/item/armors.json
+8fc3ef75b7aaa4f546b74c794774e7350e6738aa data/minecraft/tags/item/head_armor.json
 dee87d91d4e490a20b2107cae842435ff27cf2d9 data/solargeneration/tags/item/solar_helmet.json
 2dcef60eaa3e33869208df16d9dcc6f45402d239 data/solargeneration/tags/item/solar_panel.json
