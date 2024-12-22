@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -78,6 +79,11 @@ public class SolarHelmet extends ArmorItem {
       return;
     }
 
+    // Check if the player is wearing the helmet
+    if (slotId != Inventory.INVENTORY_SIZE + EquipmentSlot.HEAD.getIndex()) {
+      return;
+    }
+
     var energy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
     if (energy == null) {
       return;
@@ -92,14 +98,14 @@ public class SolarHelmet extends ArmorItem {
   private void sendEnergy(IEnergyStorage energy, Player player) {
     var inventory = player.getInventory();
     //Armor priority
-    for (int i = 36; i < 40 && energy.getEnergyStored() > 0; i++) {
+    for (int i = Inventory.INVENTORY_SIZE; i < 40 && energy.getEnergyStored() > 0; i++) {
       var item = inventory.getItem(i);
       if (item.getItem() != this) {
         chargeItem(energy, item);
       }
     }
     //Inventory
-    for (int i = 0; i < 36 && energy.getEnergyStored() > 0; i++) {
+    for (int i = 0; i < Inventory.INVENTORY_SIZE && energy.getEnergyStored() > 0; i++) {
       chargeItem(energy, inventory.getItem(i));
     }
   }
