@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:nuggets/signalum"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_redstone"
-    }
+    "a": "#c:nuggets/signalum",
+    "b": "solargeneration:solar_core_redstone"
   },
   "pattern": [
     " a ",

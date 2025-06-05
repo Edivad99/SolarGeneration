@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "item": "minecraft:lapis_lazuli"
-    }
+    "a": "minecraft:lapis_lazuli"
   },
   "pattern": [
     "aa",

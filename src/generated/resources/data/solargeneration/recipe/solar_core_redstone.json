@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:nuggets/electrum"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_hardened"
-    }
+    "a": "#c:nuggets/electrum",
+    "b": "solargeneration:solar_core_hardened"
   },
   "pattern": [
     " a ",

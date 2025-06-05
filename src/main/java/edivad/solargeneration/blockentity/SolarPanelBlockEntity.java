@@ -11,6 +11,7 @@ import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -112,9 +113,10 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
   }
 
   @Override
-  protected void applyImplicitComponents(DataComponentInput componentInput) {
-    int energy = componentInput.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT, 0);
+  protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+    int energy = componentGetter.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT, 0);
     solarPanelBattery.setEnergy(energy);
+    super.applyImplicitComponents(componentGetter);
   }
 
   @Override

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:nuggets/platinum"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_advanced"
-    }
+    "a": "#c:nuggets/platinum",
+    "b": "solargeneration:solar_core_advanced"
   },
   "pattern": [
     " a ",

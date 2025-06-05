@@ -1,13 +1,12 @@
 package edivad.solargeneration.client.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.tools.Translations;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -54,15 +53,16 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
   @Override
   protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-    RenderSystem.setShaderTexture(0, TEXTURE);
-    guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+    //RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    //RenderSystem.setShaderTexture(0, TEXTURE);
+    guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.leftPos, this.topPos, 0, 0,
+        this.imageWidth, this.imageHeight, 256, 256);
 
     // Energy
     int y = this.getEnergyScaled(60);
-    guiGraphics
-        .blit(TEXTURE, this.leftPos + 10, this.topPos + 12 + y, this.imageWidth, 0, 16, 60 - y);
+    guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.leftPos + 10, this.topPos + 12 + y,
+        this.imageWidth, 0, 16, 60 - y, 256, 256);
   }
 
   private String getEnergyFormatted(int energy) {

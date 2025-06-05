@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:nuggets/invar"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_leadstone"
-    }
+    "a": "#c:nuggets/invar",
+    "b": "solargeneration:solar_core_leadstone"
   },
   "pattern": [
     " a ",

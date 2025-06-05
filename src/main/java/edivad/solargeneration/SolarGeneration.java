@@ -5,10 +5,11 @@ import com.mojang.logging.LogUtils;
 import edivad.edivadlib.setup.UpdateChecker;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.client.screen.SolarPanelScreen;
-import edivad.solargeneration.datagen.Lang;
-import edivad.solargeneration.datagen.Recipes;
 import edivad.solargeneration.datagen.SolarGenerationAdvancementProvider;
+import edivad.solargeneration.datagen.SolarGenerationLang;
 import edivad.solargeneration.datagen.SolarGenerationLootTableProvider;
+import edivad.solargeneration.datagen.SolarGenerationModelProvider;
+import edivad.solargeneration.datagen.SolarGenerationRecipes;
 import edivad.solargeneration.datagen.SolarPanelBlockTagsProvider;
 import edivad.solargeneration.datagen.SolarPanelItemTagsProvider;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
@@ -58,23 +59,13 @@ public class SolarGeneration {
     }
   }
 
-  private void handleGatherData(GatherDataEvent event) {
-    var generator = event.getGenerator();
-    var packOutput = generator.getPackOutput();
-    var lookupProvider = event.getLookupProvider();
-    var fileHelper = event.getExistingFileHelper();
-
-    generator.addProvider(event.includeServer(),
-        new SolarGenerationLootTableProvider(packOutput, lookupProvider));
-    var blockTags = new SolarPanelBlockTagsProvider(packOutput, lookupProvider, fileHelper);
-    var blockTagsLookup = blockTags.contentsGetter();
-    generator.addProvider(event.includeServer(), blockTags);
-    generator.addProvider(event.includeServer(),
-        new SolarPanelItemTagsProvider(packOutput, lookupProvider, blockTagsLookup, fileHelper));
-    generator.addProvider(event.includeServer(),
-        new SolarGenerationAdvancementProvider(packOutput, lookupProvider, fileHelper));
-    generator.addProvider(event.includeServer(), new Recipes(packOutput, lookupProvider));
-    generator.addProvider(event.includeClient(), new Lang(packOutput));
+  private void handleGatherData(GatherDataEvent.Client event) {
+    event.createProvider(SolarGenerationLootTableProvider::new);
+    event.createBlockAndItemTags(SolarPanelBlockTagsProvider::new, SolarPanelItemTagsProvider::new);
+    event.createProvider(SolarGenerationAdvancementProvider::new);
+    event.createProvider(SolarGenerationRecipes.Runner::new);
+    event.createProvider(SolarGenerationLang::new);
+    event.createProvider(SolarGenerationModelProvider::new);
   }
 
   private void registerCapabilities(RegisterCapabilitiesEvent event) {

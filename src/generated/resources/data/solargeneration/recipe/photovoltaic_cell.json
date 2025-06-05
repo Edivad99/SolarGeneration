@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "item": "minecraft:glass_pane"
-    },
-    "b": {
-      "item": "solargeneration:lapis_shard"
-    },
-    "c": {
-      "tag": "c:nuggets/iron"
-    }
+    "a": "minecraft:glass_pane",
+    "b": "solargeneration:lapis_shard",
+    "c": "#c:nuggets/iron"
   },
   "pattern": [
     "aaa",

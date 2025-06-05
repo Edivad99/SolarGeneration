@@ -1,23 +1,18 @@
 package edivad.solargeneration.blocks;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.jetbrains.annotations.Nullable;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.setup.Registration;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import edivad.solargeneration.tools.Tooltip;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -89,7 +84,7 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
       level.getBlockEntity(pos, Registration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
           .ifPresent(blockEntity -> serverPlayer.openMenu(blockEntity, pos));
     }
-    return InteractionResult.sidedSuccess(level.isClientSide());
+    return InteractionResult.SUCCESS_SERVER;
   }
 
   @Override
@@ -140,16 +135,6 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   }
 
   @Override
-  public void appendHoverText(ItemStack itemStack, Item.TooltipContext context, List<Component> tooltip,
-      TooltipFlag flagIn) {
-    int energy = itemStack.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT.get(), 0);
-    if (energy > 0) {
-      tooltip.add(Tooltip.showInfoCtrl(energy));
-    }
-    tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));
-  }
-
-  @Override
   public FluidState getFluidState(BlockState state) {
     return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
   }
@@ -161,9 +146,9 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   }
 
   @Override
-  public boolean canPlaceLiquid(@Nullable Player player, BlockGetter blockGetter, BlockPos pos,
+  public boolean canPlaceLiquid(@Nullable LivingEntity entity, BlockGetter blockGetter, BlockPos pos,
       BlockState state, Fluid fluidIn) {
-    return SimpleWaterloggedBlock.super.canPlaceLiquid(player, blockGetter, pos, state, fluidIn);
+    return SimpleWaterloggedBlock.super.canPlaceLiquid(entity, blockGetter, pos, state, fluidIn);
   }
 
   @Override

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:nuggets/enderium"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_signalum"
-    }
+    "a": "#c:nuggets/enderium",
+    "b": "solargeneration:solar_core_signalum"
   },
   "pattern": [
     " a ",

@@ -6,13 +6,15 @@ import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.blocks.SolarPanelBlock;
 import edivad.solargeneration.items.SolarHelmet;
+import edivad.solargeneration.items.SolarPanelBlockItem;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -27,7 +29,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class Registration {
 
   public static final Map<SolarPanelLevel, DeferredBlock<SolarPanelBlock>> SOLAR_PANEL_BLOCK = new HashMap<>();
-  public static final Map<SolarPanelLevel, DeferredItem<BlockItem>> SOLAR_PANEL_ITEM = new HashMap<>();
+  public static final Map<SolarPanelLevel, DeferredItem<SolarPanelBlockItem>> SOLAR_PANEL_ITEM = new HashMap<>();
   public static final Map<SolarPanelLevel, DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarPanelBlockEntity>>> SOLAR_PANEL_BLOCK_ENTITY = new HashMap<>();
   public static final Map<SolarPanelLevel, DeferredHolder<MenuType<?>, MenuType<SolarPanelMenu>>> SOLAR_PANEL_MENU = new HashMap<>();
   public static final Map<SolarPanelLevel, DeferredItem<Item>> HELMET = new HashMap<>();
@@ -49,18 +51,18 @@ public class Registration {
       SOLAR_PANEL_BLOCK.put(level,
           BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanelBlock(level,
               BlockBehaviour.Properties.of()
+                  .setId(ResourceKey.create(Registries.BLOCK, SolarGeneration.rl(level.getSolarPanelName())))
                   .sound(SoundType.METAL)
                   .requiresCorrectToolForDrops()
                   .strength(1.5F, 6.0F))));
 
       SOLAR_PANEL_ITEM.put(level, ITEMS.registerItem(level.getSolarPanelName(), properties ->
-          new BlockItem(SOLAR_PANEL_BLOCK.get(level).get(),
+          new SolarPanelBlockItem(SOLAR_PANEL_BLOCK.get(level).get(), level,
               properties.component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
 
       SOLAR_PANEL_BLOCK_ENTITY.put(level, BLOCK_ENTITIES.register(level.getSolarPanelName(),
-          () -> BlockEntityType.Builder.of(
-              (pos, state) -> new SolarPanelBlockEntity(level, pos, state),
-              SOLAR_PANEL_BLOCK.get(level).get()).build(null)));
+          () -> new BlockEntityType<>((pos, state) ->
+              new SolarPanelBlockEntity(level, pos, state), SOLAR_PANEL_BLOCK.get(level).get())));
 
       SOLAR_PANEL_MENU.put(level, MENU.register(level.getSolarPanelName(),
           () -> new MenuType<>((IContainerFactory<SolarPanelMenu>) (id, inventory, buf) -> {
@@ -75,7 +77,7 @@ public class Registration {
           }, FeatureFlags.DEFAULT_FLAGS)));
 
       HELMET.put(level, ITEMS.registerItem(level.getSolarHelmetName(), properties ->
-          new SolarHelmet(level, properties.stacksTo(1)
+          new SolarHelmet(level, properties
               .durability(0)
               .component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
       CORE.put(level, ITEMS.registerSimpleItem(level.getSolarCoreName()));

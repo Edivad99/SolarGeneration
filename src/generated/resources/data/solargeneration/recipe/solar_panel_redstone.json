@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "item": "solargeneration:solar_panel_hardened"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_redstone"
-    }
+    "a": "solargeneration:solar_panel_hardened",
+    "b": "solargeneration:solar_core_redstone"
   },
   "pattern": [
     "aaa",

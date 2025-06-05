@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "solargeneration:solar_panel_advanced"
-    },
-    {
-      "item": "minecraft:diamond_helmet"
-    }
+    "solargeneration:solar_panel_advanced",
+    "minecraft:diamond_helmet"
   ],
   "result": {
     "count": 1,

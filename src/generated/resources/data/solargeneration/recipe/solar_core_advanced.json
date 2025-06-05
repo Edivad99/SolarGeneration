@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:nuggets/lumium"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_resonant"
-    }
+    "a": "#c:nuggets/lumium",
+    "b": "solargeneration:solar_core_resonant"
   },
   "pattern": [
     " a ",

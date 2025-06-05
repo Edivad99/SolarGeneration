@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "solargeneration:solar_panel_leadstone"
-    },
-    {
-      "item": "minecraft:iron_helmet"
-    }
+    "solargeneration:solar_panel_leadstone",
+    "minecraft:iron_helmet"
   ],
   "result": {
     "count": 1,

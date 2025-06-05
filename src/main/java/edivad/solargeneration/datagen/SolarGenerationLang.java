@@ -9,9 +9,9 @@ import edivad.solargeneration.tools.Translations;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
-public class Lang extends LanguageProvider {
+public class SolarGenerationLang extends LanguageProvider {
 
-  public Lang(PackOutput packOutput) {
+  public SolarGenerationLang(PackOutput packOutput) {
     super(packOutput, SolarGeneration.ID, "en_us");
   }
 
@@ -30,7 +30,7 @@ public class Lang extends LanguageProvider {
         (level, item) -> add(item.get(), String.format("%s Solar Core", translations.get(level))));
     Registration.HELMET.forEach((level, item) -> add(item.get(),
         String.format("%s Solar Helmet", translations.get(level))));
-    Registration.SOLAR_PANEL_BLOCK.forEach(
+    Registration.SOLAR_PANEL_ITEM.forEach(
         (level, item) -> add(item.get(), String.format("%s Solar Panel", translations.get(level))));
 
     add(Registration.LAPIS_SHARD.get(), "Lapis Shard");

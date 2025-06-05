@@ -2,6 +2,7 @@ package edivad.solargeneration.tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -10,20 +11,19 @@ import net.minecraft.network.chat.MutableComponent;
 
 public class Tooltip {
 
-  public static List<MutableComponent> showInfoShift(SolarPanelLevel solarPanelLevel) {
+  public static void showInfoShift(SolarPanelLevel solarPanelLevel, Consumer<Component> tooltipAdder) {
     List<MutableComponent> components = new ArrayList<>();
     if (Screen.hasShiftDown()) {
       var generation = String.valueOf(solarPanelLevel.getEnergyGeneration());
       var transfer = String.valueOf(solarPanelLevel.getMaxTransfer());
       var capacity = String.valueOf(solarPanelLevel.getCapacity());
 
-      components.add(buildLineEnergy(Translations.GENERATION, generation));
-      components.add(buildLineEnergy(Translations.TRANSFER, transfer));
-      components.add(buildLineEnergy(Translations.CAPACITY, capacity).append(" FE"));
+      tooltipAdder.accept(buildLineEnergy(Translations.GENERATION, generation));
+      tooltipAdder.accept(buildLineEnergy(Translations.TRANSFER, transfer));
+      tooltipAdder.accept(buildLineEnergy(Translations.CAPACITY, capacity).append(" FE"));
     } else {
-      components.add(buildLineHoldKey("Shift", Translations.FOR_DETAILS));
+      tooltipAdder.accept(buildLineHoldKey("Shift", Translations.FOR_DETAILS));
     }
-    return components;
   }
 
   public static MutableComponent showInfoCtrl(int energy) {

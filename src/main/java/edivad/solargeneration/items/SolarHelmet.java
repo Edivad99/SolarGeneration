@@ -1,33 +1,50 @@
 package edivad.solargeneration.items;
 
-import java.util.List;
+import java.util.function.Consumer;
+import org.jetbrains.annotations.Nullable;
+import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Tooltip;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-public class SolarHelmet extends ArmorItem {
+public class SolarHelmet extends Item {
 
   private final SolarPanelLevel solarPanelLevel;
   private final int energyGeneration;
   private final int maxTransfer;
 
   public SolarHelmet(SolarPanelLevel solarPanelLevel, Properties properties) {
-    super(solarPanelLevel.getArmorMaterial(), Type.HELMET, properties);
+    super(properties
+        .component(DataComponents.EQUIPPABLE,
+            Equippable.builder(EquipmentSlot.HEAD)
+                .setEquipSound(SoundEvents.ARMOR_EQUIP_IRON)
+                .setAllowedEntities(HolderSet.direct(EntityType::builtInRegistryHolder, EntityType.PLAYER))
+                .setDispensable(true)
+                .setSwappable(false)
+                .setDamageOnHurt(false)
+                .setAsset(ResourceKey.create(EquipmentAssets.ROOT_ID, SolarGeneration.rl(solarPanelLevel.getSolarHelmetName())))
+                .build()));
     this.solarPanelLevel = solarPanelLevel;
 
     this.energyGeneration = solarPanelLevel.getEnergyGeneration();
@@ -36,18 +53,12 @@ public class SolarHelmet extends ArmorItem {
 
   @Override
   public void appendHoverText(ItemStack stack, TooltipContext context,
-      List<Component> tooltip, TooltipFlag flag) {
+      TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
     int energy = stack.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT, 0);
     if (energy > 0) {
-      tooltip.add(Tooltip.showInfoCtrl(energy));
+      tooltipAdder.accept(Tooltip.showInfoCtrl(energy));
     }
-    tooltip.addAll(Tooltip.showInfoShift(this.solarPanelLevel));
-  }
-
-  @Override
-  public ResourceLocation getArmorTexture(ItemStack stack, Entity entity,
-      EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-    return this.solarPanelLevel.getArmorTexture();
+    Tooltip.showInfoShift(this.solarPanelLevel, tooltipAdder);
   }
 
   public SolarPanelLevel getLevelSolarPanel() {
@@ -73,18 +84,18 @@ public class SolarHelmet extends ArmorItem {
   }
 
   @Override
-  public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slotId,
-      boolean isSelected) {
-    if (!(entity instanceof ServerPlayer player)) {
+  public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity,
+      @Nullable EquipmentSlot slot) {
+    if (!(entity instanceof Player player)) {
       return;
     }
 
     // Check if the player is wearing the helmet
-    if (slotId != Inventory.INVENTORY_SIZE + EquipmentSlot.HEAD.getIndex()) {
+    if (slot != EquipmentSlot.HEAD) {
       return;
     }
 
-    var energy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
+    var energy = stack.getCapability(Capabilities.EnergyStorage.ITEM);
     if (energy == null) {
       return;
     }

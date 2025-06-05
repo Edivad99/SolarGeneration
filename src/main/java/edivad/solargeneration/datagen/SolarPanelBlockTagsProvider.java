@@ -8,14 +8,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class SolarPanelBlockTagsProvider extends BlockTagsProvider {
 
   public SolarPanelBlockTagsProvider(PackOutput packOutput,
-      CompletableFuture<HolderLookup.Provider> lookupProvider,
-      ExistingFileHelper existingFileHelper) {
-    super(packOutput, lookupProvider, SolarGeneration.ID, existingFileHelper);
+      CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    super(packOutput, lookupProvider, SolarGeneration.ID);
   }
 
   @Override

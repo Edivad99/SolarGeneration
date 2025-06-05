@@ -12,15 +12,13 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class SolarPanelItemTagsProvider extends ItemTagsProvider {
 
   public SolarPanelItemTagsProvider(PackOutput packOutput,
       CompletableFuture<HolderLookup.Provider> lookupProvider,
-      CompletableFuture<TagsProvider.TagLookup<Block>> blockTagProvider,
-      ExistingFileHelper fileHelper) {
-    super(packOutput, lookupProvider, blockTagProvider, SolarGeneration.ID, fileHelper);
+      CompletableFuture<TagsProvider.TagLookup<Block>> blockTagProvider) {
+    super(packOutput, lookupProvider, blockTagProvider, SolarGeneration.ID);
   }
 
   @Override

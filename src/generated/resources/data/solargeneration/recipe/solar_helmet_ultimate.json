@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "solargeneration:solar_panel_ultimate"
-    },
-    {
-      "item": "minecraft:netherite_helmet"
-    }
+    "solargeneration:solar_panel_ultimate",
+    "minecraft:netherite_helmet"
   ],
   "result": {
     "count": 1,

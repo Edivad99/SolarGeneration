@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "item": "solargeneration:solar_panel_signalum"
-    },
-    "b": {
-      "item": "solargeneration:solar_core_resonant"
-    }
+    "a": "solargeneration:solar_panel_signalum",
+    "b": "solargeneration:solar_core_resonant"
   },
   "pattern": [
     "aaa",

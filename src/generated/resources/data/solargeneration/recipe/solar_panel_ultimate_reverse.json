@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "solargeneration:solar_helmet_ultimate"
-    }
+    "solargeneration:solar_helmet_ultimate"
   ],
   "result": {
     "count": 1,

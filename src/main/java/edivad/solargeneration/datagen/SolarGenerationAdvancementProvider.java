@@ -14,19 +14,18 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementProvider;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class SolarGenerationAdvancementProvider extends AdvancementProvider {
 
   public SolarGenerationAdvancementProvider(PackOutput packOutput,
-      CompletableFuture<HolderLookup.Provider> registries,
-      ExistingFileHelper existingFileHelper) {
-    super(packOutput, registries, existingFileHelper, List.of(new Advancements()));
+      CompletableFuture<HolderLookup.Provider> registries) {
+    super(packOutput, registries, List.of(new Advancements()));
   }
 
-  private static class Advancements implements AdvancementProvider.AdvancementGenerator {
+  private static class Advancements implements AdvancementSubProvider {
 
     private static AdvancementType getFrameType(SolarPanelLevel level) {
       return switch (level) {
@@ -37,8 +36,7 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
     }
 
     @Override
-    public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> consumer,
-        ExistingFileHelper existingFileHelper) {
+    public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> writer) {
       var ROOT = Advancement.Builder.advancement()
           .display(Registration.PHOTOVOLTAIC_CELL.get(),
               Translations.ADVANCEMENTS_ROOT.translateTitle(),
@@ -48,26 +46,26 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
               true, true, false)
           .addCriterion("inv_changed",
               InventoryChangeTrigger.TriggerInstance.hasItems(Registration.PHOTOVOLTAIC_CELL.get()))
-          .save(consumer, SolarGeneration.rl("root"), existingFileHelper);
+          .save(writer, SolarGeneration.rl("root"));
 
       AdvancementHolder parent = ROOT;
       for (var level : SolarPanelLevel.values()) {
         var item = Registration.SOLAR_PANEL_ITEM.get(level);
         var translations = Translations.SOLAR_PANEL_ADVANCEMENTS.get(level);
-        parent = generateAdvancements(consumer, existingFileHelper, level, parent, item.get(),
+        parent = generateAdvancements(writer, level, parent, item.get(),
             translations, level.getSolarPanelName());
       }
+
       parent = ROOT;
       for (var level : SolarPanelLevel.values()) {
         var item = Registration.HELMET.get(level);
         var translations = Translations.HELMET_ADVANCEMENTS.get(level);
-        parent = generateAdvancements(consumer, existingFileHelper, level, parent, item.get(),
+        parent = generateAdvancements(writer, level, parent, item.get(),
             translations, level.getSolarHelmetName());
       }
     }
 
-    private AdvancementHolder generateAdvancements(Consumer<AdvancementHolder> consumer,
-        ExistingFileHelper existingFileHelper,
+    private AdvancementHolder generateAdvancements(Consumer<AdvancementHolder> writer,
         SolarPanelLevel level,
         AdvancementHolder parent,
         Item item,
@@ -82,7 +80,7 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
               true, true, false)
           .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(item))
           .parent(parent)
-          .save(consumer, SolarGeneration.rl(name), existingFileHelper);
+          .save(writer, SolarGeneration.rl(name));
     }
   }
 }
