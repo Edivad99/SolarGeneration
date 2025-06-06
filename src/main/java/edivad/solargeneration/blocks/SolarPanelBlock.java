@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -39,12 +40,12 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
   private static final VoxelShape BOX = createShape();
-  private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
+  private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   private final SolarPanelLevel solarPanelLevel;
 
   public SolarPanelBlock(SolarPanelLevel solarPanelLevel, Properties properties) {
     super(properties);
-    this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+    this.registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
     this.solarPanelLevel = solarPanelLevel;
   }
 
@@ -153,7 +154,6 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
 
   @Override
   protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-    super.createBlockStateDefinition(builder);
     builder.add(WATERLOGGED);
   }
 }
