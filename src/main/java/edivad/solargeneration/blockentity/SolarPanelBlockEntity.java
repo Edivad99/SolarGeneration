@@ -10,10 +10,8 @@ import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
@@ -23,6 +21,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -98,18 +98,15 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
   }
 
   @Override
-  protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-    super.loadAdditional(tag, provider);
-    var energyTag = tag.get("energy");
-    if (energyTag != null) {
-      solarPanelBattery.deserializeNBT(provider, energyTag);
-    }
+  protected void loadAdditional(ValueInput input) {
+    super.loadAdditional(input);
+    solarPanelBattery.deserialize(input);
   }
 
   @Override
-  protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-    super.saveAdditional(tag, provider);
-    tag.put("energy", solarPanelBattery.serializeNBT(provider));
+  protected void saveAdditional(ValueOutput output) {
+    super.saveAdditional(output);
+    solarPanelBattery.serialize(output);
   }
 
   @Override

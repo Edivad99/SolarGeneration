@@ -61,7 +61,9 @@ public class SolarGeneration {
 
   private void handleGatherData(GatherDataEvent.Client event) {
     event.createProvider(SolarGenerationLootTableProvider::new);
-    event.createBlockAndItemTags(SolarPanelBlockTagsProvider::new, SolarPanelItemTagsProvider::new);
+    event.createBlockAndItemTags(SolarPanelBlockTagsProvider::new,
+        (packOutput, lookupProvider, __) ->
+            new SolarPanelItemTagsProvider(packOutput, lookupProvider));
     event.createProvider(SolarGenerationAdvancementProvider::new);
     event.createProvider(SolarGenerationRecipes.Runner::new);
     event.createProvider(SolarGenerationLang::new);

@@ -12,7 +12,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -38,7 +37,7 @@ public class SolarHelmet extends Item {
     super(properties
         .component(DataComponents.EQUIPPABLE,
             Equippable.builder(EquipmentSlot.HEAD)
-                .setEquipSound(SoundEvents.ARMOR_EQUIP_IRON)
+                .setEquipSound(null)
                 .setAllowedEntities(HolderSet.direct(EntityType::builtInRegistryHolder, EntityType.PLAYER))
                 .setDispensable(true)
                 .setSwappable(false)

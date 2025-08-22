@@ -1,12 +1,15 @@
 package edivad.solargeneration.client.screen;
 
+import java.util.List;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.tools.Translations;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -30,8 +33,15 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
     this.renderTooltip(guiGraphics, mouseX, mouseY);
     if (mouseX > leftPos + 7 && mouseX < leftPos + 29 && mouseY > topPos + 10
         && mouseY < topPos + 77) {
-      guiGraphics.renderTooltip(this.font,
-          Component.translatable(Translations.ENERGY, getPercent()), mouseX, mouseY);
+      var component = Component.translatable(Translations.ENERGY, getPercent());
+      var clienttooltipcomponent = ClientTooltipComponent.create(component.getVisualOrderText());
+      guiGraphics.renderTooltip(
+          font,
+          List.of(clienttooltipcomponent),
+          mouseX, mouseY,
+          DefaultTooltipPositioner.INSTANCE,
+          null
+      );
     }
   }
 
@@ -40,28 +50,25 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
     var energy = Component.translatable(Translations.STORED_ENERGY,
         getEnergyFormatted(solarPanelBlockEntity.energyClient));
     guiGraphics.drawString(font, energy, (imageWidth / 2 - font.width(energy) / 2) + 14, 20,
-        4210752, false);
+        0xFF333333, false);
     var maxEnergy = Component.translatable(Translations.CAPACITY,
         getEnergyFormatted(solarPanelBlockEntity.getLevelSolarPanel().getCapacity()));
     guiGraphics.drawString(font, maxEnergy, (imageWidth / 2 - font.width(maxEnergy) / 2) + 14, 30,
-        4210752, false);
+        0xFF333333, false);
     var generation = Component.translatable(Translations.GENERATION,
         solarPanelBlockEntity.energyProductionClient);
     guiGraphics.drawString(font, generation, (imageWidth / 2 - font.width(generation) / 2) + 14, 40,
-        4210752, false);
+        0xFF333333, false);
   }
 
   @Override
   protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-    //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-    //RenderSystem.setShaderTexture(0, TEXTURE);
-    guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.leftPos, this.topPos, 0, 0,
+    guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0,
         this.imageWidth, this.imageHeight, 256, 256);
 
     // Energy
     int y = this.getEnergyScaled(60);
-    guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.leftPos + 10, this.topPos + 12 + y,
+    guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos + 10, this.topPos + 12 + y,
         this.imageWidth, 0, 16, 60 - y, 256, 256);
   }
 

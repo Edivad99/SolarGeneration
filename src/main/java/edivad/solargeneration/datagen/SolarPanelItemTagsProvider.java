@@ -7,18 +7,15 @@ import edivad.solargeneration.tags.SolarGenerationTags;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 public class SolarPanelItemTagsProvider extends ItemTagsProvider {
 
   public SolarPanelItemTagsProvider(PackOutput packOutput,
-      CompletableFuture<HolderLookup.Provider> lookupProvider,
-      CompletableFuture<TagsProvider.TagLookup<Block>> blockTagProvider) {
-    super(packOutput, lookupProvider, blockTagProvider, SolarGeneration.ID);
+      CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    super(packOutput, lookupProvider, SolarGeneration.ID);
   }
 
   @Override

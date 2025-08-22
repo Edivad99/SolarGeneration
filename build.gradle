@@ -5,8 +5,8 @@ plugins {
     id 'java-library'
     id 'eclipse'
     id 'idea'
-    id 'net.neoforged.gradle.userdev' version "$neo_gradle_version"
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '3.0.6'
+    id 'net.neoforged.moddev' version "$mod_dev_gradle"
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '3.0.7'
     id 'me.modmuss50.mod-publish-plugin' version '0.8.4'
     id 'com.diffplug.spotless' version '6.25.0'
 }
@@ -36,33 +36,59 @@ println("JVM: ${System.getProperty('java.vm.version')} (${System.getProperty('ja
 println("Arch: ${System.getProperty('os.arch')}")
 println(repeat('*', 60))
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
-
-runs {
-    configureEach {
-        systemProperty 'forge.logging.console.level', 'debug'
-
-        modSource project.sourceSets.main
-        if (System.getProperty('idea.active')) {
-            jvmArguments.add("-XX:+AllowEnhancedClassRedefinition")
-        }
-    }
-
-    client {
-    }
-
-    server {
-        arguments '--nogui'
-    }
-
-    clientData {
-        arguments.addAll '--mod', 'solargeneration', '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-    }
-}
-
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
     exclude '.cache'
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    validateAccessTransformers = true
+
+    runs {
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'solargeneration'
+
+            if (System.getProperty('idea.active')) {
+                jvmArguments.add("-XX:+AllowEnhancedClassRedefinition")
+            }
+        }
+
+        client {
+            client()
+            gameDirectory = project.file('runs/client')
+        }
+
+        server {
+            server()
+            gameDirectory = project.file('runs/server')
+            programArgument '--nogui'
+        }
+
+        clientData {
+            clientData()
+            gameDirectory = project.file('runs/data')
+            programArguments.addAll '--mod', 'solargeneration', '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+    }
+
+    mods {
+        solargeneration {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
 }
 
 repositories {
@@ -79,13 +105,7 @@ repositories {
     }
 }
 
-configurations {
-    runtimeClasspath.extendsFrom localRuntime
-}
-
 dependencies {
-    implementation "net.neoforged:neoforge:$neo_version"
-
     //implementation "edivad:EdivadLib-$minecraft_version:3.0.0-snapshot"
     implementation "curse.maven:edivadlib-638508:$edivadlib_id"
 
@@ -133,6 +153,16 @@ tasks.withType(ProcessResources).configureEach {
     }
 }
 
+def lastCommit = providers.exec {
+    commandLine 'git', 'rev-parse', 'HEAD'
+}.standardOutput.asText.get().trim()
+
+def penultimateTag = () -> {
+    providers.exec {
+        commandLine 'git', 'describe', '--abbrev=0', '--tags', 'HEAD~'
+    }.standardOutput.asText.get().trim()
+}
+
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
@@ -142,16 +172,9 @@ tasks.named('jar', Jar).configure {
             'Implementation-Title'    : 'solargeneration',
             'Implementation-Version'  : project.version,
             'Implementation-Vendor'   : 'Edivad99',
-            'Implementation-Commit'   : 'git rev-parse HEAD'.execute().text.trim(),
+            'Implementation-Commit'   : lastCommit,
         ])
     }
-}
-
-def penultimateTag = {
-    def gitVersionProvider = providers.exec {
-        commandLine 'git', 'describe', '--abbrev=0', '--tags', 'HEAD~'
-    }
-    gitVersionProvider.standardOutput.asText.get().trim()
 }
 
 tasks.register('makeChangelog', GitChangelogTask) {

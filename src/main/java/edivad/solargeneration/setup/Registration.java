@@ -67,7 +67,7 @@ public class Registration {
       SOLAR_PANEL_MENU.put(level, MENU.register(level.getSolarPanelName(),
           () -> new MenuType<>((IContainerFactory<SolarPanelMenu>) (id, inventory, buf) -> {
             var pos = buf.readBlockPos();
-            var blockEntity = inventory.player.getCommandSenderWorld().getBlockEntity(pos);
+            var blockEntity = inventory.player.level().getBlockEntity(pos);
             if (!(blockEntity instanceof SolarPanelBlockEntity solarPanelBlockEntity)) {
               SolarGeneration.LOGGER
                   .error("Wrong type of block entity (expected SolarPanelBlockEntity)!");
