@@ -58,7 +58,9 @@ public class Registration {
 
       SOLAR_PANEL_ITEM.put(level, ITEMS.registerItem(level.getSolarPanelName(), properties ->
           new SolarPanelBlockItem(SOLAR_PANEL_BLOCK.get(level).get(), level,
-              properties.component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
+              properties
+                  .useBlockDescriptionPrefix()
+                  .component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
 
       SOLAR_PANEL_BLOCK_ENTITY.put(level, BLOCK_ENTITIES.register(level.getSolarPanelName(),
           () -> new BlockEntityType<>((pos, state) ->

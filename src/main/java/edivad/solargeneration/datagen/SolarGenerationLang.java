@@ -27,11 +27,11 @@ public class SolarGenerationLang extends LanguageProvider {
     translations.put(SolarPanelLevel.ULTIMATE, "Ultimate");
 
     Registration.CORE.forEach(
-        (level, item) -> add(item.get(), String.format("%s Solar Core", translations.get(level))));
-    Registration.HELMET.forEach((level, item) -> add(item.get(),
-        String.format("%s Solar Helmet", translations.get(level))));
-    Registration.SOLAR_PANEL_ITEM.forEach(
-        (level, item) -> add(item.get(), String.format("%s Solar Panel", translations.get(level))));
+        (level, item) -> addItem(item, String.format("%s Solar Core", translations.get(level))));
+    Registration.HELMET.forEach(
+        (level, item) -> addItem(item, String.format("%s Solar Helmet", translations.get(level))));
+    Registration.SOLAR_PANEL_BLOCK.forEach(
+        (level, block) -> addBlock(block, String.format("%s Solar Panel", translations.get(level))));
 
     add(Registration.LAPIS_SHARD.get(), "Lapis Shard");
     add(Registration.PHOTOVOLTAIC_CELL.get(), "Photovoltaic Cell");
