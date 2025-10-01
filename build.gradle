@@ -6,8 +6,8 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.neoforged.moddev' version "$mod_dev_gradle"
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '3.0.7'
-    id 'me.modmuss50.mod-publish-plugin' version '0.8.4'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '3.1.1'
+    id 'me.modmuss50.mod-publish-plugin' version '1.0.0'
     id 'com.diffplug.spotless' version '6.25.0'
 }
 
@@ -106,10 +106,10 @@ repositories {
 }
 
 dependencies {
-    //implementation "edivad:EdivadLib-$minecraft_version:3.0.0-snapshot"
+    //implementation "edivad:EdivadLib-$minecraft_version:3.3.0-snapshot"
     implementation "curse.maven:edivadlib-638508:$edivadlib_id"
 
-    localRuntime "mezz.jei:jei-$minecraft_version-neoforge:$jei_version"
+    //localRuntime "mezz.jei:jei-$minecraft_version-neoforge:$jei_version"
 }
 
 spotless {

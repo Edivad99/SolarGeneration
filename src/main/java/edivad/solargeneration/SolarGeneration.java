@@ -13,7 +13,7 @@ import edivad.solargeneration.datagen.SolarGenerationRecipes;
 import edivad.solargeneration.datagen.SolarPanelBlockTagsProvider;
 import edivad.solargeneration.datagen.SolarPanelItemTagsProvider;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.setup.SolarGenerationCreativeModeTabs;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
@@ -26,8 +26,9 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.energy.ComponentEnergyStorage;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
 
 @Mod(SolarGeneration.ID)
 public class SolarGeneration {
@@ -43,7 +44,7 @@ public class SolarGeneration {
     modEventBus.addListener(this::handleGatherData);
     modEventBus.addListener(this::registerCapabilities);
     modEventBus.addListener(this::registerPayloads);
-    Registration.register(modEventBus);
+    ModRegistration.register(modEventBus);
     SolarGenerationCreativeModeTabs.register(modEventBus);
     SolarGenerationDataComponents.register(modEventBus);
   }
@@ -54,7 +55,7 @@ public class SolarGeneration {
 
   private void handleRegisterMenuScreens(RegisterMenuScreensEvent event) {
     for (var level : SolarPanelLevel.values()) {
-      var menu = Registration.SOLAR_PANEL_MENU.get(level).get();
+      var menu = ModRegistration.SOLAR_PANEL_MENU.get(level).get();
       event.register(menu, SolarPanelScreen::new);
     }
   }
@@ -71,14 +72,14 @@ public class SolarGeneration {
   }
 
   private void registerCapabilities(RegisterCapabilitiesEvent event) {
-    Registration.SOLAR_PANEL_BLOCK_ENTITY.forEach((__, blockEntityType) ->
+    ModRegistration.SOLAR_PANEL_BLOCK_ENTITY.forEach((__, blockEntityType) ->
         event.registerBlockEntity(
-            Capabilities.EnergyStorage.BLOCK, blockEntityType.get(),
+            Capabilities.Energy.BLOCK, blockEntityType.get(),
             SolarPanelBlockEntity::getSolarPanelBattery));
 
-    Registration.HELMET.forEach((solarPanelLevel, item) ->
-        event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, context) ->
-            new ComponentEnergyStorage(stack,
+    ModRegistration.HELMET.forEach((solarPanelLevel, item) ->
+        event.registerItem(Capabilities.Energy.ITEM, (stack, context) ->
+            new ItemAccessEnergyHandler(ItemAccess.forStack(stack),
                 SolarGenerationDataComponents.ENERGY_COMPONENT.get(),
                 solarPanelLevel.getCapacity(), solarPanelLevel.getMaxTransfer()), item.get()));
   }

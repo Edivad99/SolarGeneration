@@ -26,7 +26,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class Registration {
+public class ModRegistration {
 
   public static final Map<SolarPanelLevel, DeferredBlock<SolarPanelBlock>> SOLAR_PANEL_BLOCK = new HashMap<>();
   public static final Map<SolarPanelLevel, DeferredItem<SolarPanelBlockItem>> SOLAR_PANEL_ITEM = new HashMap<>();

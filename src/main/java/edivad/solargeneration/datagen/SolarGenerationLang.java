@@ -3,7 +3,7 @@ package edivad.solargeneration.datagen;
 import java.util.HashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import edivad.solargeneration.SolarGeneration;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import edivad.solargeneration.tools.Translations;
 import net.minecraft.data.PackOutput;
@@ -26,15 +26,15 @@ public class SolarGenerationLang extends LanguageProvider {
     translations.put(SolarPanelLevel.ADVANCED, "Advanced");
     translations.put(SolarPanelLevel.ULTIMATE, "Ultimate");
 
-    Registration.CORE.forEach(
+    ModRegistration.CORE.forEach(
         (level, item) -> addItem(item, String.format("%s Solar Core", translations.get(level))));
-    Registration.HELMET.forEach(
+    ModRegistration.HELMET.forEach(
         (level, item) -> addItem(item, String.format("%s Solar Helmet", translations.get(level))));
-    Registration.SOLAR_PANEL_BLOCK.forEach(
+    ModRegistration.SOLAR_PANEL_BLOCK.forEach(
         (level, block) -> addBlock(block, String.format("%s Solar Panel", translations.get(level))));
 
-    add(Registration.LAPIS_SHARD.get(), "Lapis Shard");
-    add(Registration.PHOTOVOLTAIC_CELL.get(), "Photovoltaic Cell");
+    add(ModRegistration.LAPIS_SHARD.get(), "Lapis Shard");
+    add(ModRegistration.PHOTOVOLTAIC_CELL.get(), "Photovoltaic Cell");
 
     add(Translations.STORED_ENERGY, "Stored energy: %s");
     add(Translations.CAPACITY, "Capacity: %s");

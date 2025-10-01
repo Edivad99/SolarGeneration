@@ -21,19 +21,19 @@ public class SolarGenerationCreativeModeTabs {
           .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
           .title(Component.literal(SolarGeneration.MODNAME))
           .icon(() ->
-              new ItemStack(Registration.SOLAR_PANEL_ITEM.get(SolarPanelLevel.ADVANCED).get()))
+              new ItemStack(ModRegistration.SOLAR_PANEL_ITEM.get(SolarPanelLevel.ADVANCED).get()))
           .displayItems((parameters, output) -> {
             for (var value : SolarPanelLevel.values()) {
-              output.accept(new ItemStack(Registration.SOLAR_PANEL_ITEM.get(value).get()));
+              output.accept(new ItemStack(ModRegistration.SOLAR_PANEL_ITEM.get(value).get()));
             }
             for (var value : SolarPanelLevel.values()) {
-              output.accept(new ItemStack(Registration.HELMET.get(value).get()));
+              output.accept(new ItemStack(ModRegistration.HELMET.get(value).get()));
             }
             for (var value : SolarPanelLevel.values()) {
-              output.accept(new ItemStack(Registration.CORE.get(value).get()));
+              output.accept(new ItemStack(ModRegistration.CORE.get(value).get()));
             }
-            output.accept(new ItemStack(Registration.LAPIS_SHARD.get()));
-            output.accept(new ItemStack(Registration.PHOTOVOLTAIC_CELL.get()));
+            output.accept(new ItemStack(ModRegistration.LAPIS_SHARD.get()));
+            output.accept(new ItemStack(ModRegistration.PHOTOVOLTAIC_CELL.get()));
           }).build());
 
   public static void register(IEventBus modEventBus) {

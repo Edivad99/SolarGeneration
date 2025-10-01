@@ -25,7 +25,10 @@ import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class SolarHelmet extends Item {
 
@@ -71,14 +74,11 @@ public class SolarHelmet extends Item {
 
   @Override
   public int getBarWidth(ItemStack itemStack) {
-    var energy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
-    if (energy == null) {
+    int energy = itemStack.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT, 0);
+    if (energy == 0) {
       return 0;
     }
-    if (energy.getEnergyStored() == 0) {
-      return 0;
-    }
-    var charge = (double) energy.getEnergyStored() / (double) energy.getMaxEnergyStored();
+    var charge = (double) energy / (double) this.solarPanelLevel.getCapacity();
     return (int) Math.min(1 + 12 * charge, 13);
   }
 
@@ -94,49 +94,41 @@ public class SolarHelmet extends Item {
       return;
     }
 
-    var energy = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+    var energy = ItemAccess.forStack(stack).getCapability(Capabilities.Energy.ITEM);
     if (energy == null) {
       return;
     }
-
-    if (energy.getEnergyStored() != energy.getMaxEnergyStored()) {
-      energy.receiveEnergy(this.currentAmountEnergyProduced(level, player), false);
+    try (var tx = Transaction.open(null)) {
+      var energyInserted = energy.insert(this.currentAmountEnergyProduced(level, player), tx);
+      if (energyInserted != 0) {
+        tx.commit();
+      }
     }
+    stack.set(SolarGenerationDataComponents.ENERGY_COMPONENT, energy.getAmountAsInt());
     this.sendEnergy(energy, player);
   }
 
-  private void sendEnergy(IEnergyStorage energy, Player player) {
+  private void sendEnergy(EnergyHandler energy, Player player) {
     var inventory = player.getInventory();
     //Armor priority
-    for (int i = Inventory.INVENTORY_SIZE; i < 40 && energy.getEnergyStored() > 0; i++) {
+    for (int i = Inventory.INVENTORY_SIZE; i < 40 && energy.getAmountAsInt() > 0; i++) {
       var item = inventory.getItem(i);
       if (item.getItem() != this) {
         chargeItem(energy, item);
       }
     }
     //Inventory
-    for (int i = 0; i < Inventory.INVENTORY_SIZE && energy.getEnergyStored() > 0; i++) {
+    for (int i = 0; i < Inventory.INVENTORY_SIZE && energy.getAmountAsInt() > 0; i++) {
       chargeItem(energy, inventory.getItem(i));
     }
   }
 
-  private void chargeItem(IEnergyStorage energyStorage, ItemStack receiver) {
+  private void chargeItem(EnergyHandler energyHandlerSender, ItemStack receiver) {
     if (receiver.getCount() != 1) {
       return;
     }
-    var handler = receiver.getCapability(Capabilities.EnergyStorage.ITEM);
-    if (handler == null) {
-      return;
-    }
-    if (handler.canReceive()) {
-      while (handler.getEnergyStored() < handler.getMaxEnergyStored()
-          && energyStorage.getEnergyStored() > 0) {
-        int accepted = Math.min(this.maxTransfer,
-            handler.receiveEnergy(energyStorage.getEnergyStored(), true));
-        energyStorage.extractEnergy(accepted, false);
-        handler.receiveEnergy(accepted, false);
-      }
-    }
+    var energyHandlerReceiver = ItemAccess.forStack(receiver).getCapability(Capabilities.Energy.ITEM);
+    EnergyHandlerUtil.move(energyHandlerSender, energyHandlerReceiver, this.maxTransfer, null);
   }
 
   private int currentAmountEnergyProduced(Level level, Player player) {

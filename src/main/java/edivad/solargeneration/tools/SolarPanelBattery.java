@@ -1,8 +1,8 @@
 package edivad.solargeneration.tools;
 
-import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 
-public class SolarPanelBattery extends EnergyStorage {
+public class SolarPanelBattery extends SimpleEnergyHandler {
 
   public SolarPanelBattery(int maxTransfer, int capacity) {
     super(capacity, 0, maxTransfer);
@@ -13,14 +13,14 @@ public class SolarPanelBattery extends EnergyStorage {
   }
 
   public void generatePower(int energy) {
-    this.energy = Math.min(capacity, this.energy + energy);
+    this.set(Math.min(capacity, this.energy + energy));
   }
 
   public void consumePower(int energy) {
-    this.energy = Math.max(0, this.energy - energy);
+    this.set(Math.max(0, this.energy - energy));
   }
 
   public boolean isFullEnergy() {
-    return getEnergyStored() >= getMaxEnergyStored();
+    return this.energy >= this.capacity;
   }
 }

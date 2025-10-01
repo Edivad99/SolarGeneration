@@ -2,7 +2,7 @@ package edivad.solargeneration.datagen;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.HolderLookup;
@@ -14,6 +14,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -28,8 +29,8 @@ public class SolarGenerationBlockLoot extends BlockLootSubProvider {
         .withPool(this.applyExplosionCondition(block, LootPool.lootPool()
             .setRolls(ConstantValue.exactly(1))
             .add(LootItem.lootTableItem(block)
-                .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                .apply(CopyNameFunction.copyName(new CopyNameFunction.Source(LootContextParams.BLOCK_ENTITY)))
+                .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                     .include(SolarGenerationDataComponents.ENERGY_COMPONENT.get()))
                 )
         ));
@@ -38,13 +39,13 @@ public class SolarGenerationBlockLoot extends BlockLootSubProvider {
   @Override
   protected void generate() {
     for (var level : SolarPanelLevel.values()) {
-      this.add(Registration.SOLAR_PANEL_BLOCK.get(level).get(), this::createSolarPanelDrops);
+      this.add(ModRegistration.SOLAR_PANEL_BLOCK.get(level).get(), this::createSolarPanelDrops);
     }
   }
 
   @Override
   protected Iterable<Block> getKnownBlocks() {
-    return Registration.SOLAR_PANEL_BLOCK.values().stream()
+    return ModRegistration.SOLAR_PANEL_BLOCK.values().stream()
         .map(DeferredHolder::get)
         .collect(Collectors.toList());
   }

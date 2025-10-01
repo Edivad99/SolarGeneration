@@ -3,7 +3,7 @@ package edivad.solargeneration.blockentity;
 import org.jetbrains.annotations.Nullable;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelBattery;
@@ -25,6 +25,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -35,7 +36,7 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
   public int energyClient, energyProductionClient;
 
   public SolarPanelBlockEntity(SolarPanelLevel levelSolarPanel, BlockPos pos, BlockState state) {
-    super(Registration.SOLAR_PANEL_BLOCK_ENTITY.get(levelSolarPanel).get(), pos, state);
+    super(ModRegistration.SOLAR_PANEL_BLOCK_ENTITY.get(levelSolarPanel).get(), pos, state);
     this.levelSolarPanel = levelSolarPanel;
 
     energyGeneration = levelSolarPanel.getEnergyGeneration();
@@ -52,7 +53,7 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
     int energyProducedBySun = solarPanel.currentAmountEnergyProduced(level);
     solarPanel.solarPanelBattery.generatePower(energyProducedBySun);
     solarPanel.sendEnergy();
-    int energyStored = solarPanel.solarPanelBattery.getEnergyStored();
+    int energyStored = solarPanel.solarPanelBattery.getAmountAsInt();
     if (solarPanel.energyClient != energyStored
         || solarPanel.energyProductionClient != energyProducedBySun) {
       int energyProduced = solarPanel.solarPanelBattery.isFullEnergy() ? 0 : energyProducedBySun;
@@ -69,7 +70,7 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
   }
 
   private void sendEnergy() {
-    var capacity = solarPanelBattery.getEnergyStored();
+    var capacity = solarPanelBattery.getAmountAsInt();
 
     for (int i = 0; (i < Direction.values().length) && capacity > 0; i++) {
       var facing = Direction.values()[i];
@@ -77,14 +78,22 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
         continue;
       }
 
-      var energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK,
+      var handler = level.getCapability(Capabilities.Energy.BLOCK,
           worldPosition.relative(facing), facing.getOpposite());
+      if (handler == null) {
+        continue;
+      }
 
-      if (energyStorage != null && energyStorage.canReceive()) {
-        int received = energyStorage.receiveEnergy(Math.min(capacity, maxTransfer), false);
-        capacity -= received;
-        solarPanelBattery.consumePower(received);
+      try (var tx = Transaction.open(null)) {
+        var energyInserted = handler.insert(Math.min(capacity, maxTransfer), tx);
+        if (energyInserted == 0) {
+          // If we can't insert any energy, skip this side.
+          continue;
+        }
+        capacity -= energyInserted;
+        solarPanelBattery.consumePower(energyInserted);
         setChanged();
+        tx.commit();
       }
     }
   }
@@ -112,13 +121,13 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
   @Override
   protected void applyImplicitComponents(DataComponentGetter componentGetter) {
     int energy = componentGetter.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT, 0);
-    solarPanelBattery.setEnergy(energy);
+    solarPanelBattery.set(energy);
     super.applyImplicitComponents(componentGetter);
   }
 
   @Override
   protected void collectImplicitComponents(DataComponentMap.Builder components) {
-    components.set(SolarGenerationDataComponents.ENERGY_COMPONENT, solarPanelBattery.getEnergyStored());
+    components.set(SolarGenerationDataComponents.ENERGY_COMPONENT, solarPanelBattery.getAmountAsInt());
   }
 
   @Nullable

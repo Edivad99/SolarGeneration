@@ -1,7 +1,7 @@
 package edivad.solargeneration.datagen;
 
 import edivad.solargeneration.SolarGeneration;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -17,14 +17,14 @@ public class SolarGenerationModelProvider extends ModelProvider {
 
   @Override
   protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-    itemModels.generateFlatItem(Registration.PHOTOVOLTAIC_CELL.get(), ModelTemplates.FLAT_ITEM);
-    itemModels.generateFlatItem(Registration.LAPIS_SHARD.get(), ModelTemplates.FLAT_ITEM);
-    Registration.CORE.forEach((core, item) ->
+    itemModels.generateFlatItem(ModRegistration.PHOTOVOLTAIC_CELL.get(), ModelTemplates.FLAT_ITEM);
+    itemModels.generateFlatItem(ModRegistration.LAPIS_SHARD.get(), ModelTemplates.FLAT_ITEM);
+    ModRegistration.CORE.forEach((core, item) ->
         itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_ITEM));
-    Registration.HELMET.forEach((core, item) ->
+    ModRegistration.HELMET.forEach((core, item) ->
         itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_ITEM));
 
-    Registration.SOLAR_PANEL_BLOCK.forEach((level, block) -> {
+    ModRegistration.SOLAR_PANEL_BLOCK.forEach((level, block) -> {
       blockModels.blockStateOutput.accept(
           BlockModelGenerators.createSimpleBlock(block.get(),
               BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block.get()))));

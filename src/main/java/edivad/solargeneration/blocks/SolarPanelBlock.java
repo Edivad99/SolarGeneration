@@ -3,7 +3,7 @@ package edivad.solargeneration.blocks;
 import java.util.ArrayList;
 import org.jetbrains.annotations.Nullable;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
@@ -82,7 +82,7 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
       Player player, BlockHitResult hit) {
     if (player instanceof ServerPlayer serverPlayer) {
-      level.getBlockEntity(pos, Registration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
+      level.getBlockEntity(pos, ModRegistration.SOLAR_PANEL_BLOCK_ENTITY.get(this.solarPanelLevel).get())
           .ifPresent(blockEntity -> serverPlayer.openMenu(blockEntity, pos));
     }
     return InteractionResult.SUCCESS_SERVER;
@@ -114,21 +114,20 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
     return level.isClientSide()
         ? null
         : BaseEntityBlock.createTickerHelper(blockEntityType,
-            Registration.SOLAR_PANEL_BLOCK_ENTITY.get(solarPanelLevel).get(),
+            ModRegistration.SOLAR_PANEL_BLOCK_ENTITY.get(solarPanelLevel).get(),
             SolarPanelBlockEntity::serverTick);
   }
 
   @Override
   public void setPlacedBy(Level level, BlockPos pos, BlockState state,
       @Nullable LivingEntity placer, ItemStack itemStack) {
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       var blockEntity = level.getBlockEntity(pos);
       if (blockEntity instanceof SolarPanelBlockEntity) {
-        var energyStore = level.getCapability(Capabilities.EnergyStorage.BLOCK,
-            blockEntity.getBlockPos(), null);
+        var energyStore = level.getCapability(Capabilities.Energy.BLOCK, pos, null);
         var energy = itemStack.getOrDefault(SolarGenerationDataComponents.ENERGY_COMPONENT.get(), 0);
         if (energyStore != null) {
-          ((SolarPanelBattery) energyStore).setEnergy(energy);
+          ((SolarPanelBattery) energyStore).set(energy);
         }
       }
     }

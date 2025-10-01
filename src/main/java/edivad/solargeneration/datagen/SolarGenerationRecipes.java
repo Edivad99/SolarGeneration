@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import edivad.solargeneration.SolarGeneration;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -60,32 +60,32 @@ public class SolarGenerationRecipes extends RecipeProvider {
         .pattern("aaa")
         .pattern("aaa")
         .pattern("aaa")
-        .define('a', Registration.LAPIS_SHARD.get())
-        .unlockedBy(getHasName(Registration.LAPIS_SHARD.get()), has(Registration.LAPIS_SHARD.get()))
+        .define('a', ModRegistration.LAPIS_SHARD.get())
+        .unlockedBy(getHasName(ModRegistration.LAPIS_SHARD.get()), has(ModRegistration.LAPIS_SHARD.get()))
         .save(this.output, SolarGeneration.rl("lapis_lazuli_from_shard").toString());
 
-    ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, Registration.LAPIS_SHARD.get(), 36)
+    ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, ModRegistration.LAPIS_SHARD.get(), 36)
         .pattern("aa")
         .pattern("aa")
         .define('a', Items.LAPIS_LAZULI)
         .unlockedBy(getHasName(Items.LAPIS_LAZULI), has(Items.LAPIS_LAZULI))
         .save(this.output);
 
-    ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, Registration.PHOTOVOLTAIC_CELL.get())
+    ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, ModRegistration.PHOTOVOLTAIC_CELL.get())
         .pattern("aaa")
         .pattern("bbb")
         .pattern("ccc")
         .define('a', Items.GLASS_PANE)
-        .define('b', Registration.LAPIS_SHARD.get())
+        .define('b', ModRegistration.LAPIS_SHARD.get())
         .define('c', Tags.Items.NUGGETS_IRON)
-        .unlockedBy(getHasName(Registration.LAPIS_SHARD.get()), has(Registration.LAPIS_SHARD.get()))
+        .unlockedBy(getHasName(ModRegistration.LAPIS_SHARD.get()), has(ModRegistration.LAPIS_SHARD.get()))
         .save(this.output);
   }
 
   private void solarPanelReverse() {
     for (var level : SolarPanelLevel.values()) {
-      var solarPanel = Registration.SOLAR_PANEL_BLOCK.get(level).get();
-      var helmet = Registration.HELMET.get(level).get();
+      var solarPanel = ModRegistration.SOLAR_PANEL_BLOCK.get(level).get();
+      var helmet = ModRegistration.HELMET.get(level).get();
       var resourceLocation = SolarGeneration.rl(level.getSolarPanelName() + "_reverse");
       ShapelessRecipeBuilder.shapeless(this.items, RecipeCategory.MISC, solarPanel)
           .requires(helmet)
@@ -96,8 +96,8 @@ public class SolarGenerationRecipes extends RecipeProvider {
 
   private void solarHelmet() {
     for (var level : SolarPanelLevel.values()) {
-      var solarPanel = Registration.SOLAR_PANEL_BLOCK.get(level).get();
-      var helmet = Registration.HELMET.get(level).get();
+      var solarPanel = ModRegistration.SOLAR_PANEL_BLOCK.get(level).get();
+      var helmet = ModRegistration.HELMET.get(level).get();
       ShapelessRecipeBuilder.shapeless(this.items, RecipeCategory.MISC, helmet)
           .requires(solarPanel)
           .requires(getVanillaHelmet(level))
@@ -108,26 +108,26 @@ public class SolarGenerationRecipes extends RecipeProvider {
 
   private void solarPanel() {
     ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC,
-            Registration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.LEADSTONE).get())
+            ModRegistration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.LEADSTONE).get())
         .pattern("aaa")
         .pattern("bcb")
         .pattern("ddd")
-        .define('a', Registration.PHOTOVOLTAIC_CELL.get())
+        .define('a', ModRegistration.PHOTOVOLTAIC_CELL.get())
         .define('b', Items.REDSTONE)
-        .define('c', Registration.CORE.get(SolarPanelLevel.LEADSTONE).get())
+        .define('c', ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get())
         .define('d', ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/steel")))
-        .unlockedBy(getHasName(Registration.CORE.get(SolarPanelLevel.LEADSTONE).get()),
-            has(Registration.CORE.get(SolarPanelLevel.LEADSTONE).get()))
-        .unlockedBy(getHasName(Registration.PHOTOVOLTAIC_CELL.get()),
-            has(Registration.PHOTOVOLTAIC_CELL.get()))
+        .unlockedBy(getHasName(ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get()),
+            has(ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get()))
+        .unlockedBy(getHasName(ModRegistration.PHOTOVOLTAIC_CELL.get()),
+            has(ModRegistration.PHOTOVOLTAIC_CELL.get()))
         .save(this.output);
 
     for (int i = 1; i < SolarPanelLevel.values().length; i++) {
       var level = SolarPanelLevel.values()[i];
-      var currentSolarPanel = Registration.SOLAR_PANEL_BLOCK.get(level).get();
-      var prevSolarPanel = Registration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.values()[i - 1])
+      var currentSolarPanel = ModRegistration.SOLAR_PANEL_BLOCK.get(level).get();
+      var prevSolarPanel = ModRegistration.SOLAR_PANEL_BLOCK.get(SolarPanelLevel.values()[i - 1])
           .get();
-      var core = Registration.CORE.get(level).get();
+      var core = ModRegistration.CORE.get(level).get();
       ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, currentSolarPanel)
           .pattern("aaa")
           .pattern("aba")
@@ -150,7 +150,7 @@ public class SolarGenerationRecipes extends RecipeProvider {
     materials.put(SolarPanelLevel.ULTIMATE, ResourceLocation.fromNamespaceAndPath("c", "nuggets/platinum"));
 
     ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC,
-            Registration.CORE.get(SolarPanelLevel.LEADSTONE).get())
+            ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get())
         .pattern(" a ")
         .pattern("aba")
         .pattern(" a ")
@@ -161,8 +161,8 @@ public class SolarGenerationRecipes extends RecipeProvider {
 
     for (int i = 1; i < SolarPanelLevel.values().length; i++) {
       var level = SolarPanelLevel.values()[i];
-      var core = Registration.CORE.get(level).get();
-      var prevCore = Registration.CORE.get(SolarPanelLevel.values()[i - 1]).get();
+      var core = ModRegistration.CORE.get(level).get();
+      var prevCore = ModRegistration.CORE.get(SolarPanelLevel.values()[i - 1]).get();
       ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, core)
           .pattern(" a ")
           .pattern("aba")

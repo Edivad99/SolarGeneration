@@ -2,7 +2,7 @@ package edivad.solargeneration.datagen;
 
 import java.util.concurrent.CompletableFuture;
 import edivad.solargeneration.SolarGeneration;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tags.SolarGenerationTags;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.HolderLookup;
@@ -22,9 +22,9 @@ public class SolarPanelItemTagsProvider extends ItemTagsProvider {
   protected void addTags(HolderLookup.Provider provider) {
     for (var level : SolarPanelLevel.values()) {
       this.tag(SolarGenerationTags.Items.SOLAR_PANEL)
-          .add(Registration.SOLAR_PANEL_ITEM.get(level).get());
+          .add(ModRegistration.SOLAR_PANEL_ITEM.get(level).get());
       this.tag(SolarGenerationTags.Items.SOLAR_HELMET)
-          .add(Registration.HELMET.get(level).get());
+          .add(ModRegistration.HELMET.get(level).get());
     }
     this.tag(Tags.Items.ARMORS)
         .addTag(SolarGenerationTags.Items.SOLAR_HELMET);

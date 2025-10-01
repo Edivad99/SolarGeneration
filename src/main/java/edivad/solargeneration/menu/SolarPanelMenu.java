@@ -1,7 +1,7 @@
 package edivad.solargeneration.menu;
 
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
-import edivad.solargeneration.setup.Registration;
+import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,7 +14,7 @@ public class SolarPanelMenu extends AbstractContainerMenu {
 
   public SolarPanelMenu(int containerId, SolarPanelBlockEntity solarPanelBlockEntity,
       SolarPanelLevel level) {
-    super(Registration.SOLAR_PANEL_MENU.get(level).get(), containerId);
+    super(ModRegistration.SOLAR_PANEL_MENU.get(level).get(), containerId);
     this.solarPanelBlockEntity = solarPanelBlockEntity;
   }
 

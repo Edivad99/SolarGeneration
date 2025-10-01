@@ -1,19 +1,16 @@
 package edivad.solargeneration.tools;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.InputQuirks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 public class Tooltip {
 
   public static void showInfoShift(SolarPanelLevel solarPanelLevel, Consumer<Component> tooltipAdder) {
-    List<MutableComponent> components = new ArrayList<>();
-    if (Screen.hasShiftDown()) {
+    if (Minecraft.getInstance().hasShiftDown()) {
       var generation = String.valueOf(solarPanelLevel.getEnergyGeneration());
       var transfer = String.valueOf(solarPanelLevel.getMaxTransfer());
       var capacity = String.valueOf(solarPanelLevel.getCapacity());
@@ -27,10 +24,10 @@ public class Tooltip {
   }
 
   public static MutableComponent showInfoCtrl(int energy) {
-    if (Screen.hasControlDown()) {
+    if (Minecraft.getInstance().hasControlDown()) {
       return buildLineEnergy(Translations.STORED_ENERGY, String.valueOf(energy)).append(" FE");
     }
-    return buildLineHoldKey(Minecraft.ON_OSX ? "Cmd" : "Ctrl", Translations.FOR_STORED_ENERGY);
+    return buildLineHoldKey(InputQuirks.ON_OSX ? "Cmd" : "Ctrl", Translations.FOR_STORED_ENERGY);
   }
 
   private static MutableComponent buildLineEnergy(String translationKey, String value) {
