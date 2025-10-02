@@ -96,7 +96,7 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
 
   @Override
   public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
-      BlockEntity blockEntity, ItemStack tool) {
+      @Nullable BlockEntity blockEntity, ItemStack tool) {
     super.playerDestroy(level, player, pos, state, blockEntity, tool);
     level.removeBlock(pos, false);
   }

@@ -98,7 +98,7 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
     }
   }
   @Nullable
-  public SolarPanelBattery getSolarPanelBattery(Direction direction) {
+  public SolarPanelBattery getSolarPanelBattery(@Nullable Direction direction) {
     return direction != Direction.UP ? solarPanelBattery : null;
   }
 

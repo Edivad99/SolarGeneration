@@ -29,11 +29,11 @@ public class ProductionSolarPanel {
         }
 
         if (level.isRaining()) {
-          sunIntensity *= 0.4;
+          sunIntensity *= 0.4F;
         }
 
         if (level.isThundering()) {
-          sunIntensity *= 0.2;
+          sunIntensity *= 0.2F;
         }
       }
     }
