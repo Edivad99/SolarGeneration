@@ -77,7 +77,9 @@ neoForge {
         clientData {
             clientData()
             gameDirectory = project.file('runs/data')
-            programArguments.addAll '--mod', 'solargeneration', '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll '--mod', 'solargeneration',
+                '--all', '--output', file('src/generated/resources/').getAbsolutePath(),
+                '--existing', file('src/main/resources/').getAbsolutePath()
         }
     }
 
@@ -169,7 +171,7 @@ idea {
     }
 }
 
-tasks.withType(ProcessResources).configureEach {
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
         minecraft_version       : minecraft_version,
         minecraft_version_range : minecraft_version_range,
@@ -180,11 +182,12 @@ tasks.withType(ProcessResources).configureEach {
         edivadlib_version_range : edivadlib_version_range,
     ]
     inputs.properties replaceProperties
-
-    filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties
-    }
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
 }
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
 
 def lastCommit = providers.exec {
     commandLine 'git', 'rev-parse', 'HEAD'

@@ -41,7 +41,7 @@ public class SolarHelmet extends Item {
         .component(DataComponents.EQUIPPABLE,
             Equippable.builder(EquipmentSlot.HEAD)
                 .setEquipSound(null)
-                .setAllowedEntities(HolderSet.direct(EntityType::builtInRegistryHolder, EntityType.PLAYER))
+                .setAllowedEntities(HolderSet.direct(EntityType.PLAYER.builtInRegistryHolder()))
                 .setDispensable(true)
                 .setSwappable(false)
                 .setDamageOnHurt(false)

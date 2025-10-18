@@ -84,7 +84,7 @@ public class SolarPanelBlockEntity extends BlockEntity implements MenuProvider {
         continue;
       }
 
-      try (var tx = Transaction.open(null)) {
+      try (var tx = Transaction.openRoot()) {
         var energyInserted = handler.insert(Math.min(capacity, maxTransfer), tx);
         if (energyInserted == 0) {
           // If we can't insert any energy, skip this side.

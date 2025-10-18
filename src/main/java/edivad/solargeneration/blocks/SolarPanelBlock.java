@@ -90,8 +90,8 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
 
   @Override
   public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player,
-      boolean willHarvest, FluidState fluid) {
-    return willHarvest || super.onDestroyedByPlayer(state, level, pos, player, false, fluid);
+      ItemStack toolStack, boolean willHarvest, FluidState fluid) {
+    return willHarvest || super.onDestroyedByPlayer(state, level, pos, player, toolStack, false, fluid);
   }
 
   @Override
