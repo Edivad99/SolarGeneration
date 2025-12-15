@@ -1,7 +1,7 @@
 package edivad.solargeneration.blocks;
 
 import java.util.ArrayList;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import edivad.solargeneration.blockentity.SolarPanelBlockEntity;
 import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;

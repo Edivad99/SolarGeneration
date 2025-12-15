@@ -1,6 +1,6 @@
 package edivad.solargeneration.blockentity;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import edivad.solargeneration.menu.SolarPanelMenu;
 import edivad.solargeneration.network.packet.UpdateSolarPanel;
 import edivad.solargeneration.setup.ModRegistration;

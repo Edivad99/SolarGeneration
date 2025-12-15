@@ -51,7 +51,7 @@ public class ModRegistration {
       SOLAR_PANEL_BLOCK.put(level,
           BLOCKS.register(level.getSolarPanelName(), () -> new SolarPanelBlock(level,
               BlockBehaviour.Properties.of()
-                  .setId(ResourceKey.create(Registries.BLOCK, SolarGeneration.rl(level.getSolarPanelName())))
+                  .setId(ResourceKey.create(Registries.BLOCK, SolarGeneration.id(level.getSolarPanelName())))
                   .sound(SoundType.METAL)
                   .requiresCorrectToolForDrops()
                   .strength(1.5F, 6.0F))));

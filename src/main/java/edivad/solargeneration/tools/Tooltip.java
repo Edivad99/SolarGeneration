@@ -3,7 +3,6 @@ package edivad.solargeneration.tools;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.input.InputQuirks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
@@ -27,7 +26,8 @@ public class Tooltip {
     if (Minecraft.getInstance().hasControlDown()) {
       return buildLineEnergy(Translations.STORED_ENERGY, String.valueOf(energy)).append(" FE");
     }
-    return buildLineHoldKey(InputQuirks.ON_OSX ? "Cmd" : "Ctrl", Translations.FOR_STORED_ENERGY);
+    //return buildLineHoldKey(InputQuirks.ON_OSX ? "Cmd" : "Ctrl", Translations.FOR_STORED_ENERGY);
+    return buildLineHoldKey("Ctrl", Translations.FOR_STORED_ENERGY);
   }
 
   private static MutableComponent buildLineEnergy(String translationKey, String value) {

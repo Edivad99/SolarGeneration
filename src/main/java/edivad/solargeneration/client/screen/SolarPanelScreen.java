@@ -11,13 +11,13 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
-  private static final ResourceLocation TEXTURE =
-      SolarGeneration.rl("textures/gui/solar_panel.png");
+  private static final Identifier TEXTURE =
+      SolarGeneration.id("textures/gui/solar_panel.png");
 
   private final SolarPanelBlockEntity solarPanelBlockEntity;
 

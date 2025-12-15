@@ -14,7 +14,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -62,7 +62,7 @@ public class SolarGenerationRecipes extends RecipeProvider {
         .pattern("aaa")
         .define('a', ModRegistration.LAPIS_SHARD.get())
         .unlockedBy(getHasName(ModRegistration.LAPIS_SHARD.get()), has(ModRegistration.LAPIS_SHARD.get()))
-        .save(this.output, SolarGeneration.rl("lapis_lazuli_from_shard").toString());
+        .save(this.output, SolarGeneration.id("lapis_lazuli_from_shard").toString());
 
     ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, ModRegistration.LAPIS_SHARD.get(), 36)
         .pattern("aa")
@@ -86,7 +86,7 @@ public class SolarGenerationRecipes extends RecipeProvider {
     for (var level : SolarPanelLevel.values()) {
       var solarPanel = ModRegistration.SOLAR_PANEL_BLOCK.get(level).get();
       var helmet = ModRegistration.HELMET.get(level).get();
-      var resourceLocation = SolarGeneration.rl(level.getSolarPanelName() + "_reverse");
+      var resourceLocation = SolarGeneration.id(level.getSolarPanelName() + "_reverse");
       ShapelessRecipeBuilder.shapeless(this.items, RecipeCategory.MISC, solarPanel)
           .requires(helmet)
           .unlockedBy(getHasName(helmet), has(helmet))
@@ -115,7 +115,7 @@ public class SolarGenerationRecipes extends RecipeProvider {
         .define('a', ModRegistration.PHOTOVOLTAIC_CELL.get())
         .define('b', Items.REDSTONE)
         .define('c', ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get())
-        .define('d', ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/steel")))
+        .define('d', ItemTags.create(Identifier.fromNamespaceAndPath("c", "nuggets/steel")))
         .unlockedBy(getHasName(ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get()),
             has(ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get()))
         .unlockedBy(getHasName(ModRegistration.PHOTOVOLTAIC_CELL.get()),
@@ -141,21 +141,21 @@ public class SolarGenerationRecipes extends RecipeProvider {
   }
 
   private void solarCore() {
-    Map<SolarPanelLevel, ResourceLocation> materials = new HashMap<>();
-    materials.put(SolarPanelLevel.HARDENED, ResourceLocation.fromNamespaceAndPath("c", "nuggets/invar"));
-    materials.put(SolarPanelLevel.REDSTONE, ResourceLocation.fromNamespaceAndPath("c", "nuggets/electrum"));
-    materials.put(SolarPanelLevel.SIGNALUM, ResourceLocation.fromNamespaceAndPath("c", "nuggets/signalum"));
-    materials.put(SolarPanelLevel.RESONANT, ResourceLocation.fromNamespaceAndPath("c", "nuggets/enderium"));
-    materials.put(SolarPanelLevel.ADVANCED, ResourceLocation.fromNamespaceAndPath("c", "nuggets/lumium"));
-    materials.put(SolarPanelLevel.ULTIMATE, ResourceLocation.fromNamespaceAndPath("c", "nuggets/platinum"));
+    Map<SolarPanelLevel, Identifier> materials = new HashMap<>();
+    materials.put(SolarPanelLevel.HARDENED, Identifier.fromNamespaceAndPath("c", "nuggets/invar"));
+    materials.put(SolarPanelLevel.REDSTONE, Identifier.fromNamespaceAndPath("c", "nuggets/electrum"));
+    materials.put(SolarPanelLevel.SIGNALUM, Identifier.fromNamespaceAndPath("c", "nuggets/signalum"));
+    materials.put(SolarPanelLevel.RESONANT, Identifier.fromNamespaceAndPath("c", "nuggets/enderium"));
+    materials.put(SolarPanelLevel.ADVANCED, Identifier.fromNamespaceAndPath("c", "nuggets/lumium"));
+    materials.put(SolarPanelLevel.ULTIMATE, Identifier.fromNamespaceAndPath("c", "nuggets/platinum"));
 
     ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC,
             ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get())
         .pattern(" a ")
         .pattern("aba")
         .pattern(" a ")
-        .define('a', ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/lead")))
-        .define('b', ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ingots/iron")))
+        .define('a', ItemTags.create(Identifier.fromNamespaceAndPath("c", "nuggets/lead")))
+        .define('b', ItemTags.create(Identifier.fromNamespaceAndPath("c", "ingots/iron")))
         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
         .save(this.output);
 

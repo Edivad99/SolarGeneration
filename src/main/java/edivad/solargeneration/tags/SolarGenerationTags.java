@@ -14,7 +14,7 @@ public class SolarGenerationTags {
     public static final TagKey<Item> SOLAR_HELMET = tag("solar_helmet");
 
     private static TagKey<Item> tag(String name) {
-      return ItemTags.create(SolarGeneration.rl(name));
+      return ItemTags.create(SolarGeneration.id(name));
     }
   }
 }

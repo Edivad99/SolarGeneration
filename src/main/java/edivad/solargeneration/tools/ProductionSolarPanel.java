@@ -2,6 +2,7 @@ package edivad.solargeneration.tools;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.Level;
 
 public class ProductionSolarPanel {
@@ -14,7 +15,8 @@ public class ProductionSolarPanel {
       float multiplicator = 1.5f;
       float displacement = 1.2f;
       // Celestial angle == 0 at zenith.
-      float celestialAngleRadians = level.getSunAngle(1.0f);
+      float celestialAngleRadians = level.environmentAttributes()
+          .getValue(EnvironmentAttributes.SUN_ANGLE, pos) * ((float)Math.PI / 180F);
       if (celestialAngleRadians > Math.PI) {
         celestialAngleRadians = (2 * 3.141592f - celestialAngleRadians);
       }

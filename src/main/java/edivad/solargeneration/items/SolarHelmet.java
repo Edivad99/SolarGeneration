@@ -1,7 +1,7 @@
 package edivad.solargeneration.items;
 
 import java.util.function.Consumer;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.tools.ProductionSolarPanel;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
@@ -45,7 +45,7 @@ public class SolarHelmet extends Item {
                 .setDispensable(true)
                 .setSwappable(false)
                 .setDamageOnHurt(false)
-                .setAsset(ResourceKey.create(EquipmentAssets.ROOT_ID, SolarGeneration.rl(solarPanelLevel.getSolarHelmetName())))
+                .setAsset(ResourceKey.create(EquipmentAssets.ROOT_ID, SolarGeneration.id(solarPanelLevel.getSolarHelmetName())))
                 .build()));
     this.solarPanelLevel = solarPanelLevel;
 

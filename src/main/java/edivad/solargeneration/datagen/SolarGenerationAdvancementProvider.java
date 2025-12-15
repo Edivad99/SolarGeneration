@@ -11,7 +11,7 @@ import edivad.solargeneration.tools.Translations;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
@@ -41,12 +41,12 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
           .display(ModRegistration.PHOTOVOLTAIC_CELL.get(),
               Translations.ADVANCEMENTS_ROOT.translateTitle(),
               Translations.ADVANCEMENTS_ROOT.translateDescription(),
-              SolarGeneration.rl("textures/gui/advancements.png"),
+              SolarGeneration.id("textures/gui/advancements.png"),
               AdvancementType.TASK,
               true, true, false)
           .addCriterion("inv_changed",
               InventoryChangeTrigger.TriggerInstance.hasItems(ModRegistration.PHOTOVOLTAIC_CELL.get()))
-          .save(writer, SolarGeneration.rl("root"));
+          .save(writer, SolarGeneration.id("root"));
 
       AdvancementHolder parent = ROOT;
       for (var level : SolarPanelLevel.values()) {
@@ -80,7 +80,7 @@ public class SolarGenerationAdvancementProvider extends AdvancementProvider {
               true, true, false)
           .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(item))
           .parent(parent)
-          .save(writer, SolarGeneration.rl(name));
+          .save(writer, SolarGeneration.id(name));
     }
   }
 }

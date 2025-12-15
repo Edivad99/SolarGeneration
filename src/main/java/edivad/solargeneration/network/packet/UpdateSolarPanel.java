@@ -13,7 +13,7 @@ public record UpdateSolarPanel(
     BlockPos pos, int currentEnergy, int currentProduction) implements CustomPacketPayload {
 
   public static final Type<UpdateSolarPanel> TYPE =
-      new Type<>(SolarGeneration.rl("update_solar_panel"));
+      new Type<>(SolarGeneration.id("update_solar_panel"));
 
   public static final StreamCodec<FriendlyByteBuf, UpdateSolarPanel> STREAM_CODEC =
       StreamCodec.composite(

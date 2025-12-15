@@ -17,7 +17,7 @@ import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.setup.SolarGenerationCreativeModeTabs;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -89,7 +89,7 @@ public class SolarGeneration {
     registrar.playToClient(UpdateSolarPanel.TYPE, UpdateSolarPanel.STREAM_CODEC, UpdateSolarPanel::handle);
   }
 
-  public static ResourceLocation rl(String path) {
-    return ResourceLocation.fromNamespaceAndPath(ID, path);
+  public static Identifier id(String path) {
+    return Identifier.fromNamespaceAndPath(ID, path);
   }
 }
