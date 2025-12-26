@@ -80,7 +80,6 @@ public class ModRegistration {
 
       HELMET.put(level, ITEMS.registerItem(level.getSolarHelmetName(), properties ->
           new SolarHelmet(level, properties
-              .durability(0)
               .component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
       CORE.put(level, ITEMS.registerSimpleItem(level.getSolarCoreName()));
     }
