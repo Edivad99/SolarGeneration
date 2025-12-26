@@ -76,7 +76,6 @@ public class Registration {
 
       HELMET.put(level, ITEMS.registerItem(level.getSolarHelmetName(), properties ->
           new SolarHelmet(level, properties.stacksTo(1)
-              .durability(0)
               .component(SolarGenerationDataComponents.ENERGY_COMPONENT, 0))));
       CORE.put(level, ITEMS.registerSimpleItem(level.getSolarCoreName()));
     }
