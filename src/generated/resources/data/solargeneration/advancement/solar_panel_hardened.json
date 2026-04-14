@@ -17,7 +17,6 @@
       "translate": "advancements.solargeneration.solar_panel_hardened.desc"
     },
     "icon": {
-      "count": 1,
       "id": "solargeneration:solar_panel_hardened"
     },
     "title": {
