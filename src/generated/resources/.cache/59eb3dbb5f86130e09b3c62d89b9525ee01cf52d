@@ -1,8 +1,0 @@
-// 26.1.2	2026-04-14T20:32:07.893192	Loot Tables
-6f85f23fe22d4fbcd85df29589f596db6ff0ff01 data/solargeneration/loot_table/blocks/solar_panel_advanced.json
-e3aa910691506d7278eb84987f2a0fdc9bc7345b data/solargeneration/loot_table/blocks/solar_panel_hardened.json
-d4d4a600bbe3cb188c27ecea5eee6e1464688820 data/solargeneration/loot_table/blocks/solar_panel_leadstone.json
-ee5c9f3bed35c53f98cab88db15d230095d64b8d data/solargeneration/loot_table/blocks/solar_panel_redstone.json
-d8f04eb4aa0997e5550c0328f712c80b93058d06 data/solargeneration/loot_table/blocks/solar_panel_resonant.json
-f2ac479a4ab58cb37ef065526ad255c452189a37 data/solargeneration/loot_table/blocks/solar_panel_signalum.json
-ebbb72872b5fa152ef829e5bbee7527a1f1c0379 data/solargeneration/loot_table/blocks/solar_panel_ultimate.json
