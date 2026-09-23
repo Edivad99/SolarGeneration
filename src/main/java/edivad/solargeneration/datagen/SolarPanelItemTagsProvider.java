@@ -22,9 +22,9 @@ public class SolarPanelItemTagsProvider extends ItemTagsProvider {
   protected void addTags(HolderLookup.Provider provider) {
     for (var level : SolarPanelLevel.values()) {
       this.tag(SolarGenerationTags.Items.SOLAR_PANEL)
-          .add(ModRegistration.SOLAR_PANEL_ITEM.get(level).get());
+          .add(ModRegistration.SOLAR_PANEL_ITEM.get(level).getKey());
       this.tag(SolarGenerationTags.Items.SOLAR_HELMET)
-          .add(ModRegistration.HELMET.get(level).get());
+          .add(ModRegistration.HELMET.get(level).getKey());
     }
     this.tag(Tags.Items.ARMORS)
         .addTag(SolarGenerationTags.Items.SOLAR_HELMET);

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_helmet_resonant"
+        "recipes": "solargeneration:solar_helmet_resonant"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

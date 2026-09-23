@@ -20,9 +20,9 @@ public class SolarPanelBlockTagsProvider extends BlockTagsProvider {
   protected void addTags(HolderLookup.Provider provider) {
     for (var level : SolarPanelLevel.values()) {
       this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-          .add(ModRegistration.SOLAR_PANEL_BLOCK.get(level).get());
+          .add(ModRegistration.SOLAR_PANEL_BLOCK.get(level).getKey());
       this.tag(BlockTags.NEEDS_IRON_TOOL)
-          .add(ModRegistration.SOLAR_PANEL_BLOCK.get(level).get());
+          .add(ModRegistration.SOLAR_PANEL_BLOCK.get(level).getKey());
     }
   }
 }

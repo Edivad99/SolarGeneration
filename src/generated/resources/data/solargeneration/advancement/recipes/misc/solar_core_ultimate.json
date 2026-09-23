@@ -1,4 +1,13 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:nuggets/platinum"
+      }
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_solar_core_advanced": {
@@ -13,7 +22,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_core_ultimate"
+        "recipes": "solargeneration:solar_core_ultimate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

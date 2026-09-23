@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +41,7 @@ public class SolarHelmet extends Item {
         .component(DataComponents.EQUIPPABLE,
             Equippable.builder(EquipmentSlot.HEAD)
                 .setEquipSound(null)
-                .setAllowedEntities(HolderSet.direct(EntityType.PLAYER.builtInRegistryHolder()))
+                .setAllowedEntities(HolderSet.direct(EntityTypes.PLAYER.builtInRegistryHolder()))
                 .setDispensable(true)
                 .setSwappable(false)
                 .setDamageOnHurt(false)

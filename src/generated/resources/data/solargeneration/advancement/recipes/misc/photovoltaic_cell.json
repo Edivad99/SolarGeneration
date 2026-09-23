@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:photovoltaic_cell"
+        "recipes": "solargeneration:photovoltaic_cell"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

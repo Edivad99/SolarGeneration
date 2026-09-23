@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:lapis_lazuli_from_shard"
+        "recipes": "solargeneration:lapis_lazuli_from_shard"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

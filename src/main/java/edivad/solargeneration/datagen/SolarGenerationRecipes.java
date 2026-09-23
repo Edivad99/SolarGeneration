@@ -2,48 +2,34 @@ package edivad.solargeneration.datagen;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import edivad.solargeneration.SolarGeneration;
 import edivad.solargeneration.setup.ModRegistration;
+import edivad.solargeneration.tags.SolarGenerationTags;
 import edivad.solargeneration.tools.SolarPanelLevel;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.core.registries.MultiRegistryBootstrap;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.resources.Identifier;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.NeoForgeConditions;
 
 public class SolarGenerationRecipes extends RecipeProvider {
 
-  private final HolderLookup.RegistryLookup<Item> items;
-
-  protected SolarGenerationRecipes(HolderLookup.Provider registries, RecipeOutput output) {
-    super(registries, output);
-    this.items = registries.lookupOrThrow(Registries.ITEM);
+  protected SolarGenerationRecipes(BootstrapContext<Recipe<?>> recipeOutput,
+      BootstrapContext<Advancement> advancementOutput) {
+    super(recipeOutput, advancementOutput);
   }
 
-  public static class Runner extends RecipeProvider.Runner {
-
-    public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-      super(output, registries);
-    }
-
-    @Override
-    protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-      return new SolarGenerationRecipes(registries, output);
-    }
-
-    @Override
-    public String getName() {
-      return "SolarGenerationRecipeProvider";
-    }
+  public static MultiRegistryBootstrap create() {
+    return RecipeProvider.asBootstrap(SolarGenerationRecipes::new);
   }
 
   @Override
@@ -115,12 +101,12 @@ public class SolarGenerationRecipes extends RecipeProvider {
         .define('a', ModRegistration.PHOTOVOLTAIC_CELL.get())
         .define('b', Items.REDSTONE)
         .define('c', ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get())
-        .define('d', ItemTags.create(Identifier.fromNamespaceAndPath("c", "nuggets/steel")))
+        .define('d', SolarGenerationTags.Items.NUGGETS_STEEL)
         .unlockedBy(getHasName(ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get()),
             has(ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get()))
         .unlockedBy(getHasName(ModRegistration.PHOTOVOLTAIC_CELL.get()),
             has(ModRegistration.PHOTOVOLTAIC_CELL.get()))
-        .save(this.output);
+        .save(ifTagNotEmpty(SolarGenerationTags.Items.NUGGETS_STEEL));
 
     for (int i = 1; i < SolarPanelLevel.values().length; i++) {
       var level = SolarPanelLevel.values()[i];
@@ -141,38 +127,42 @@ public class SolarGenerationRecipes extends RecipeProvider {
   }
 
   private void solarCore() {
-    Map<SolarPanelLevel, Identifier> materials = new HashMap<>();
-    materials.put(SolarPanelLevel.HARDENED, Identifier.fromNamespaceAndPath("c", "nuggets/invar"));
-    materials.put(SolarPanelLevel.REDSTONE, Identifier.fromNamespaceAndPath("c", "nuggets/electrum"));
-    materials.put(SolarPanelLevel.SIGNALUM, Identifier.fromNamespaceAndPath("c", "nuggets/signalum"));
-    materials.put(SolarPanelLevel.RESONANT, Identifier.fromNamespaceAndPath("c", "nuggets/enderium"));
-    materials.put(SolarPanelLevel.ADVANCED, Identifier.fromNamespaceAndPath("c", "nuggets/lumium"));
-    materials.put(SolarPanelLevel.ULTIMATE, Identifier.fromNamespaceAndPath("c", "nuggets/platinum"));
+    Map<SolarPanelLevel, TagKey<Item>> materials = new HashMap<>();
+    materials.put(SolarPanelLevel.HARDENED, SolarGenerationTags.Items.NUGGETS_INVAR);
+    materials.put(SolarPanelLevel.REDSTONE, SolarGenerationTags.Items.NUGGETS_ELECTRUM);
+    materials.put(SolarPanelLevel.SIGNALUM, SolarGenerationTags.Items.NUGGETS_SIGNALUM);
+    materials.put(SolarPanelLevel.RESONANT, SolarGenerationTags.Items.NUGGETS_ENDERIUM);
+    materials.put(SolarPanelLevel.ADVANCED, SolarGenerationTags.Items.NUGGETS_LUMIUM);
+    materials.put(SolarPanelLevel.ULTIMATE, SolarGenerationTags.Items.NUGGETS_PLATINUM);
 
     ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC,
             ModRegistration.CORE.get(SolarPanelLevel.LEADSTONE).get())
         .pattern(" a ")
         .pattern("aba")
         .pattern(" a ")
-        .define('a', ItemTags.create(Identifier.fromNamespaceAndPath("c", "nuggets/lead")))
-        .define('b', ItemTags.create(Identifier.fromNamespaceAndPath("c", "ingots/iron")))
+        .define('a', SolarGenerationTags.Items.NUGGETS_LEAD)
+        .define('b', Tags.Items.INGOTS_IRON)
         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-        .save(this.output);
+        .save(ifTagNotEmpty(SolarGenerationTags.Items.NUGGETS_LEAD));
 
     for (int i = 1; i < SolarPanelLevel.values().length; i++) {
       var level = SolarPanelLevel.values()[i];
       var core = ModRegistration.CORE.get(level).get();
       var prevCore = ModRegistration.CORE.get(SolarPanelLevel.values()[i - 1]).get();
+      var material = materials.get(level);
       ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, core)
           .pattern(" a ")
           .pattern("aba")
           .pattern(" a ")
-          .define('a', ItemTags.create(materials.get(level)))
+          .define('a', material)
           .define('b', prevCore)
           .unlockedBy(getHasName(prevCore), has(prevCore))
-          .save(this.output);
+          .save(ifTagNotEmpty(material));
     }
+  }
 
+  private RecipeOutput ifTagNotEmpty(TagKey<Item> tag) {
+    return this.output.withConditions(NeoForgeConditions.not(NeoForgeConditions.tagEmpty(tag)));
   }
 
   private Item getVanillaHelmet(SolarPanelLevel level) {

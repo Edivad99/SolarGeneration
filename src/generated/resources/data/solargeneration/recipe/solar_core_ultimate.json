@@ -1,6 +1,14 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:nuggets/platinum"
+      }
+    }
+  ],
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "a": "#c:nuggets/platinum",
     "b": "solargeneration:solar_core_advanced"

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_panel_resonant"
+        "recipes": "solargeneration:solar_panel_resonant"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

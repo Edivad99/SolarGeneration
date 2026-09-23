@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_helmet_advanced"
+        "recipes": "solargeneration:solar_helmet_advanced"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

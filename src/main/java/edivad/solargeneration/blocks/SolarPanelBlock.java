@@ -8,6 +8,7 @@ import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelBattery;
 import edivad.solargeneration.tools.SolarPanelLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -95,9 +96,9 @@ public class SolarPanelBlock extends Block implements EntityBlock, SimpleWaterlo
   }
 
   @Override
-  public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
-      @Nullable BlockEntity blockEntity, ItemStack tool) {
-    super.playerDestroy(level, player, pos, state, blockEntity, tool);
+  public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state,
+          @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
+    super.playerDestroy(level, player, pos, state, blockEntity, destroyedWith);
     level.removeBlock(pos, false);
   }
 

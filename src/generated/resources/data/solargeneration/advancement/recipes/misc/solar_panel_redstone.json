@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_panel_redstone"
+        "recipes": "solargeneration:solar_panel_redstone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

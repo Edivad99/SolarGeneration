@@ -17,6 +17,8 @@ import edivad.solargeneration.setup.ModRegistration;
 import edivad.solargeneration.setup.SolarGenerationCreativeModeTabs;
 import edivad.solargeneration.tools.SolarGenerationDataComponents;
 import edivad.solargeneration.tools.SolarPanelLevel;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -61,12 +63,13 @@ public class SolarGeneration {
   }
 
   private void handleGatherData(GatherDataEvent.Client event) {
-    event.createProvider(SolarGenerationLootTableProvider::new);
+    event.createReloadableRegistryObjects(new RegistrySetBuilder()
+            .add(Registries.LOOT_TABLE, SolarGenerationLootTableProvider.create())
+            .add(Registries.ADVANCEMENT, SolarGenerationAdvancementProvider.create())
+            .add(SolarGenerationRecipes.create()));
     event.createBlockAndItemTags(SolarPanelBlockTagsProvider::new,
         (packOutput, lookupProvider, __) ->
             new SolarPanelItemTagsProvider(packOutput, lookupProvider));
-    event.createProvider(SolarGenerationAdvancementProvider::new);
-    event.createProvider(SolarGenerationRecipes.Runner::new);
     event.createProvider(SolarGenerationLang::new);
     event.createProvider(SolarGenerationModelProvider::new);
   }

@@ -38,7 +38,8 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
           List.of(clienttooltipcomponent),
           mouseX, mouseY,
           DefaultTooltipPositioner.INSTANCE,
-          null
+          null,
+          false
       );
     }
   }

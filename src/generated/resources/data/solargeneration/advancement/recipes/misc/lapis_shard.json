@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:lapis_shard"
+        "recipes": "solargeneration:lapis_shard"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

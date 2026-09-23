@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_panel_advanced"
+        "recipes": "solargeneration:solar_panel_advanced"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

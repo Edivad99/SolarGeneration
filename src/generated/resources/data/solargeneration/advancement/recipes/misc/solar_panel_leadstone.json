@@ -1,4 +1,13 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:nuggets/steel"
+      }
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_photovoltaic_cell": {
@@ -23,7 +32,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_panel_leadstone"
+        "recipes": "solargeneration:solar_panel_leadstone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

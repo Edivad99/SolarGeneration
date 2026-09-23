@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "solargeneration:solar_panel_hardened"
+        "recipes": "solargeneration:solar_panel_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
